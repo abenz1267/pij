@@ -25,6 +25,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.0-jre'
+    implementation group: 'com.google.inject', name: 'guice', version: '5.0.1'
 }
 
 application {
