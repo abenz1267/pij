@@ -1,0 +1,5 @@
+.gradle
+build
+workspace
+app/bin
+app/build
