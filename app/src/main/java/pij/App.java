@@ -1,19 +1,12 @@
 package pij;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import database.DatabaseModule;
-import database.DatabaseService;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javax.inject.Inject;
 
 public class App extends Application {
-  @Inject private DatabaseService databaseService;
-
   @Override
   public void start(Stage stage) {
     String javaVersion = System.getProperty("java.version");
@@ -27,12 +20,6 @@ public class App extends Application {
   }
 
   public static void main(String[] args) {
-    Injector injector = Guice.createInjector(new DatabaseModule());
-
-    App app = injector.getInstance(App.class);
-
-    System.out.println(app.databaseService.hello());
-
     launch();
   }
 }

@@ -5,3 +5,4 @@ build
 workspace
 app/bin
 app/build
+app/data.db
