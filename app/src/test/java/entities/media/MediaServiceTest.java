@@ -10,9 +10,9 @@ import entities.resolution.Resolution;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
-public class MediaServiceTest extends BaseEntityTest {
+class MediaServiceTest extends BaseEntityTest {
   @Test
-  public void create() {
+  void create() {
     Location l = new Location();
     l.setName("Kiel");
 
@@ -50,19 +50,35 @@ public class MediaServiceTest extends BaseEntityTest {
     assertDoesNotThrow(
         () -> {
           this.mediaService.create(m);
+        });
+
+    assertEquals(m.getLocation().getId(), l.getId());
+    assertEquals(m.getResolution().getId(), r.getId());
+    assertEquals(1, m.getId());
+
+    assertDoesNotThrow(
+        () -> {
           this.mediaService.create(mm);
+        });
 
-          assertEquals(m.getLocation().getId(), l.getId());
-          assertEquals(m.getResolution().getId(), r.getId());
-          assertEquals(mm.getLocation().getId(), l.getId());
-          assertEquals(mm.getResolution().getId(), r.getId());
-          assertEquals(m.getId(), 1);
-          assertEquals(mm.getId(), 2);
+    assertEquals(mm.getLocation().getId(), l.getId());
+    assertEquals(mm.getResolution().getId(), r.getId());
+    assertEquals(2, mm.getId());
 
+    assertDoesNotThrow(
+        () -> {
           assertEquals(
               1, this.resolutionService.dao().queryForAll().size(), "Wrong amount of resolutions");
+        });
+
+    assertDoesNotThrow(
+        () -> {
           assertEquals(
               1, this.locationService.dao().queryForAll().size(), "Wrong amount of locations");
+        });
+
+    assertDoesNotThrow(
+        () -> {
           assertEquals(2, this.mediaService.dao().queryForAll().size(), "Wrong amount of media");
         });
 
@@ -70,6 +86,10 @@ public class MediaServiceTest extends BaseEntityTest {
         SQLException.class,
         () -> {
           this.mediaService.create(mmm);
+        });
+
+    assertDoesNotThrow(
+        () -> {
           assertEquals(2, this.mediaService.dao().queryForAll().size(), "Wrong amount of media");
         });
   }

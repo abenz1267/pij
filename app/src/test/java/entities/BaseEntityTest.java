@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -30,6 +32,7 @@ public abstract class BaseEntityTest {
   @Inject protected LocationService locationService;
   @Inject protected ResolutionService resolutionService;
 
+  private static final Logger logger = Logger.getLogger(BaseEntityTest.class.getName());
   private JdbcPooledConnectionSource source = null;
   private List<Class<?>> classes = new ArrayList<>();
 
@@ -48,7 +51,7 @@ public abstract class BaseEntityTest {
         TableUtils.createTable(this.source, c);
       }
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      logger.log(Level.SEVERE, e.getMessage());
     }
   }
 
@@ -60,7 +63,7 @@ public abstract class BaseEntityTest {
         TableUtils.clearTable(this.source, c);
       }
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      logger.log(Level.SEVERE, e.getMessage());
     }
   }
 
@@ -72,7 +75,7 @@ public abstract class BaseEntityTest {
       TableUtils.dropTable(this.locationService.dao(), true);
       TableUtils.dropTable(this.resolutionService.dao(), true);
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      logger.log(Level.SEVERE, e.getMessage());
     }
   }
 }
