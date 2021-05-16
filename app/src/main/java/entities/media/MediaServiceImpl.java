@@ -11,9 +11,12 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 
 public class MediaServiceImpl extends AbstractDAO implements MediaService {
+  private static final Logger logger = Logger.getLogger(MediaServiceImpl.class.getName());
   private Dao<Media, Integer> dao = null;
 
   @Inject private LocationService locationService;
@@ -24,7 +27,7 @@ public class MediaServiceImpl extends AbstractDAO implements MediaService {
       try {
         this.dao = DaoManager.createDao(AbstractDAO.source, Media.class);
       } catch (SQLException e) {
-        System.out.println(e.getMessage());
+        logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
@@ -57,7 +60,7 @@ public class MediaServiceImpl extends AbstractDAO implements MediaService {
   }
 
   private void checkResolution(Media media) throws SQLException {
-    Map<String, Object> kv = new HashMap<String, Object>();
+    Map<String, Object> kv = new HashMap<>();
     kv.put("height", media.getResolution().getHeight());
     kv.put("width", media.getResolution().getWidth());
 

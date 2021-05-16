@@ -7,6 +7,7 @@ import entities.resolution.ResolutionService;
 import entities.resolution.ResolutionServiceImpl;
 
 public class MediaModule extends AbstractModule {
+  @Override
   protected void configure() {
     bind(MediaService.class).to(MediaServiceImpl.class);
     bind(LocationService.class).to(LocationServiceImpl.class);

@@ -4,15 +4,18 @@ import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.misc.TransactionManager;
 import java.sql.SQLException;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class AbstractDAO {
-  protected static JdbcPooledConnectionSource source = null;
+  protected static JdbcPooledConnectionSource source;
+  private static final Logger logger = Logger.getLogger(AbstractDAO.class.getName());
 
-  public AbstractDAO() {
+  static {
     try {
       AbstractDAO.source = new JdbcPooledConnectionSource("jdbc:sqlite:data.db");
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      logger.log(Level.SEVERE, e.getMessage());
     }
   }
 
