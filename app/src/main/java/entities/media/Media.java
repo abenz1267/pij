@@ -16,20 +16,16 @@ public class Media {
   @DatabaseField(canBeNull = false, unique = true)
   private String filename;
 
-  @DatabaseField(canBeNull = false)
-  private Date datetime;
+  @DatabaseField() private Date datetime;
 
-  @DatabaseField(canBeNull = false)
-  private String description;
+  @DatabaseField() private String description;
 
   @DatabaseField(canBeNull = false)
   private boolean isPrivate;
 
-  @DatabaseField(canBeNull = false)
-  private int quality;
+  @DatabaseField() private int quality;
 
-  @DatabaseField(canBeNull = false)
-  private int duration;
+  @DatabaseField() private int duration;
 
   @DatabaseField(canBeNull = false)
   private DataType dataType;
@@ -37,12 +33,15 @@ public class Media {
   @DatabaseField(foreign = true, columnName = "location_id")
   private Location location;
 
+  @DatabaseField(foreign = true, columnName = "resolution_id", canBeNull = false)
   private Resolution resolution;
+
   private Person[] persons;
   private Tag[] tags;
 
   public enum DataType {
     JPEG,
+    PNG,
     MP4,
     RAW,
     AVI
