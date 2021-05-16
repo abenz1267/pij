@@ -52,6 +52,13 @@ public class MediaServiceTest extends BaseEntityTest {
           this.mediaService.create(m);
           this.mediaService.create(mm);
 
+          assertEquals(m.getLocation().getId(), l.getId());
+          assertEquals(m.getResolution().getId(), r.getId());
+          assertEquals(mm.getLocation().getId(), l.getId());
+          assertEquals(mm.getResolution().getId(), r.getId());
+          assertEquals(m.getId(), 1);
+          assertEquals(mm.getId(), 2);
+
           assertEquals(
               1, this.resolutionService.dao().queryForAll().size(), "Wrong amount of resolutions");
           assertEquals(

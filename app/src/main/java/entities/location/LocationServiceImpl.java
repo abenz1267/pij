@@ -19,12 +19,4 @@ public class LocationServiceImpl extends AbstractDAO implements LocationService 
 
     return this.dao;
   }
-
-  public void create(Location location) throws SQLException {
-    if (!this.dao().queryForEq("name", location.getName()).isEmpty()) {
-      return;
-    }
-
-    this.dao().createIfNotExists(location);
-  }
 }
