@@ -1,6 +1,7 @@
 .gradle
 .settings
 .project
+.idea
 build
 workspace
 app/bin
