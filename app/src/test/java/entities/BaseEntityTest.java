@@ -1,6 +1,5 @@
 package entities;
 
-import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import entities.location.Location;
 import entities.location.LocationService;
@@ -29,9 +28,9 @@ public abstract class BaseEntityTest {
   @Inject protected MediaService mediaService;
   @Inject protected LocationService locationService;
   @Inject protected ResolutionService resolutionService;
+  @Inject protected DatabaseConnectionService databaseConnectionService;
   @Inject private Logger logger;
 
-  private JdbcPooledConnectionSource source = null;
   private List<Class<?>> classes = new ArrayList<>();
 
   @BeforeAll
@@ -39,10 +38,8 @@ public abstract class BaseEntityTest {
     this.classes.addAll(Arrays.asList(Media.class, Resolution.class, Location.class));
 
     try {
-      this.source = new JdbcPooledConnectionSource("jdbc:sqlite:data.db");
-
       for (Class<?> c : this.classes) {
-        TableUtils.createTable(this.source, c);
+        TableUtils.createTable(databaseConnectionService.get(), c);
       }
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
@@ -52,9 +49,8 @@ public abstract class BaseEntityTest {
   @AfterEach
   public void clear() {
     try {
-      this.source = new JdbcPooledConnectionSource("jdbc:sqlite:data.db");
       for (Class<?> c : this.classes) {
-        TableUtils.clearTable(this.source, c);
+        TableUtils.clearTable(databaseConnectionService.get(), c);
       }
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
@@ -64,7 +60,6 @@ public abstract class BaseEntityTest {
   @AfterAll
   public void cleanup() {
     try {
-      this.source = new JdbcPooledConnectionSource("jdbc:sqlite:data.db");
       TableUtils.dropTable(this.mediaService.dao(), true);
       TableUtils.dropTable(this.locationService.dao(), true);
       TableUtils.dropTable(this.resolutionService.dao(), true);

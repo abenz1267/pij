@@ -1,21 +1,18 @@
 package entities.person;
 
-import com.google.inject.Inject;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import entities.AbstractDAO;
+import entities.AbstractEntityService;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class PersonServiceImpl extends AbstractDAO implements PersonService {
-  @Inject private Logger logger;
+public class PersonServiceImpl extends AbstractEntityService implements PersonService {
   private Dao<Person, Integer> dao = null;
 
   public Dao<Person, Integer> dao() {
     if (this.dao == null) {
       try {
-        this.dao = DaoManager.createDao(AbstractDAO.source, Person.class);
+        this.dao = DaoManager.createDao(this.databaseConnectionService.get(), Person.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
