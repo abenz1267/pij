@@ -18,18 +18,10 @@ import javax.inject.Inject;
 
 @Singleton
 public class MediaServiceImpl extends AbstractDAO implements MediaService {
-  private final Logger logger;
-  private final LocationService locationService;
-  private final ResolutionService resolutionService;
+  @Inject private Logger logger;
+  @Inject private LocationService locationService;
+  @Inject private ResolutionService resolutionService;
   private Dao<Media, Integer> dao = null;
-
-  @Inject
-  public MediaServiceImpl(
-      LocationService locationService, ResolutionService resolutionService, Logger logger) {
-    this.locationService = locationService;
-    this.resolutionService = resolutionService;
-    this.logger = logger;
-  }
 
   public Dao<Media, Integer> dao() {
     if (this.dao == null) {
