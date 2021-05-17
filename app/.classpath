@@ -64,7 +64,19 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-fxml/15.0.1/7d424e313435f4db2a2063cbffd48ca5912526b2/javafx-fxml-15.0.1-sources.jar" kind="lib" path="/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-fxml/15.0.1/1d2a8b3cff48cb8d83deb8aeb00226776146ebc4/javafx-fxml-15.0.1-linux.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-fxml/15.0.1/c1b16ce9978ba7fc233b817f0fd0ff7ca119fa17/javafx-fxml-15.0.1-javadoc.jar!/"/>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/15.0.1/bc13403cf76feeed6f6080483e0afa115038847c/javafx-controls-15.0.1-sources.jar" kind="lib" path="/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/15.0.1/11efce24b8ac1a119ec355fd7302dd1e373eb7dd/javafx-controls-15.0.1-linux.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/15.0.1/a7076ff5d35818f22420b45c429a2a36753e26da/javafx-controls-15.0.1-javadoc.jar!/"/>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/15.0.1/bc13403cf76feeed6f6080483e0afa115038847c/javafx-controls-15.0.1-sources.jar" kind="lib" path="/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/15.0.1/7e951231ff36d704e8cc8b112b71951c9ccbc15d/javafx-controls-15.0.1.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/home/andrej/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-controls/15.0.1/a7076ff5d35818f22420b45c429a2a36753e26da/javafx-controls-15.0.1-javadoc.jar!/"/>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
