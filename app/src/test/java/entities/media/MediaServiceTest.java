@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
 class MediaServiceTest extends BaseEntityTest {
+
   @Test
   void create() {
     Location l = new Location();

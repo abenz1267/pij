@@ -1,5 +1,7 @@
 package entities.resolution;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractDAO;
@@ -7,8 +9,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Singleton
 public class ResolutionServiceImpl extends AbstractDAO implements ResolutionService {
-  private static final Logger logger = Logger.getLogger(ResolutionServiceImpl.class.getName());
+  @Inject private Logger logger;
   private Dao<Resolution, Integer> dao = null;
 
   public Dao<Resolution, Integer> dao() {
