@@ -1,5 +1,6 @@
 package entities.media;
 
+import com.google.inject.Singleton;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractDAO;
@@ -15,12 +16,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 
+@Singleton
 public class MediaServiceImpl extends AbstractDAO implements MediaService {
-  private static final Logger logger = Logger.getLogger(MediaServiceImpl.class.getName());
+  private final Logger logger;
+  private final LocationService locationService;
+  private final ResolutionService resolutionService;
   private Dao<Media, Integer> dao = null;
 
-  @Inject private LocationService locationService;
-  @Inject private ResolutionService resolutionService;
+  @Inject
+  public MediaServiceImpl(
+      LocationService locationService, ResolutionService resolutionService, Logger logger) {
+    this.locationService = locationService;
+    this.resolutionService = resolutionService;
+    this.logger = logger;
+  }
 
   public Dao<Media, Integer> dao() {
     if (this.dao == null) {

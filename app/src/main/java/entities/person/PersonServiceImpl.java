@@ -1,5 +1,6 @@
 package entities.person;
 
+import com.google.inject.Inject;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractDAO;
@@ -8,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PersonServiceImpl extends AbstractDAO implements PersonService {
-  private static final Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
+  @Inject private Logger logger;
   private Dao<Person, Integer> dao = null;
 
   public Dao<Person, Integer> dao() {
