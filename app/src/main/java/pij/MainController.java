@@ -11,17 +11,17 @@ public class MainController implements Initializable {
 
   ResourceBundle bundle;
 
+  @FXML Label labelText;
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
     this.bundle = ResourceBundle.getBundle("texts");
 
-    setLabel_text();
+    setLabelText();
   }
 
-  @FXML Label label_text;
-
-  public void setLabel_text() {
-    this.label_text.setText(bundle.getString("label"));
+  public void setLabelText() {
+    this.labelText.setText(bundle.getString("label"));
   }
 }

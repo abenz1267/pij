@@ -13,14 +13,14 @@ public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
 
-    ResourceBundle config_bundle = ResourceBundle.getBundle("config");
-    String UI = config_bundle.getString("mainview");
+    var configBundle = ResourceBundle.getBundle("config");
+    var ui = configBundle.getString("mainview");
 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource(UI));
+    var loader = new FXMLLoader(getClass().getResource(ui));
 
-    Scene scene = new Scene(loader.load());
+    var scene = new Scene(loader.load());
 
-    String title = config_bundle.getString("title");
+    var title = configBundle.getString("title");
 
     stage.setTitle(title);
     stage.setScene(scene);
