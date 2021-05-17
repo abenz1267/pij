@@ -25,6 +25,7 @@ dependencies {
     // Use JUnit test framework.
     testImplementation(platform('org.junit:junit-bom:5.7.2'))
     testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation "org.testfx:testfx-junit5:4.0.16-alpha"
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.0-jre'
@@ -42,7 +43,7 @@ application {
 
 javafx {
     version = "15.0.1"
-    modules = [ 'javafx.controls', 'javafx.fxml']
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 test {
