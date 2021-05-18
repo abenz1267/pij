@@ -1,9 +1,3 @@
-.gradle
-.settings
-.project
-.idea
-build
-workspace
-app/bin
-app/build
-app/data.db
+*
+!*/
+!.gitignore
