@@ -1,7 +1,6 @@
 package pij;
 
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,7 +13,7 @@ import views.View;
 public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
-    Injector i = Guice.createInjector();
+    var i = Guice.createInjector();
     var resourceService = i.getInstance(ResourceService.class);
     var sceneService = i.getInstance(SceneService.class);
 
