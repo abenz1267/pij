@@ -6,7 +6,6 @@
  * User Manual available at https://docs.gradle.org/7.0.1/userguide/building_java_projects.html
  */
 
-
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
@@ -57,6 +56,14 @@ test {
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination layout.buildDirectory.dir('../jacoco.xml').get().asFile
+    }
+}
+
 
 sonarqube {
   properties {

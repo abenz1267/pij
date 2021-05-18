@@ -7,4 +7,4 @@
 !gradle/**
 !app/src/**
 !app/build.gradle
-!app/build/jacoco.xml
+!app/jacoco.xml
