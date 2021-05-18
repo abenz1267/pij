@@ -13,6 +13,7 @@ plugins {
     id 'eclipse'
     id 'org.openjfx.javafxplugin' version '0.0.9'
     id 'jacoco'
+    id "org.sonarqube" version "3.2.0"
 }
 
 repositories {
@@ -55,4 +56,12 @@ test {
 
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
+}
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "abenz1267_pij"
+    property "sonar.organization", "abenz1267"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
 }
