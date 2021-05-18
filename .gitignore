@@ -1,3 +1,10 @@
 *
 !*/
 !.gitignore
+!gradlew
+!gradlew.bat
+!settings.gradle
+!gradle/**
+!app/src/**
+!app/build.gradle
+!app/build/jacoco.xml
