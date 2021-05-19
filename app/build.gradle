@@ -36,6 +36,7 @@ dependencies {
     implementation 'org.kordamp.ikonli:ikonli-javafx:12.2.0'
     implementation "fr.brouillard.oss:cssfx:11.4.0"
     implementation 'org.kordamp.ikonli:ikonli-materialdesign2-pack:12.2.0'
+    implementation("com.google.guava:guava:30.1.1-jre")
 }
 
 application {
