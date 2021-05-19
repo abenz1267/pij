@@ -3,7 +3,6 @@
   -fx-background-color: #fbfbfb;
   -fx-font-size: 16px;
   -fx-orientation: vertical;
-  -fx-text-fill: red;
 }
 
 .top-controls Button {
@@ -12,9 +11,11 @@
   -fx-background-insets: none;
   -fx-background-color: #eeeeee;
   -fx-font-weight: bolder;
+  -fx-text-fill: #333;
 }
 
 .top-controls Button FontIcon {
+  -fx-icon-color: #333;
   -fx-icon-size: 24px;
 }
 
