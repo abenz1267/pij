@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.control.Button?>
 
 
-<AnchorPane prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
-   <children>
-      <Label fx:id="labelText" layoutX="14.0" layoutY="14.0" text="Label" />
-        <Button fx:id="btn" layoutX="81.0" layoutY="121.0" mnemonicParsing="false" onAction="#next" text="Next" />
-   </children>
-</AnchorPane>
+<FlowPane stylesheets="@base.css" styleClass="container" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
+  <FlowPane styleClass="top-controls">
+    <Button fx:id="importBtn" text="Importieren" onAction="#enable"/>
+    <Button fx:id="exportBtn" text="Exportieren"/>
+  </FlowPane>
+  <FlowPane styleClass="hflex">
+    <Label fx:id="labelText" />
+    <Label text="TEST" />
+  </FlowPane>
+</FlowPane>

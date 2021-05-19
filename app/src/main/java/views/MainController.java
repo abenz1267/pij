@@ -11,11 +11,18 @@ import resources.Resource;
 
 public class MainController extends AbstractController implements Initializable {
   @FXML Label labelText;
-  @FXML Button btn;
+  @FXML Button importBtn;
+  @FXML Button exportBtn;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    exportBtn.getStyleClass().add("btn--disabled");
     resourceService.setText(this.labelText, Resource.GENERIC, "label");
+  }
+
+  @FXML
+  private void enable() {
+    exportBtn.getStyleClass().remove("btn--disabled");
   }
 
   @FXML
