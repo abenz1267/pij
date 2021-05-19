@@ -9,3 +9,4 @@
 !app/build.gradle
 !app/jacoco.xml
 !.github/**
+!.idea/**
