@@ -33,7 +33,9 @@ dependencies {
     implementation group: 'com.j256.ormlite', name: 'ormlite-jdbc', version: '5.3'
     implementation group: 'com.j256.ormlite', name: 'ormlite-core', version: '5.3'
     implementation 'name.falgout.jeffrey.testing.junit5:guice-extension:1.2.1'
+    implementation 'org.kordamp.ikonli:ikonli-javafx:12.2.0'
     implementation "fr.brouillard.oss:cssfx:11.4.0"
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign2-pack:12.2.0'
 }
 
 application {
