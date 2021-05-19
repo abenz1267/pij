@@ -1,6 +1,6 @@
 .container {
   -fx-font-family: "sans-serif";
-  -fx-background-color: hsba(0, 0%, 90%);
+  -fx-background-color: #fbfbfb;
   -fx-font-size: 16px;
   -fx-orientation: vertical;
   -fx-text-fill: red;
@@ -14,6 +14,10 @@
   -fx-font-weight: bolder;
 }
 
+.top-controls Button FontIcon {
+  -fx-icon-size: 24px;
+}
+
 .top-controls Button:hover {
   -fx-cursor: hand;
   -fx-background-color: #ddd;
@@ -21,7 +25,11 @@
 
 .btn--disabled,
 .btn--disabled:hover {
-  -fx-background-color: hsba(0, 0%, 90%);
+  -fx-background-color: #fbfbfb;
   -fx-text-fill: #bbb;
   -fx-cursor: normal;
+}
+
+.btn--disabled FontIcon {
+  -fx-icon-color: #bbb;
 }

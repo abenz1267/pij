@@ -3,12 +3,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.control.Button?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 
 <FlowPane stylesheets="@base.css" styleClass="container" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
   <FlowPane styleClass="top-controls">
-    <Button fx:id="importBtn" text="Importieren" onAction="#enable"/>
-    <Button fx:id="exportBtn" text="Exportieren"/>
+    <Button fx:id="importBtn" text="Importieren" onAction="#enable">
+      <graphic><FontIcon iconLiteral="mdi2i-import" /></graphic>
+    </Button>
+    <Button fx:id="exportBtn" text="Exportieren">
+      <graphic><FontIcon iconLiteral="mdi2e-export" /></graphic>
+    </Button>
   </FlowPane>
   <FlowPane styleClass="hflex">
     <Label fx:id="labelText" />
