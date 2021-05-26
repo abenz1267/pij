@@ -68,7 +68,6 @@ jacocoTestReport {
     }
 }
 
-
 sonarqube {
   properties {
     property "sonar.projectKey", "abenz1267_pij"

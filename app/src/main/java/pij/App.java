@@ -2,6 +2,7 @@ package pij;
 
 import com.google.inject.Guice;
 import fr.brouillard.oss.cssfx.CSSFX;
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -30,6 +31,12 @@ public class App extends Application {
   }
 
   public static void main(String[] args) {
+    File files = new File("mediafiles");
+
+    if (!files.exists()) {
+      files.mkdir();
+    }
+
     launch();
   }
 }

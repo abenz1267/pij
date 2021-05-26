@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.io.IOException;
 import javafx.scene.Scene;
+import javafx.stage.Window;
 import pij.App;
 import resources.ResourceService;
 
@@ -20,6 +21,10 @@ public class SceneServiceImpl implements SceneService {
 
   public static void setRootScene(Scene scene) {
     SceneServiceImpl.scene = scene;
+  }
+
+  public Window getWindow() {
+    return SceneServiceImpl.scene.getWindow();
   }
 
   public void change(View view) throws IOException {

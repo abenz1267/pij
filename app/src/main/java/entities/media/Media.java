@@ -14,6 +14,9 @@ public class Media {
   private int id;
 
   @DatabaseField(canBeNull = false, unique = true)
+  private String name;
+
+  @DatabaseField(canBeNull = false, unique = true)
   private String filename;
 
   @DatabaseField() private Date datetime;
@@ -40,11 +43,21 @@ public class Media {
   private Tag[] tags;
 
   public enum DataType {
-    JPEG,
-    PNG,
-    MP4,
-    RAW,
-    AVI
+    JPEG("*.jpeg"),
+    PNG("*.png"),
+    MP4("*.mp4"),
+    RAW("*.raw"),
+    AVI("*.avi");
+
+    private String ext;
+
+    DataType(String ext) {
+      this.ext = ext;
+    }
+
+    public String toString() {
+      return this.ext;
+    }
   }
 
   public int getId() {
@@ -53,6 +66,14 @@ public class Media {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getFilename() {

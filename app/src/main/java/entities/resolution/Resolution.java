@@ -14,6 +14,13 @@ public class Resolution {
   @DatabaseField(uniqueCombo = true, canBeNull = false)
   private int height;
 
+  Resolution() {}
+
+  public Resolution(int width, int height) {
+    this.width = width;
+    this.height = height;
+  }
+
   public int getId() {
     return id;
   }
