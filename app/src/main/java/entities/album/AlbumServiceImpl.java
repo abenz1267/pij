@@ -6,11 +6,10 @@ import entities.AbstractEntityService;
 import entities.albumMedia.AlbumMedia;
 import entities.albumMedia.AlbumMediaService;
 import entities.media.Media;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.sql.SQLException;
 import java.util.logging.Level;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class AlbumServiceImpl extends AbstractEntityService implements AlbumService {
