@@ -21,11 +21,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
+import resources.ResourceService;
 
 @Singleton
 public class MediaServiceImpl extends AbstractEntityService implements MediaService {
   @Inject private LocationService locationService;
   @Inject private ResolutionService resolutionService;
+  @Inject private ResourceService resourceService;
   @Inject private Logger logger;
   private Dao<Media, Integer> dao = null;
 
@@ -43,7 +45,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
   public void importMedia(List<File> files) throws IOException {
     for (File file : files) {
-      var copied = new File("mediafiles", file.getName());
+      var copied = new File(resourceService.getMediaDir(), file.getName());
       com.google.common.io.Files.copy(file, copied);
 
       Media media = new Media();
