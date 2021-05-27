@@ -55,6 +55,7 @@ public class Media {
       this.ext = ext;
     }
 
+    @Override
     public String toString() {
       return this.ext;
     }

@@ -1,6 +1,7 @@
 package pij;
 
 import com.google.inject.Guice;
+import entities.DatabaseConnectionService;
 import fr.brouillard.oss.cssfx.CSSFX;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,11 @@ public class App extends Application {
     CSSFX.start();
     var i = Guice.createInjector();
     var resourceService = i.getInstance(ResourceService.class);
+    var databaseService = i.getInstance(DatabaseConnectionService.class);
     var sceneService = i.getInstance(SceneService.class);
+
+    resourceService.setContentFiles("mediafiles", "data.db");
+    databaseService.connect();
 
     var scene = sceneService.load(View.MAINVIEW);
     SceneServiceImpl.setRootScene(scene);
@@ -31,7 +36,7 @@ public class App extends Application {
   }
 
   public static void main(String[] args) {
-    File files = new File("mediafiles");
+    var files = new File("mediafiles");
 
     if (!files.exists()) {
       files.mkdir();
