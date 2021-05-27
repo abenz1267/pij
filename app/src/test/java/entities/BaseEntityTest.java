@@ -7,12 +7,14 @@ import entities.media.Media;
 import entities.media.MediaService;
 import entities.resolution.Resolution;
 import entities.resolution.ResolutionService;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import javax.inject.Inject;
 import name.falgout.jeffrey.testing.junit.guice.GuiceExtension;
 import org.junit.jupiter.api.AfterAll;
@@ -21,6 +23,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
+import resources.ResourceService;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(GuiceExtension.class)
@@ -28,13 +31,23 @@ public abstract class BaseEntityTest {
   @Inject protected MediaService mediaService;
   @Inject protected LocationService locationService;
   @Inject protected ResolutionService resolutionService;
+  @Inject protected ResourceService resourceService;
   @Inject protected DatabaseConnectionService databaseConnectionService;
   @Inject private Logger logger;
 
   private List<Class<?>> classes = new ArrayList<>();
+  private static String MEDIA_FOLDER = "testmediafiles";
+  private static String DATABASE = "test.db";
 
   @BeforeAll
   public void setup() {
+    var folder = new File(MEDIA_FOLDER);
+    folder.mkdir();
+
+    resourceService.setContentFiles(MEDIA_FOLDER, DATABASE);
+
+    databaseConnectionService.connect();
+
     this.classes.addAll(Arrays.asList(Media.class, Resolution.class, Location.class));
 
     try {
@@ -48,6 +61,13 @@ public abstract class BaseEntityTest {
 
   @AfterEach
   public void clear() {
+    File folder = new File(MEDIA_FOLDER);
+    Stream.of(folder.listFiles())
+        .forEach(
+            file -> {
+              file.delete();
+            });
+
     try {
       for (Class<?> c : this.classes) {
         TableUtils.clearTable(databaseConnectionService.get(), c);
@@ -59,12 +79,12 @@ public abstract class BaseEntityTest {
 
   @AfterAll
   public void cleanup() {
-    try {
-      TableUtils.dropTable(this.mediaService.dao(), true);
-      TableUtils.dropTable(this.locationService.dao(), true);
-      TableUtils.dropTable(this.resolutionService.dao(), true);
-    } catch (SQLException e) {
-      logger.log(Level.SEVERE, e.getMessage());
-    }
+    databaseConnectionService.close();
+
+    File db = new File(DATABASE);
+    db.delete();
+
+    File folder = new File(MEDIA_FOLDER);
+    folder.delete();
   }
 }

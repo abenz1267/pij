@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 @Singleton
 public class ResourceServiceImpl implements ResourceService {
   private EnumMap<Resource, ResourceBundle> bundles = new EnumMap<>(Resource.class);
+  private static String mediaDir;
+  private static String databaseFile;
 
   @Override
   public void setText(Labeled element, Resource bundle, String prop) {
@@ -34,5 +36,18 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     this.bundles.put(bundle, ResourceBundle.getBundle(bundle.toString()));
+  }
+
+  public void setContentFiles(String mediaDir, String databaseFile) {
+    ResourceServiceImpl.mediaDir = mediaDir;
+    ResourceServiceImpl.databaseFile = databaseFile;
+  }
+
+  public String getMediaDir() {
+    return mediaDir;
+  }
+
+  public String getDatabaseFile() {
+    return databaseFile;
   }
 }

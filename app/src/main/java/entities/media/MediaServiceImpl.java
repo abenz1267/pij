@@ -10,23 +10,23 @@ import entities.location.LocationService;
 import entities.media.Media.DataType;
 import entities.resolution.Resolution;
 import entities.resolution.ResolutionService;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
+import resources.ResourceService;
 
 @Singleton
 public class MediaServiceImpl extends AbstractEntityService implements MediaService {
   @Inject private LocationService locationService;
   @Inject private ResolutionService resolutionService;
-  @Inject private Logger logger;
+  @Inject private ResourceService resourceService;
   private Dao<Media, Integer> dao = null;
 
   public Dao<Media, Integer> dao() {
@@ -43,12 +43,12 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
   public void importMedia(List<File> files) throws IOException {
     for (File file : files) {
-      var copied = new File("mediafiles", file.getName());
+      var copied = new File(resourceService.getMediaDir(), file.getName());
       com.google.common.io.Files.copy(file, copied);
 
-      Media media = new Media();
+      var media = new Media();
 
-      String ext = Files.getFileExtension(file.getName());
+      var ext = Files.getFileExtension(file.getName());
       media.setFilename(copied.getPath());
       media.setName(media.getFilename());
 
@@ -60,9 +60,9 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
         }
       }
 
-      BufferedImage img = ImageIO.read(copied);
+      var img = ImageIO.read(copied);
 
-      Resolution res = new Resolution(img.getWidth(), img.getHeight());
+      var res = new Resolution(img.getWidth(), img.getHeight());
 
       media.setDataType(datatype);
       media.setResolution(res);
@@ -72,7 +72,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       } catch (SQLException e) {
         logger.log(Level.INFO, e.getMessage());
 
-        copied.delete();
+        java.nio.file.Files.delete(Paths.get(copied.getAbsolutePath()));
 
         throw new IOException("Couldn't import image");
       }

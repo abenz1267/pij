@@ -40,7 +40,7 @@ public class TopMenuController extends AbstractController implements Initializab
     var filter =
         new ExtensionFilter(
             "Media files",
-            Stream.of(DataType.values()).map(e -> e.toString()).collect(Collectors.toList()));
+            Stream.of(DataType.values()).map(Object::toString).collect(Collectors.toList()));
     var f = new FileChooser();
 
     f.setTitle(this.resourceService.getString(Resource.GENERIC, "importDialog"));
@@ -49,7 +49,7 @@ public class TopMenuController extends AbstractController implements Initializab
     try {
       List<File> files = f.showOpenMultipleDialog(sceneService.getWindow());
 
-      if (files != null && files.size() > 0) {
+      if (files != null && !files.isEmpty()) {
         this.mediaService.importMedia(files);
       }
     } catch (IOException e) {

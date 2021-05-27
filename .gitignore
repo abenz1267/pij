@@ -6,6 +6,7 @@
 !settings.gradle
 !gradle/**
 !app/src/**
+!app/testfiles/**
 !app/build.gradle
 !app/jacoco.xml
 !.github/**

@@ -11,4 +11,10 @@ public interface ResourceService {
   void setStageTitle(Stage stage, Resource bundle, String prop);
 
   String getString(Resource bundle, String prop);
+
+  void setContentFiles(String mediaDir, String databaseFile);
+
+  String getMediaDir();
+
+  String getDatabaseFile();
 }
