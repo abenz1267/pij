@@ -36,7 +36,7 @@ public class App extends Application {
   }
 
   public static void main(String[] args) {
-    File files = new File("mediafiles");
+    var files = new File("mediafiles");
 
     if (!files.exists()) {
       files.mkdir();

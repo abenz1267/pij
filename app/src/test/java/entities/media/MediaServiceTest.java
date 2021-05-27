@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class MediaServiceTest extends BaseEntityTest {
   @Test
-  public void testImport() {
+  void testImport() {
     var folder = new File("testfiles");
 
     assertDoesNotThrow(
