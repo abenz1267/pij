@@ -3,13 +3,18 @@ package entities.album;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractEntityService;
+import entities.albumMedia.AlbumMedia;
+import entities.albumMedia.AlbumMediaService;
+import entities.media.Media;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
 @Singleton
 public class AlbumServiceImpl extends AbstractEntityService implements AlbumService {
+  @Inject private AlbumMediaService albumMediaService;
 
   private Dao<Album, Integer> dao = null;
 
@@ -25,12 +30,13 @@ public class AlbumServiceImpl extends AbstractEntityService implements AlbumServ
     return this.dao;
   }
 
-  private void createAlbum(Album album) throws SQLException {
-    this.transaction(
-        () -> {
-          this.dao().createIfNotExists(album);
+  public void createAlbum(Album album) throws SQLException {
+    this.dao().createIfNotExists(album);
+  }
 
-          return null;
-        });
+  public void addMedia(Album album, Media... media) throws SQLException {
+    for (Media item : media) {
+      this.albumMediaService.dao().createIfNotExists(new AlbumMedia(album, item));
+    }
   }
 }

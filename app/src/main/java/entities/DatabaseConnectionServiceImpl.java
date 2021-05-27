@@ -3,6 +3,8 @@ package entities;
 import com.google.inject.Singleton;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import entities.album.Album;
+import entities.albumMedia.AlbumMedia;
 import entities.location.Location;
 import entities.media.Media;
 import entities.person.Person;
@@ -30,6 +32,8 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
       TableUtils.createTable(this.connection, Location.class);
       TableUtils.createTable(this.connection, Tag.class);
       TableUtils.createTable(this.connection, Person.class);
+      TableUtils.createTable(this.connection, Album.class);
+      TableUtils.createTable(this.connection, AlbumMedia.class);
 
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
