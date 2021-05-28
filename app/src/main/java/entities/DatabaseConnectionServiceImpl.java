@@ -21,10 +21,9 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
   @Inject private ResourceService resourceService;
   private JdbcPooledConnectionSource connection;
 
-  public void connect() {
+  public void createSchema() {
     try {
-      this.connection =
-          new JdbcPooledConnectionSource("jdbc:sqlite:" + resourceService.getDatabaseFile());
+      this.get();
 
       TableUtils.createTable(this.connection, Media.class);
       TableUtils.createTable(this.connection, Resolution.class);
@@ -38,6 +37,15 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
   }
 
   public JdbcPooledConnectionSource get() {
+    if (this.connection == null) {
+      try {
+        this.connection =
+            new JdbcPooledConnectionSource("jdbc:sqlite:" + resourceService.getDatabaseFile());
+      } catch (SQLException e) {
+        logger.log(Level.SEVERE, e.getMessage());
+      }
+    }
+
     return this.connection;
   }
 

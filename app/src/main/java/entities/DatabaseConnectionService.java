@@ -7,7 +7,7 @@ import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 public interface DatabaseConnectionService {
   JdbcPooledConnectionSource get();
 
-  void connect();
+  void createSchema();
 
   void close();
 }

@@ -8,15 +8,16 @@ import entities.media.MediaService;
 import entities.resolution.Resolution;
 import entities.resolution.ResolutionService;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 import javax.inject.Inject;
 import name.falgout.jeffrey.testing.junit.guice.GuiceExtension;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -45,8 +46,9 @@ public abstract class BaseEntityTest {
     folder.mkdir();
 
     resourceService.setContentFiles(MEDIA_FOLDER, DATABASE);
+    mediaService.setKeepOriginal(true);
 
-    databaseConnectionService.connect();
+    databaseConnectionService.createSchema();
 
     this.classes.addAll(Arrays.asList(Media.class, Resolution.class, Location.class));
 
@@ -61,18 +63,12 @@ public abstract class BaseEntityTest {
 
   @AfterEach
   public void clear() {
-    File folder = new File(MEDIA_FOLDER);
-    Stream.of(folder.listFiles())
-        .forEach(
-            file -> {
-              file.delete();
-            });
-
     try {
+      FileUtils.deleteDirectory(new File(MEDIA_FOLDER));
       for (Class<?> c : this.classes) {
         TableUtils.clearTable(databaseConnectionService.get(), c);
       }
-    } catch (SQLException e) {
+    } catch (IOException | SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
   }
@@ -83,8 +79,5 @@ public abstract class BaseEntityTest {
 
     File db = new File(DATABASE);
     db.delete();
-
-    File folder = new File(MEDIA_FOLDER);
-    folder.delete();
   }
 }

@@ -1,5 +1,7 @@
 package entities.media;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
 import com.google.inject.Singleton;
 import com.j256.ormlite.dao.Dao;
@@ -7,19 +9,24 @@ import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractEntityService;
 import entities.location.Location;
 import entities.location.LocationService;
-import entities.media.Media.DataType;
 import entities.resolution.Resolution;
 import entities.resolution.ResolutionService;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import javax.imageio.ImageIO;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 import javax.inject.Inject;
+import org.apache.commons.io.FileUtils;
 import resources.ResourceService;
 
 @Singleton
@@ -28,6 +35,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   @Inject private ResolutionService resolutionService;
   @Inject private ResourceService resourceService;
   private Dao<Media, Integer> dao = null;
+  private boolean keepOriginal = false;
 
   public Dao<Media, Integer> dao() {
     if (this.dao == null) {
@@ -41,42 +49,165 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     return this.dao;
   }
 
-  public void importMedia(List<File> files) throws IOException {
-    for (File file : files) {
+  public void importMedia(List<File> files) throws IOException, SQLException {
+    for (var file : files) {
+      var media = new Media(file, resourceService.getMediaDir());
+
+      this.create(media);
+
       var copied = new File(resourceService.getMediaDir(), file.getName());
       com.google.common.io.Files.copy(file, copied);
 
-      var media = new Media();
-
-      var ext = Files.getFileExtension(file.getName());
-      media.setFilename(copied.getPath());
-      media.setName(media.getFilename());
-
-      DataType datatype = null;
-
-      for (DataType d : DataType.values()) {
-        if (d.toString().contains(ext)) {
-          datatype = d;
-        }
-      }
-
-      var img = ImageIO.read(copied);
-
-      var res = new Resolution(img.getWidth(), img.getHeight());
-
-      media.setDataType(datatype);
-      media.setResolution(res);
-
-      try {
-        this.create(media);
-      } catch (SQLException e) {
-        logger.log(Level.INFO, e.getMessage());
-
-        java.nio.file.Files.delete(Paths.get(copied.getAbsolutePath()));
-
-        throw new IOException("Couldn't import image");
+      if (!this.keepOriginal) {
+        file.delete();
       }
     }
+  }
+
+  public void importMediaFromExport(File file) throws IOException, SQLException {
+    var tmpDir = new File(resourceService.getMediaDir(), "tmp");
+    tmpDir.mkdir();
+
+    var buffer = new byte[1024];
+    var zis = new ZipInputStream(new FileInputStream(file.toString()));
+    var zipEntry = zis.getNextEntry();
+
+    while (zipEntry != null) {
+      var newFile = newFile(tmpDir, zipEntry);
+      if (zipEntry.isDirectory()) {
+        if (!newFile.isDirectory() && !newFile.mkdirs()) {
+          throw new IOException("Failed to create directory " + newFile);
+        }
+      } else {
+        var parent = newFile.getParentFile();
+        if (!parent.isDirectory() && !parent.mkdirs()) {
+          throw new IOException("Failed to create directory " + parent);
+        }
+
+        var fos = new FileOutputStream(newFile);
+        int len;
+        while ((len = zis.read(buffer)) > 0) {
+          fos.write(buffer, 0, len);
+        }
+        fos.close();
+      }
+      zipEntry = zis.getNextEntry();
+    }
+
+    zis.closeEntry();
+    zis.close();
+
+    var mapper = new ObjectMapper();
+    var json = Paths.get(tmpDir.toString(), file.getName().replace(".zip", ""), "info.json");
+    List<Media> media = mapper.readValue(json.toFile(), new TypeReference<List<Media>>() {});
+
+    try {
+      this.createMultiple(media);
+    } catch (SQLException e) {
+      FileUtils.deleteDirectory(tmpDir);
+      throw new SQLException(e);
+    }
+
+    for (var m : media) {
+      var src = Paths.get(tmpDir.toString(), file.getName().replace(".zip", ""), m.getFilename());
+      try {
+        Files.copy(src.toFile(), new File(m.getFilename()));
+      } catch (IOException e) {
+        FileUtils.deleteDirectory(tmpDir);
+        throw new IOException(e);
+      }
+    }
+
+    if (!this.keepOriginal) {
+      FileUtils.delete(file);
+    }
+
+    FileUtils.deleteDirectory(tmpDir);
+  }
+
+  private File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
+    File destFile = new File(destinationDir, zipEntry.getName());
+
+    String destDirPath = destinationDir.getCanonicalPath();
+    String destFilePath = destFile.getCanonicalPath();
+
+    if (!destFilePath.startsWith(destDirPath + File.separator)) {
+      throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
+    }
+
+    return destFile;
+  }
+
+  public void exportMedia(List<Media> media, Path output) throws SQLException, IOException {
+    var tmpDir = new File(resourceService.getMediaDir(), "tmp");
+    var exportMediaFolder = new File(tmpDir, resourceService.getMediaDir());
+    tmpDir.mkdir();
+    exportMediaFolder.mkdir();
+
+    for (var m : media) {
+      this.dao().refresh(m);
+      resolutionService.dao().refresh(m.getResolution());
+
+      var orig = new File(m.getFilename());
+      var copied = new File(exportMediaFolder, orig.getName());
+      Files.copy(orig, copied);
+    }
+
+    var mapper = new ObjectMapper();
+    mapper.writeValue(new File(tmpDir, "info.json"), media);
+
+    var fos = new FileOutputStream(output.toFile());
+    var zipOut = new ZipOutputStream(fos);
+
+    this.zipFolder(tmpDir, output.getFileName().toString().replace(".zip", ""), zipOut);
+
+    zipOut.close();
+    fos.close();
+    FileUtils.deleteDirectory(tmpDir);
+  }
+
+  private void zipFolder(File fileToZip, String fileName, ZipOutputStream zipOut)
+      throws IOException {
+    if (fileToZip.isHidden()) {
+      return;
+    }
+    if (fileToZip.isDirectory()) {
+      if (fileName.endsWith("/")) {
+        zipOut.putNextEntry(new ZipEntry(fileName));
+        zipOut.closeEntry();
+      } else {
+        zipOut.putNextEntry(new ZipEntry(fileName + "/"));
+        zipOut.closeEntry();
+      }
+      File[] children = fileToZip.listFiles();
+      for (File childFile : children) {
+        zipFolder(childFile, fileName + "/" + childFile.getName(), zipOut);
+      }
+      return;
+    }
+    FileInputStream fis = new FileInputStream(fileToZip);
+    ZipEntry zipEntry = new ZipEntry(fileName);
+    zipOut.putNextEntry(zipEntry);
+    byte[] bytes = new byte[1024];
+    int length;
+    while ((length = fis.read(bytes)) >= 0) {
+      zipOut.write(bytes, 0, length);
+    }
+    fis.close();
+  }
+
+  private void createMultiple(List<Media> media) throws SQLException {
+    this.transaction(
+        () -> {
+          for (var m : media) {
+            this.checkLocation(m);
+            this.checkResolution(m);
+
+            this.dao().createIfNotExists(m);
+          }
+
+          return null;
+        });
   }
 
   private void create(Media media) throws SQLException {
@@ -116,5 +247,9 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     } else {
       this.resolutionService.dao().createIfNotExists(media.getResolution());
     }
+  }
+
+  public void setKeepOriginal(boolean val) {
+    this.keepOriginal = val;
   }
 }
