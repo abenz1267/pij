@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<AnchorPane prefHeight="28.0" prefWidth="176.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.SearchController">
+    <children>
+        <TextField fx:id="searchInput" layoutX="36.0" onAction="#onSearch" prefHeight="28.0" prefWidth="137.0" />
+        <Button layoutX="0.0" layoutY="0.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="25.0" prefWidth="22.0">
+            <graphic>
+                <FontIcon iconLiteral="mdi2c-card-search-outline" iconSize="20" />
+            </graphic>
+        </Button>
+    </children>
+</AnchorPane>
