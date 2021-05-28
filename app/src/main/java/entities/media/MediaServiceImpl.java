@@ -59,7 +59,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       com.google.common.io.Files.copy(file, copied);
 
       if (!this.keepOriginal) {
-        file.delete();
+        FileUtils.delete(file);
       }
     }
   }
@@ -68,34 +68,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     var tmpDir = new File(resourceService.getMediaDir(), "tmp");
     tmpDir.mkdir();
 
-    var buffer = new byte[1024];
-    var zis = new ZipInputStream(new FileInputStream(file.toString()));
-    var zipEntry = zis.getNextEntry();
-
-    while (zipEntry != null) {
-      var newFile = newFile(tmpDir, zipEntry);
-      if (zipEntry.isDirectory()) {
-        if (!newFile.isDirectory() && !newFile.mkdirs()) {
-          throw new IOException("Failed to create directory " + newFile);
-        }
-      } else {
-        var parent = newFile.getParentFile();
-        if (!parent.isDirectory() && !parent.mkdirs()) {
-          throw new IOException("Failed to create directory " + parent);
-        }
-
-        var fos = new FileOutputStream(newFile);
-        int len;
-        while ((len = zis.read(buffer)) > 0) {
-          fos.write(buffer, 0, len);
-        }
-        fos.close();
-      }
-      zipEntry = zis.getNextEntry();
-    }
-
-    zis.closeEntry();
-    zis.close();
+    this.unzip(tmpDir, file);
 
     var mapper = new ObjectMapper();
     var json = Paths.get(tmpDir.toString(), file.getName().replace(".zip", ""), "info.json");
@@ -125,8 +98,41 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     FileUtils.deleteDirectory(tmpDir);
   }
 
+  private void unzip(File tmpDir, File zip) throws IOException {
+    var buffer = new byte[1024];
+
+    try (var zis = new ZipInputStream(new FileInputStream(zip.toString()))) {
+      ZipEntry zipEntry;
+      while ((zipEntry = zis.getNextEntry()) != null) {
+        var newFile = newFile(tmpDir, zipEntry);
+
+        if (zipEntry.isDirectory()) {
+          if (!newFile.isDirectory() && !newFile.mkdirs()) {
+            throw new IOException("Failed to create directory " + newFile);
+          }
+
+          continue;
+        }
+
+        var parent = newFile.getParentFile();
+        if (!parent.isDirectory() && !parent.mkdirs()) {
+          throw new IOException("Failed to create directory " + parent);
+        }
+
+        try (var fos = new FileOutputStream(newFile)) {
+          int len;
+          while ((len = zis.read(buffer)) > 0) {
+            fos.write(buffer, 0, len);
+          }
+        }
+      }
+
+      zis.closeEntry();
+    }
+  }
+
   private File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
-    File destFile = new File(destinationDir, zipEntry.getName());
+    var destFile = new File(destinationDir, zipEntry.getName());
 
     String destDirPath = destinationDir.getCanonicalPath();
     String destFilePath = destFile.getCanonicalPath();
@@ -185,15 +191,17 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       }
       return;
     }
-    FileInputStream fis = new FileInputStream(fileToZip);
-    ZipEntry zipEntry = new ZipEntry(fileName);
+
+    var zipEntry = new ZipEntry(fileName);
     zipOut.putNextEntry(zipEntry);
-    byte[] bytes = new byte[1024];
+    var bytes = new byte[1024];
     int length;
-    while ((length = fis.read(bytes)) >= 0) {
-      zipOut.write(bytes, 0, length);
+
+    try (var fis = new FileInputStream(fileToZip)) {
+      while ((length = fis.read(bytes)) >= 0) {
+        zipOut.write(bytes, 0, length);
+      }
     }
-    fis.close();
   }
 
   private void createMultiple(List<Media> media) throws SQLException {
