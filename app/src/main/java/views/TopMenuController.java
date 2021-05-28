@@ -1,7 +1,6 @@
 package views;
 
 import com.google.common.io.Files;
-import com.google.inject.Inject;
 import entities.media.Media.DataType;
 import events.TestEvent;
 import java.io.File;
@@ -11,7 +10,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javafx.fxml.FXML;
@@ -25,7 +23,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import resources.Resource;
 
 public class TopMenuController extends AbstractController implements Initializable {
-  @Inject Logger logger;
   @FXML Button importBtn;
   @FXML Button exportBtn;
 
