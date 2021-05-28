@@ -23,7 +23,7 @@ public class App extends Application {
     var sceneService = i.getInstance(SceneService.class);
 
     resourceService.setContentFiles("mediafiles", "data.db");
-    databaseService.connect();
+    databaseService.createSchema();
 
     var scene = sceneService.load(View.MAINVIEW);
     SceneServiceImpl.setRootScene(scene);

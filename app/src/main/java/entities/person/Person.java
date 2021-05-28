@@ -1,11 +1,13 @@
 package entities.person;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable()
 public class Person {
   @DatabaseField(generatedId = true)
+  @JsonIgnore
   private int id;
 
   @DatabaseField(canBeNull = false)
