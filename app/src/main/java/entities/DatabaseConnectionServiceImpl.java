@@ -25,11 +25,11 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
     try {
       this.get();
 
-      TableUtils.createTable(this.connection, Media.class);
-      TableUtils.createTable(this.connection, Resolution.class);
-      TableUtils.createTable(this.connection, Location.class);
-      TableUtils.createTable(this.connection, Tag.class);
-      TableUtils.createTable(this.connection, Person.class);
+      TableUtils.createTableIfNotExists(this.connection, Media.class);
+      TableUtils.createTableIfNotExists(this.connection, Resolution.class);
+      TableUtils.createTableIfNotExists(this.connection, Location.class);
+      TableUtils.createTableIfNotExists(this.connection, Tag.class);
+      TableUtils.createTableIfNotExists(this.connection, Person.class);
 
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
