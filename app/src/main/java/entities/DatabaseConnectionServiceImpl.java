@@ -24,12 +24,8 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
   public void createSchema() {
     try {
       if (this.connection == null) {
-        try {
-          this.connection =
-              new JdbcPooledConnectionSource("jdbc:sqlite:" + resourceService.getDatabaseFile());
-        } catch (SQLException e) {
-          logger.log(Level.SEVERE, e.getMessage());
-        }
+        this.connection =
+            new JdbcPooledConnectionSource("jdbc:sqlite:" + resourceService.getDatabaseFile());
       }
 
       TableUtils.createTableIfNotExists(this.connection, Media.class);
