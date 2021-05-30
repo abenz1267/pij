@@ -1,6 +1,5 @@
 package pij;
 
-import com.google.inject.Guice;
 import entities.DatabaseConnectionService;
 import fr.brouillard.oss.cssfx.CSSFX;
 import java.io.File;
@@ -9,15 +8,15 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import resources.Resource;
 import resources.ResourceService;
+import views.Loader;
 import views.SceneService;
-import views.SceneServiceImpl;
 import views.View;
 
 public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
     CSSFX.start();
-    var i = Guice.createInjector();
+    var i = Loader.getInjector();
     var resourceService = i.getInstance(ResourceService.class);
     var databaseService = i.getInstance(DatabaseConnectionService.class);
     var sceneService = i.getInstance(SceneService.class);
@@ -26,7 +25,7 @@ public class App extends Application {
     databaseService.createSchema();
 
     var scene = sceneService.load(View.MAINVIEW);
-    SceneServiceImpl.setRootScene(scene);
+    sceneService.setRootScene(scene);
 
     resourceService.setStageTitle(stage, Resource.CONFIG, View.MAINVIEW.toString());
     stage.setScene(scene);
