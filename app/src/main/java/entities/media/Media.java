@@ -1,16 +1,22 @@
 package entities.media;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.io.Files;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import entities.location.*;
 import entities.person.*;
 import entities.resolution.*;
 import entities.tag.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import javax.imageio.ImageIO;
 
 @DatabaseTable()
 public class Media {
   @DatabaseField(generatedId = true)
+  @JsonIgnore
   private int id;
 
   @DatabaseField(canBeNull = false, unique = true)
@@ -44,6 +50,7 @@ public class Media {
 
   public enum DataType {
     JPEG("*.jpeg"),
+    JPG("*.jpg"),
     PNG("*.png"),
     MP4("*.mp4"),
     RAW("*.raw"),
@@ -59,6 +66,28 @@ public class Media {
     public String toString() {
       return this.ext;
     }
+  }
+
+  Media() {}
+
+  public Media(File file, String outputDir) throws IOException {
+    DataType datatype = null;
+    var ext = Files.getFileExtension(file.getName());
+
+    var img = ImageIO.read(file);
+    var res = new Resolution(img.getWidth(), img.getHeight());
+
+    this.setFilename(new File(outputDir, file.getName()).getPath());
+    this.setName(this.getFilename());
+
+    for (var d : DataType.values()) {
+      if (d.toString().contains(ext)) {
+        datatype = d;
+      }
+    }
+
+    this.setDataType(datatype);
+    this.setResolution(res);
   }
 
   public int getId() {

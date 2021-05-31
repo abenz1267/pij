@@ -12,4 +12,6 @@ public interface SceneService {
   void change(View view) throws IOException;
 
   Window getWindow();
+
+  void setRootScene(Scene scene);
 }

@@ -23,18 +23,18 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
   @Inject private ResourceService resourceService;
   private JdbcPooledConnectionSource connection;
 
-  public void connect() {
+  public void createSchema() {
     try {
-      this.connection =
-          new JdbcPooledConnectionSource("jdbc:sqlite:" + resourceService.getDatabaseFile());
+      if (this.connection == null) {
+        this.connection =
+            new JdbcPooledConnectionSource("jdbc:sqlite:" + resourceService.getDatabaseFile());
+      }
 
-      TableUtils.createTable(this.connection, Media.class);
-      TableUtils.createTable(this.connection, Resolution.class);
-      TableUtils.createTable(this.connection, Location.class);
-      TableUtils.createTable(this.connection, Tag.class);
-      TableUtils.createTable(this.connection, Person.class);
-      TableUtils.createTable(this.connection, Album.class);
-      TableUtils.createTable(this.connection, AlbumMedia.class);
+      TableUtils.createTableIfNotExists(this.connection, Media.class);
+      TableUtils.createTableIfNotExists(this.connection, Resolution.class);
+      TableUtils.createTableIfNotExists(this.connection, Location.class);
+      TableUtils.createTableIfNotExists(this.connection, Tag.class);
+      TableUtils.createTableIfNotExists(this.connection, Person.class);
 
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
