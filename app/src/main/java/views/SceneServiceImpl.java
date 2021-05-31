@@ -12,19 +12,19 @@ import resources.ResourceService;
 public class SceneServiceImpl implements SceneService {
   @Inject private ResourceService resourceService;
 
-  private static Scene scene;
+  private Scene scene;
 
   public Scene load(View view) throws IOException {
     var loader = new Loader(App.class, view, resourceService);
     return new Scene(loader.load());
   }
 
-  public static void setRootScene(Scene scene) {
-    SceneServiceImpl.scene = scene;
+  public void setRootScene(Scene scene) {
+    this.scene = scene;
   }
 
   public Window getWindow() {
-    return SceneServiceImpl.scene.getWindow();
+    return this.scene.getWindow();
   }
 
   public void change(View view) throws IOException {

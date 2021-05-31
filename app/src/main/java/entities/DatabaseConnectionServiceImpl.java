@@ -23,13 +23,16 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
 
   public void createSchema() {
     try {
-      this.get();
+      if (this.connection == null) {
+        this.connection =
+            new JdbcPooledConnectionSource("jdbc:sqlite:" + resourceService.getDatabaseFile());
+      }
 
-      TableUtils.createTable(this.connection, Media.class);
-      TableUtils.createTable(this.connection, Resolution.class);
-      TableUtils.createTable(this.connection, Location.class);
-      TableUtils.createTable(this.connection, Tag.class);
-      TableUtils.createTable(this.connection, Person.class);
+      TableUtils.createTableIfNotExists(this.connection, Media.class);
+      TableUtils.createTableIfNotExists(this.connection, Resolution.class);
+      TableUtils.createTableIfNotExists(this.connection, Location.class);
+      TableUtils.createTableIfNotExists(this.connection, Tag.class);
+      TableUtils.createTableIfNotExists(this.connection, Person.class);
 
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
@@ -37,15 +40,6 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
   }
 
   public JdbcPooledConnectionSource get() {
-    if (this.connection == null) {
-      try {
-        this.connection =
-            new JdbcPooledConnectionSource("jdbc:sqlite:" + resourceService.getDatabaseFile());
-      } catch (SQLException e) {
-        logger.log(Level.SEVERE, e.getMessage());
-      }
-    }
-
     return this.connection;
   }
 
