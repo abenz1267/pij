@@ -56,4 +56,9 @@ public class TopMenuController extends AbstractController implements Initializab
       logger.log(Level.INFO, e.getMessage());
     }
   }
+
+  @FXML
+  private void createAlbum() {
+
+  }
 }

@@ -12,4 +12,7 @@
   <Button fx:id="exportBtn" text="Exportieren">
     <graphic><FontIcon iconLiteral="mdi2e-export" /></graphic>
   </Button>
+  <Button fx:id="albumBtn" text="ALbum erstellen" onAction="#createAlbum">
+    <graphic><FontIcon iconLiteral="mdi2i-image-album"/></graphic>
+  </Button>
 </FlowPane>
