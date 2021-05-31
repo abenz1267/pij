@@ -16,4 +16,8 @@ public class Loader extends FXMLLoader {
         null,
         injector::getInstance);
   }
+
+  public static Injector getInjector() {
+    return injector;
+  }
 }
