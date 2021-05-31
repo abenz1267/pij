@@ -5,6 +5,7 @@ import fr.brouillard.oss.cssfx.CSSFX;
 import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import resources.Resource;
 import resources.ResourceService;
@@ -24,7 +25,8 @@ public class App extends Application {
     resourceService.setContentFiles("mediafiles", "data.db");
     databaseService.createSchema();
 
-    var scene = sceneService.load(View.MAINVIEW);
+    var pane = sceneService.load(View.MAINVIEW);
+    var scene = new Scene(pane);
     sceneService.setRootScene(scene);
 
     resourceService.setStageTitle(stage, Resource.CONFIG, View.MAINVIEW.toString());

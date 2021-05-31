@@ -3,7 +3,10 @@ package views;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.io.IOException;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Window;
 import pij.App;
 import resources.ResourceService;
@@ -14,9 +17,9 @@ public class SceneServiceImpl implements SceneService {
 
   private Scene scene;
 
-  public Scene load(View view) throws IOException {
+  public Pane load(View view) throws IOException {
     var loader = new Loader(App.class, view, resourceService);
-    return new Scene(loader.load());
+    return loader.load();
   }
 
   public void setRootScene(Scene scene) {
@@ -29,5 +32,12 @@ public class SceneServiceImpl implements SceneService {
 
   public void change(View view) throws IOException {
     scene.setRoot(new Loader(App.class, view, resourceService).load());
+  }
+
+  public void setContent(Pane pane, View view) throws IOException {
+    var albumcontext = this.load(View.ALBUMCONTEXT);
+    ObservableList<Node> children = pane.getChildren();
+    children.clear();
+    children.add(albumcontext);
   }
 }
