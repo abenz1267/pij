@@ -2,7 +2,7 @@ package views;
 
 import com.google.inject.Inject;
 import entities.media.Media.DataType;
-import events.TestEvent;
+import events.ShowAlbumView;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +23,7 @@ public class TopMenuController extends AbstractController implements Initializab
   @Inject Logger logger;
   @FXML Button importBtn;
   @FXML Button exportBtn;
+  @FXML Button albumBtn;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -32,7 +33,6 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML
   private void enable() {
     exportBtn.getStyleClass().remove("btn--disabled");
-    this.eventService.post(new TestEvent("Der text kommt von einem anderen Controller"));
   }
 
   @FXML
@@ -55,5 +55,10 @@ public class TopMenuController extends AbstractController implements Initializab
     } catch (IOException e) {
       logger.log(Level.INFO, e.getMessage());
     }
+  }
+
+  @FXML
+  private void showAlbumView() {
+    eventService.post(new ShowAlbumView());
   }
 }
