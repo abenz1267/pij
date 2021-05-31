@@ -1,6 +1,9 @@
 package entities;
 
 import com.j256.ormlite.table.TableUtils;
+import entities.album.Album;
+import entities.album.AlbumService;
+import entities.albumMedia.AlbumMedia;
 import entities.location.Location;
 import entities.location.LocationService;
 import entities.media.Media;
@@ -33,6 +36,7 @@ public abstract class BaseEntityTest {
   @Inject protected ResolutionService resolutionService;
   @Inject protected ResourceService resourceService;
   @Inject protected DatabaseConnectionService databaseConnectionService;
+  @Inject protected AlbumService albumService;
   @Inject private Logger logger;
 
   private List<Class<?>> classes = new ArrayList<>();
@@ -48,7 +52,7 @@ public abstract class BaseEntityTest {
 
     databaseConnectionService.connect();
 
-    this.classes.addAll(Arrays.asList(Media.class, Resolution.class, Location.class));
+    this.classes.addAll(Arrays.asList(Media.class, Resolution.class, Location.class, Album.class, AlbumMedia.class));
 
     try {
       for (Class<?> c : this.classes) {
