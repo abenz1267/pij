@@ -5,5 +5,8 @@
 
 
 <FlowPane styleClass="main" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContainerController">
-  <Label fx:id="label" text="vanilla" />
+    <fx:include source="contextwrapper.fxml" />
+  <FlowPane>
+
+  </FlowPane>
 </FlowPane>

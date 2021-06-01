@@ -2,7 +2,7 @@ package views;
 
 import com.google.common.io.Files;
 import entities.media.Media.DataType;
-import events.TestEvent;
+import events.ShowAlbumView;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +25,7 @@ import resources.Resource;
 public class TopMenuController extends AbstractController implements Initializable {
   @FXML Button importBtn;
   @FXML Button exportBtn;
+  @FXML Button albumBtn;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -34,7 +35,6 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML
   private void enable() {
     exportBtn.getStyleClass().remove("btn--disabled");
-    this.eventService.post(new TestEvent("Der text kommt von einem anderen Controller"));
   }
 
   @FXML
@@ -74,5 +74,10 @@ public class TopMenuController extends AbstractController implements Initializab
       var alert = new Alert(AlertType.ERROR, "Importieren fehlgeschlagen.", ButtonType.OK);
       alert.showAndWait();
     }
+  }
+
+  @FXML
+  private void showAlbumView() {
+    eventService.post(new ShowAlbumView());
   }
 }
