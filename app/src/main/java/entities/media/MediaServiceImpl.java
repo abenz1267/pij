@@ -35,7 +35,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   @Inject private ResolutionService resolutionService;
   @Inject private ResourceService resourceService;
   private Dao<Media, Integer> dao = null;
-  private boolean keepOriginal = false;
+  private boolean keepOriginal = true;
 
   public Dao<Media, Integer> dao() {
     if (this.dao == null) {

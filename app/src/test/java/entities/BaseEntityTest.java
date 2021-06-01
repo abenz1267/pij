@@ -54,7 +54,9 @@ public abstract class BaseEntityTest {
 
     databaseConnectionService.createSchema();
 
-    this.classes.addAll(Arrays.asList(Media.class, Resolution.class, Location.class, Album.class, AlbumMedia.class));
+    this.classes.addAll(
+        Arrays.asList(
+            Media.class, Resolution.class, Location.class, Album.class, AlbumMedia.class));
 
     try {
       for (Class<?> c : this.classes) {
