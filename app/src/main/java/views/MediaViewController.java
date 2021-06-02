@@ -49,7 +49,7 @@ public class MediaViewController extends AbstractController implements Initializ
                 WritableImage newImage = null;
                 
 
-                if(tempImage.getHeight() == tempImage.getHeight()) {
+                if(tempImage.getHeight() == tempImage.getWidth()) {
 
                 } else if (tempImage.getHeight() < tempImage.getWidth()) {
                     //höhe zum ausschneiden nehmen
