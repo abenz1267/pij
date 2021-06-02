@@ -4,6 +4,5 @@
 <?import javafx.scene.control.Label?>
 
 
-<FlowPane fx:id="wrapper" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContextController">
-  <Label text="AHOI"></Label>
+<FlowPane fx:id="contextwrapper" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContextController">
 </FlowPane>

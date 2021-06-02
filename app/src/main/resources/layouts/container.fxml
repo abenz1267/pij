@@ -6,7 +6,5 @@
 
 <FlowPane styleClass="main" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContainerController">
     <fx:include source="contextwrapper.fxml" />
-  <FlowPane>
-
-  </FlowPane>
+    <fx:include source="mainwrapper.fxml" />
 </FlowPane>
