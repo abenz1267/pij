@@ -260,4 +260,9 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   public void setKeepOriginal(boolean val) {
     this.keepOriginal = val;
   }
+
+  public List<Media> getAllMedia() throws SQLException {
+    return this.dao.queryForAll();
+  }
+
 }
