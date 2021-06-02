@@ -3,6 +3,7 @@ package views;
 import com.google.common.io.Files;
 import entities.media.Media.DataType;
 import events.ShowAlbumView;
+import events.ShowAllImages;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -69,6 +70,8 @@ public class TopMenuController extends AbstractController implements Initializab
           this.mediaService.importMedia(files);
         }
       }
+
+      eventService.post(new ShowAllImages());
     } catch (SQLException | IOException e) {
       logger.log(Level.INFO, e.getMessage());
       var alert = new Alert(AlertType.ERROR, "Importieren fehlgeschlagen.", ButtonType.OK);
