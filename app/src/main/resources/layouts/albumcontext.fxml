@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.control.Label?>
-
-
-<FlowPane xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.AlbumContextController">
-  <Label text="ALBUMCONTEXT"></Label>
-</FlowPane>

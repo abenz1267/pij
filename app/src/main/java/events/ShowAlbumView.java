@@ -1,3 +1,4 @@
 package events;
 
-public class ShowAlbumView {}
+public class ShowAlbumView {
+}

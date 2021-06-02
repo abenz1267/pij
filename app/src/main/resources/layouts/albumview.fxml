@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="views.AlbumController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.layout.GridPane?>
+<FlowPane xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.AlbumContextController">
+    <Label text="ALBUMCONTEXT"></Label>
+    <children>
+        <ScrollPane fx:id="albumViewPane" fitToHeight="true" fitToWidth="true">
+            <GridPane fx:id="albumGridPane">
 
-</AnchorPane>
+            </GridPane>
+        </ScrollPane>
+    </children>
+</FlowPane>
