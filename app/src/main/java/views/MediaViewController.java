@@ -13,8 +13,8 @@ import com.google.inject.Inject;
 import entities.media.Media;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.GridPane;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -23,13 +23,11 @@ import javafx.scene.layout.HBox;
 
 public class MediaViewController extends AbstractController implements Initializable {
 
-    @FXML ScrollPane scrollPane;
+    @FXML GridPane gridPane;
     @Inject private SceneService sceneService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         eventService.register(this);
     }
 
@@ -37,12 +35,12 @@ public class MediaViewController extends AbstractController implements Initializ
     public ScrollPane initializeMediaView() {
         List<Media> media;
         HBox hb = new HBox();
-        scrollPane = new ScrollPane();
-        scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+        gridPane = new GridPane();
 
         try {
             media = mediaService.dao().queryForAll();
-            int i = 0;
+            final int[] col = {0};
+            final int[] row = {0};
             media.forEach(mediaFile -> {
                 
                 File file = new File(mediaFile.getFilename());
@@ -73,10 +71,16 @@ public class MediaViewController extends AbstractController implements Initializ
 
 
                 hb.getChildren().addAll(imageView);
+                gridPane.add(imageView , col[0], row[0] );
+                col[0]++;
+                if(col[0] == 4)  {
+                    col[0] = 0;
+                    row[0]++;
+                }
+
             });
 
-            scrollPane.setContent(hb);
-            return scrollPane;
+            return new ScrollPane(gridPane);
 
         } catch (SQLException e) {
             // errorhandling
