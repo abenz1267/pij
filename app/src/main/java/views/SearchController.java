@@ -14,7 +14,6 @@ public class SearchController extends AbstractController implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     @FXML

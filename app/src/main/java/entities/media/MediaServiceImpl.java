@@ -11,6 +11,10 @@ import entities.location.Location;
 import entities.location.LocationService;
 import entities.resolution.Resolution;
 import entities.resolution.ResolutionService;
+import org.apache.commons.io.FileUtils;
+import resources.ResourceService;
+
+import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -25,9 +29,6 @@ import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
-import javax.inject.Inject;
-import org.apache.commons.io.FileUtils;
-import resources.ResourceService;
 
 @Singleton
 public class MediaServiceImpl extends AbstractEntityService implements MediaService {
@@ -259,14 +260,5 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
   public void setKeepOriginal(boolean val) {
     this.keepOriginal = val;
-  }
-
-  public List<Media> getMedia(){
-    try {
-      return this.dao().queryForAll();
-    } catch (SQLException e) {
-      this.logger.log(Level.SEVERE, e.getMessage());
-    }
-    return null;
   }
 }

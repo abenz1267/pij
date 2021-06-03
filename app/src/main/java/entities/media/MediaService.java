@@ -2,6 +2,7 @@ package entities.media;
 
 import com.google.inject.ImplementedBy;
 import com.j256.ormlite.dao.Dao;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -19,6 +20,4 @@ public interface MediaService {
   void exportMedia(List<Media> media, Path output) throws SQLException, IOException;
 
   void setKeepOriginal(boolean val);
-
-  List<Media> getMedia();
 }

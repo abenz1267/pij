@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
@@ -32,27 +33,10 @@ public class ImagesController extends AbstractController implements Initializabl
     public void showFilteredImages(ShowFilteredImages event) {
         this.grid.getChildren().clear();
 
-        var input = event.getSearchInput();
-        this.grid.getChildren().clear();
-
         try {
             var items = mediaService.dao().queryForAll();
-            var matchedMediaList = new ArrayList<Media>();
-            var dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-            items.forEach(media -> {
-                if ((media.getName() != null && media.getName().contains(input)) ||
-                        (media.getDatetime() != null && dateFormat.format(media.getDatetime()).contains(input)) ||
-                        (media.getFilename() != null && media.getFilename().contains(input)) ||
-                        (media.getDescription() != null && media.getDescription().contains(input)) ||
-                        (media.getLocation() != null && media.getLocation().getName().contains(input)) ||
-                        (media.getPersons() != null && Arrays.stream(media.getPersons())
-                                .anyMatch(person -> person.getFirstname().equals(input) || person.getLastname().equals(input))) ||
-                        (media.getTags() != null && Arrays.stream(media.getTags()).anyMatch(tag -> tag.getName().equals(input))))
-                    matchedMediaList.add(media);
-            });
-
-            for (var item : matchedMediaList) {
+            for (var item : filterMediaList(items, event.getSearchInput())) {
                 var file = new File(item.getFilename());
                 var image = new Image(file.toURI().toString());
                 var view = new ImageView();
@@ -63,6 +47,24 @@ public class ImagesController extends AbstractController implements Initializabl
         } catch (SQLException e) {
             this.logger.log(Level.SEVERE, e.getMessage());
         }
+    }
+
+    private List<Media> filterMediaList(List<Media> mediaList, String input){
+        var filteredMediaList = new ArrayList<Media>();
+        var dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
+        mediaList.forEach(media -> {
+            if ((media.getName() != null && media.getName().contains(input)) ||
+                    (media.getDatetime() != null && dateFormat.format(media.getDatetime()).contains(input)) ||
+                    (media.getFilename() != null && media.getFilename().contains(input)) ||
+                    (media.getDescription() != null && media.getDescription().contains(input)) ||
+                    (media.getLocation() != null && media.getLocation().getName().contains(input)) ||
+                    (media.getPersons() != null && Arrays.stream(media.getPersons())
+                            .anyMatch(person -> person.getFirstname().equals(input) || person.getLastname().equals(input))) ||
+                    (media.getTags() != null && Arrays.stream(media.getTags()).anyMatch(tag -> tag.getName().equals(input))))
+                filteredMediaList.add(media);
+        });
+        return filteredMediaList;
     }
 
     @Subscribe
