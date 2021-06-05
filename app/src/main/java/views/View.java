@@ -3,7 +3,8 @@ package views;
 public enum View {
   MAINVIEW("mainview"),
   SECONDVIEW("secondview"),
-  ALBUMCONTEXT("albumcontext");
+  ALBUMCONTEXT("albumcontext"),
+  NEWALBUM("newalbum");
 
   private final String name;
 

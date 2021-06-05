@@ -3,6 +3,19 @@ package views;
 import com.google.common.io.Files;
 import entities.media.Media.DataType;
 import events.ShowAlbumView;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import resources.Resource;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -12,19 +25,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import resources.Resource;
 
 public class TopMenuController extends AbstractController implements Initializable {
   @FXML Button importBtn;
@@ -83,14 +83,10 @@ public class TopMenuController extends AbstractController implements Initializab
 
   @FXML
   private void newAlbumDialog() throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/layouts/newalbumdialog.fxml"));
-    Parent parent = fxmlLoader.load();
-
-    Scene scene = new Scene(parent, 300, 200);
     Stage stage = new Stage();
     stage.initModality(Modality.APPLICATION_MODAL);
-    stage.setScene(scene);
-    stage.setTitle("Neues ALbum erstellen");
+    stage.setScene(new Scene(sceneService.load(View.NEWALBUM)));
+    stage.setTitle("Neues Album erstellen");
     stage.showAndWait();
   }
 
