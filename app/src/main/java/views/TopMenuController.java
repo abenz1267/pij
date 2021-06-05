@@ -2,7 +2,6 @@ package views;
 
 import com.google.common.io.Files;
 import entities.media.Media.DataType;
-import events.NewAlbumDialog;
 import events.ShowAlbumView;
 import java.io.File;
 import java.io.IOException;
@@ -13,16 +12,18 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Callback;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import resources.Resource;
 
 public class TopMenuController extends AbstractController implements Initializable {
@@ -81,60 +82,17 @@ public class TopMenuController extends AbstractController implements Initializab
   }
 
   @FXML
-  private void newAlbumDialog() {
-    eventService.post(new NewAlbumDialog());
+  private void newAlbumDialog() throws IOException {
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/layouts/newalbumdialog.fxml"));
+    Parent parent = fxmlLoader.load();
 
-    // private void CreateAlbumDialog() {
-
-    Dialog<NewAlbum> newAlbumDialog = new Dialog<>();
-    Label AlbumNameLabel = new Label("Name:  ");
-    Label AlbumThemeLabel = new Label("Thema:  ");
-
-    TextField AlbumNameField = new TextField();
-    TextField AlbumThemeField = new TextField();
-
-    GridPane newAlbumPane = new GridPane();
-    newAlbumPane.setAlignment(Pos.CENTER);
-    newAlbumPane.setHgap(10);
-    newAlbumPane.setVgap(10);
-    newAlbumPane.setPadding(new Insets(20, 35, 20, 35));
-    newAlbumPane.add(AlbumNameLabel, 1, 1);
-    newAlbumPane.add(AlbumNameField, 2, 1);
-    newAlbumPane.add(AlbumThemeLabel, 1, 2);
-    newAlbumPane.add(AlbumThemeField, 2, 2);
-    newAlbumDialog.getDialogPane().setContent(newAlbumPane);
-
-    ButtonType okButton = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
-    newAlbumDialog.getDialogPane().getButtonTypes().add(okButton);
-
-    newAlbumDialog.setResultConverter(
-        new Callback<ButtonType, NewAlbum>() {
-          @Override
-          public NewAlbum call(ButtonType b) {
-            if (b == okButton) {
-              return new NewAlbum(AlbumNameField.getText(), AlbumThemeField.getText());
-            }
-
-            return null;
-          }
-        });
+    Scene scene = new Scene(parent, 300, 200);
+    Stage stage = new Stage();
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.setScene(scene);
+    stage.setTitle("Neues ALbum erstellen");
+    stage.showAndWait();
   }
-
-  class NewAlbum {
-    private String AlbumName;
-    private String AlbumTheme;
-
-    NewAlbum(String s1, String s2) {
-      AlbumName = s1;
-      AlbumTheme = s2;
-    }
-
-    @Override
-    public String toString() {
-      return (AlbumName + ", " + AlbumTheme);
-    }
-  }
-  // }
 
   @FXML
   private void showAlbumView() {
