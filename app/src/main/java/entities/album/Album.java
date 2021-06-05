@@ -15,6 +15,13 @@ public class Album {
   @DatabaseField(canBeNull = false)
   private String theme;
 
+  public Album(String name, String theme) {
+    this.name = name;
+    this.theme = theme;
+  }
+
+  public Album() {}
+
   public int getId() {
     return id;
   }

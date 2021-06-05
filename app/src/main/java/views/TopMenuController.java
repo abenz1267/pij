@@ -83,14 +83,10 @@ public class TopMenuController extends AbstractController implements Initializab
 
   @FXML
   private void newAlbumDialog() throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/layouts/newalbumdialog.fxml"));
-    Parent parent = fxmlLoader.load();
-
-    Scene scene = new Scene(parent, 300, 200);
     Stage stage = new Stage();
     stage.initModality(Modality.APPLICATION_MODAL);
-    stage.setScene(scene);
-    stage.setTitle("Neues ALbum erstellen");
+    stage.setScene(new Scene(sceneService.load(View.NEWALBUM)));
+    stage.setTitle("Neues Album erstellen");
     stage.showAndWait();
   }
 

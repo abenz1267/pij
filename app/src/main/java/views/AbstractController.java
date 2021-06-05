@@ -1,6 +1,7 @@
 package views;
 
 import com.google.inject.Inject;
+import entities.album.AlbumService;
 import entities.media.MediaService;
 import events.EventService;
 import java.util.logging.Logger;
@@ -12,4 +13,5 @@ abstract class AbstractController {
   @Inject protected EventService eventService;
   @Inject protected MediaService mediaService;
   @Inject protected Logger logger;
+  @Inject protected AlbumService albumService;
 }

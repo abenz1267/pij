@@ -35,6 +35,7 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
       TableUtils.createTableIfNotExists(this.connection, Location.class);
       TableUtils.createTableIfNotExists(this.connection, Tag.class);
       TableUtils.createTableIfNotExists(this.connection, Person.class);
+      TableUtils.createTableIfNotExists(this.connection, Album.class);
 
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
