@@ -2,7 +2,6 @@ package entities.media;
 
 import com.google.inject.ImplementedBy;
 import com.j256.ormlite.dao.Dao;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
