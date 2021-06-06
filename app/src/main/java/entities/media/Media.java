@@ -2,12 +2,14 @@ package entities.media;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.io.Files;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import entities.location.*;
 import entities.person.*;
 import entities.resolution.*;
 import entities.tag.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -15,182 +17,187 @@ import javax.imageio.ImageIO;
 
 @DatabaseTable()
 public class Media {
-  @DatabaseField(generatedId = true)
-  @JsonIgnore
-  private int id;
+    @DatabaseField(generatedId = true)
+    @JsonIgnore
+    private int id;
 
-  @DatabaseField(canBeNull = false, unique = true)
-  private String name;
+    @DatabaseField(canBeNull = false, unique = true)
+    private String name;
 
-  @DatabaseField(canBeNull = false, unique = true)
-  private String filename;
+    @DatabaseField(canBeNull = false, unique = true)
+    private String filename;
 
-  @DatabaseField() private Date datetime;
+    @DatabaseField(format = "dd.MM.yyyy")
+    private Date datetime;
 
-  @DatabaseField() private String description;
+    @DatabaseField()
+    private String description;
 
-  @DatabaseField(canBeNull = false)
-  private boolean isPrivate;
+    @DatabaseField(canBeNull = false)
+    private boolean isPrivate;
 
-  @DatabaseField() private int quality;
+    @DatabaseField()
+    private int quality;
 
-  @DatabaseField() private int duration;
+    @DatabaseField()
+    private int duration;
 
-  @DatabaseField(canBeNull = false)
-  private DataType dataType;
+    @DatabaseField(canBeNull = false)
+    private DataType dataType;
 
-  @DatabaseField(foreign = true, columnName = "location_id")
-  private Location location;
+    @DatabaseField(foreign = true, columnName = "location_id")
+    private Location location;
 
-  @DatabaseField(foreign = true, columnName = "resolution_id", canBeNull = false)
-  private Resolution resolution;
+    @DatabaseField(foreign = true, columnName = "resolution_id", canBeNull = false)
+    private Resolution resolution;
 
-  private Person[] persons;
-  private Tag[] tags;
+    private Person[] persons;
+    private Tag[] tags;
 
-  public enum DataType {
-    JPEG("*.jpeg"),
-    JPG("*.jpg"),
-    PNG("*.png"),
-    MP4("*.mp4"),
-    RAW("*.raw"),
-    AVI("*.avi");
+    public enum DataType {
+        JPEG("*.jpeg"),
+        JPG("*.jpg"),
+        PNG("*.png"),
+        MP4("*.mp4"),
+        RAW("*.raw"),
+        AVI("*.avi");
 
-    private String ext;
+        private String ext;
 
-    DataType(String ext) {
-      this.ext = ext;
+        DataType(String ext) {
+            this.ext = ext;
+        }
+
+        @Override
+        public String toString() {
+            return this.ext;
+        }
     }
 
-    @Override
-    public String toString() {
-      return this.ext;
-    }
-  }
-
-  Media() {}
-
-  public Media(File file, String outputDir) throws IOException {
-    DataType datatype = null;
-    var ext = Files.getFileExtension(file.getName());
-
-    var img = ImageIO.read(file);
-    var res = new Resolution(img.getWidth(), img.getHeight());
-
-    this.setFilename(new File(outputDir, file.getName()).getPath());
-    this.setName(this.getFilename());
-
-    for (var d : DataType.values()) {
-      if (d.toString().contains(ext)) {
-        datatype = d;
-      }
+    Media() {
     }
 
-    this.setDataType(datatype);
-    this.setResolution(res);
-  }
+    public Media(File file, String outputDir) throws IOException {
+        DataType datatype = null;
+        var ext = Files.getFileExtension(file.getName());
 
-  public int getId() {
-    return id;
-  }
+        var img = ImageIO.read(file);
+        var res = new Resolution(img.getWidth(), img.getHeight());
 
-  public void setId(int id) {
-    this.id = id;
-  }
+        this.setFilename(new File(outputDir, file.getName()).getPath());
+        this.setName(this.getFilename());
 
-  public String getName() {
-    return name;
-  }
+        for (var d : DataType.values()) {
+            if (d.toString().contains(ext)) {
+                datatype = d;
+            }
+        }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+        this.setDataType(datatype);
+        this.setResolution(res);
+    }
 
-  public String getFilename() {
-    return filename;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public void setFilename(String filename) {
-    this.filename = filename;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public Date getDatetime() {
-    return datetime;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setDatetime(Date datetime) {
-    this.datetime = datetime;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getFilename() {
+        return filename;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
-  public boolean isPrivate() {
-    return isPrivate;
-  }
+    public Date getDatetime() {
+        return datetime;
+    }
 
-  public void setPrivate(boolean aPrivate) {
-    isPrivate = aPrivate;
-  }
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
+    }
 
-  public int getQuality() {
-    return quality;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setQuality(int quality) {
-    this.quality = quality;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public int getDuration() {
-    return duration;
-  }
+    public boolean isPrivate() {
+        return isPrivate;
+    }
 
-  public void setDuration(int duration) {
-    this.duration = duration;
-  }
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
 
-  public Resolution getResolution() {
-    return resolution;
-  }
+    public int getQuality() {
+        return quality;
+    }
 
-  public void setResolution(Resolution resolution) {
-    this.resolution = resolution;
-  }
+    public void setQuality(int quality) {
+        this.quality = quality;
+    }
 
-  public Location getLocation() {
-    return location;
-  }
+    public int getDuration() {
+        return duration;
+    }
 
-  public void setLocation(Location location) {
-    this.location = location;
-  }
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
-  public Person[] getPersons() {
-    return persons;
-  }
+    public Resolution getResolution() {
+        return resolution;
+    }
 
-  public void setPersons(Person[] persons) {
-    this.persons = persons;
-  }
+    public void setResolution(Resolution resolution) {
+        this.resolution = resolution;
+    }
 
-  public Tag[] getTags() {
-    return tags;
-  }
+    public Location getLocation() {
+        return location;
+    }
 
-  public void setTags(Tag[] tags) {
-    this.tags = tags;
-  }
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
-  public DataType getDataType() {
-    return dataType;
-  }
+    public Person[] getPersons() {
+        return persons;
+    }
 
-  public void setDataType(DataType dataType) {
-    this.dataType = dataType;
-  }
+    public void setPersons(Person[] persons) {
+        this.persons = persons;
+    }
+
+    public Tag[] getTags() {
+        return tags;
+    }
+
+    public void setTags(Tag[] tags) {
+        this.tags = tags;
+    }
+
+    public DataType getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(DataType dataType) {
+        this.dataType = dataType;
+    }
 }
