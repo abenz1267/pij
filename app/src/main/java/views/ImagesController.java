@@ -1,7 +1,6 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
-import entities.media.Media;
 import events.ShowAllImages;
 import events.ShowFilteredImages;
 import javafx.fxml.FXML;
@@ -13,10 +12,6 @@ import javafx.scene.layout.GridPane;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 

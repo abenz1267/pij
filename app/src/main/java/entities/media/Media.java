@@ -2,18 +2,17 @@ package entities.media;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.io.Files;
-import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import entities.location.*;
-import entities.person.*;
-import entities.resolution.*;
-import entities.tag.*;
+import entities.location.Location;
+import entities.person.Person;
+import entities.resolution.Resolution;
+import entities.tag.Tag;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import javax.imageio.ImageIO;
 
 @DatabaseTable()
 public class Media {
