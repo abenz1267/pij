@@ -34,3 +34,7 @@
 .btn--disabled FontIcon {
   -fx-icon-color: #bbb;
 }
+
+.mainview {
+  -fx-orientation: vertical;
+}
