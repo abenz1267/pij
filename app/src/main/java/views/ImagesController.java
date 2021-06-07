@@ -1,12 +1,10 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
-import events.ShowAllImages;
+import events.ShowImages;
 import java.io.File;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -22,22 +20,16 @@ public class ImagesController extends AbstractController implements Initializabl
   }
 
   @Subscribe
-  public void showAll(ShowAllImages event) {
+  public void displayMedia(ShowImages event) {
     this.grid.getChildren().clear();
 
-    try {
-      var items = mediaService.dao().queryForAll();
+    for (var item : event.getMedia()) {
+      var file = new File(item.getFilename());
+      var image = new Image(file.toURI().toString());
+      var view = new ImageView();
+      view.setImage(image);
 
-      for (var item : items) {
-        var file = new File(item.getFilename());
-        var image = new Image(file.toURI().toString());
-        var view = new ImageView();
-        view.setImage(image);
-
-        this.grid.getChildren().add(view);
-      }
-    } catch (SQLException e) {
-      this.logger.log(Level.SEVERE, e.getMessage());
+      this.grid.getChildren().add(view);
     }
   }
 }

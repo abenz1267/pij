@@ -19,4 +19,6 @@ public interface MediaService {
   void exportMedia(List<Media> media, Path output) throws SQLException, IOException;
 
   void setKeepOriginal(boolean val);
+
+  List<Media> filterMediaByInput(String input) throws SQLException;
 }

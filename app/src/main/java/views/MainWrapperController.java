@@ -1,10 +1,11 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
-import events.ShowAllImages;
+import events.ShowImages;
 import events.ShowImagesView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
@@ -23,8 +24,8 @@ public class MainWrapperController extends AbstractController implements Initial
   public void showAllImages(ShowImagesView event) {
     try {
       sceneService.setContent(this.mainwrapper, View.IMAGESVIEW);
-      eventService.post(new ShowAllImages());
-    } catch (IOException e) {
+      eventService.post(new ShowImages(mediaService.dao().queryForAll()));
+    } catch (SQLException | IOException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }
   }
