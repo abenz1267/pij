@@ -13,7 +13,9 @@ public class SearchController extends AbstractController implements Initializabl
   @FXML TextField searchInput;
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+    // needed for abstract
+  }
 
   @FXML
   public void onSearch() {
