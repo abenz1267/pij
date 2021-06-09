@@ -1,4 +1,4 @@
-package entities.albumMedia;
+package entities.albummedia;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;

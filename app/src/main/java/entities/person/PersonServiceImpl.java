@@ -5,7 +5,9 @@ import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractEntityService;
 import java.sql.SQLException;
 import java.util.logging.Level;
+import javax.inject.Singleton;
 
+@Singleton
 public class PersonServiceImpl extends AbstractEntityService implements PersonService {
   private Dao<Person, Integer> dao = null;
 

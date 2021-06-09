@@ -3,7 +3,7 @@ package entities;
 import com.j256.ormlite.table.TableUtils;
 import entities.album.Album;
 import entities.album.AlbumService;
-import entities.albumMedia.AlbumMedia;
+import entities.albummedia.AlbumMedia;
 import entities.location.Location;
 import entities.location.LocationService;
 import entities.media.Media;
@@ -54,7 +54,9 @@ public abstract class BaseEntityTest {
 
     databaseConnectionService.createSchema();
 
-    this.classes.addAll(Arrays.asList(Media.class, Resolution.class, Location.class, Album.class, AlbumMedia.class));
+    this.classes.addAll(
+        Arrays.asList(
+            Media.class, Resolution.class, Location.class, Album.class, AlbumMedia.class));
 
     try {
       for (Class<?> c : this.classes) {

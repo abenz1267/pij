@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.io.Files;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import entities.location.*;
-import entities.person.*;
-import entities.resolution.*;
-import entities.tag.*;
+import entities.location.Location;
+import entities.person.Person;
+import entities.resolution.Resolution;
+import entities.tag.Tag;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -25,7 +25,8 @@ public class Media {
   @DatabaseField(canBeNull = false, unique = true)
   private String filename;
 
-  @DatabaseField() private Date datetime;
+  @DatabaseField(format = "dd.MM.yyyy")
+  private Date datetime;
 
   @DatabaseField() private String description;
 

@@ -1,4 +1,3 @@
 package entities.album;
 
-public class AlbumServiceTest {
-}
+public class AlbumServiceTest {}

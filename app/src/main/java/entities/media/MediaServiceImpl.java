@@ -6,11 +6,18 @@ import com.google.common.io.Files;
 import com.google.inject.Singleton;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import entities.AbstractEntityService;
 import entities.location.Location;
 import entities.location.LocationService;
+import entities.person.Person;
+import entities.person.PersonService;
 import entities.resolution.Resolution;
 import entities.resolution.ResolutionService;
+import entities.tag.Tag;
+import entities.tag.TagService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,6 +25,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +44,11 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   @Inject private LocationService locationService;
   @Inject private ResolutionService resolutionService;
   @Inject private ResourceService resourceService;
+  @Inject private PersonService personService;
+  @Inject private TagService tagService;
+
   private Dao<Media, Integer> dao = null;
-  private boolean keepOriginal = false;
+  private boolean keepOriginal = true;
 
   public Dao<Media, Integer> dao() {
     if (this.dao == null) {
@@ -265,4 +278,36 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     return this.dao.queryForAll();
   }
 
+  public List<Media> filterMediaByInput(String input) throws SQLException {
+    var dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    Date date = null;
+
+    try {
+      date = dateFormat.parse(input);
+    } catch (ParseException e) {
+      this.logger.log(Level.INFO, e.getMessage());
+    }
+
+    input = "%" + input + "%";
+
+    QueryBuilder<Media, Integer> mediaQB = dao.queryBuilder();
+    QueryBuilder<Location, Integer> locationQB = locationService.dao().queryBuilder();
+    QueryBuilder<Person, Integer> personQB = personService.dao().queryBuilder();
+    QueryBuilder<Tag, Integer> tagQB = tagService.dao().queryBuilder();
+
+    locationQB.where().like("name", input);
+    personQB.where().like("firstname", input).or().like("lastname", input);
+    tagQB.where().like("name", input);
+
+    mediaQB.leftJoinOr(
+        locationQB); // .leftJoinOr(personQB).leftJoinOr(tagQB); //nicht in der Datenbank?
+    Where<Media, Integer> whereMedia = mediaQB.where();
+
+    whereMedia.like("filename", input).or().like("name", input).or().like("description", input);
+    if (date != null) whereMedia.or().eq("datetime", date);
+
+    PreparedQuery<Media> preparedQuery = mediaQB.prepare();
+
+    return dao.query(preparedQuery);
+  }
 }
