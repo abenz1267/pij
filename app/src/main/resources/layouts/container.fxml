@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
 
-<FlowPane styleClass="main" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContainerController">
+<HBox VBox.vgrow="ALWAYS" styleClass="main" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContainerController">
     <fx:include source="contextwrapper.fxml" />
     <fx:include source="mainwrapper.fxml" />
-</FlowPane>
+</HBox>
