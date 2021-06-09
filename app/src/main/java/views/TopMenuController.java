@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import resources.Resource;
 
+import events.ShowImages;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -74,6 +75,8 @@ public class TopMenuController extends AbstractController implements Initializab
           this.mediaService.importMedia(files);
         }
       }
+
+      eventService.post(new ShowImages(mediaService.dao().queryForAll()));
     } catch (SQLException | IOException e) {
       logger.log(Level.INFO, e.getMessage());
       var alert = new Alert(AlertType.ERROR, "Importieren fehlgeschlagen.", ButtonType.OK);
