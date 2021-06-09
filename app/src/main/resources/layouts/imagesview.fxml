@@ -8,7 +8,7 @@
 
 <FlowPane xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesController">
   <fx:include source="search.fxml" />
-  <ScrollPane>
+  <ScrollPane fx:id="scrollPane">
     <GridPane fx:id="grid">
     </GridPane>
   </ScrollPane>
