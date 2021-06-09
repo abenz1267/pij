@@ -3,14 +3,16 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.GridPane?>
 
 
-<FlowPane xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesController">
+<VBox HBox.hgrow="ALWAYS" styleClass="imagesview" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesController">
   <fx:include source="search.fxml" />
-  <ScrollPane>
+  <ScrollPane VBox.vgrow="ALWAYS">
     <GridPane fx:id="grid">
     </GridPane>
   </ScrollPane>
-</FlowPane>
+</VBox>
 

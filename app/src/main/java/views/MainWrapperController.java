@@ -10,10 +10,10 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 
 public class MainWrapperController extends AbstractController implements Initializable {
-  @FXML FlowPane mainwrapper;
+  @FXML HBox mainwrapper;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
