@@ -35,9 +35,9 @@ public class SceneServiceImpl implements SceneService {
   }
 
   public void setContent(Pane pane, View view) throws IOException {
-    var albumcontext = this.load(View.ALBUMCONTEXT);
+    var nPane = this.load(view);
     ObservableList<Node> children = pane.getChildren();
     children.clear();
-    children.add(albumcontext);
+    children.add(nPane);
   }
 }

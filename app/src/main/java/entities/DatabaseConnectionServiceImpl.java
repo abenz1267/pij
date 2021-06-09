@@ -3,8 +3,6 @@ package entities;
 import com.google.inject.Singleton;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import entities.album.Album;
-import entities.albumMedia.AlbumMedia;
 import entities.location.Location;
 import entities.media.Media;
 import entities.person.Person;

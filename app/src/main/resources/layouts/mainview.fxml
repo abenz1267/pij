@@ -3,8 +3,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.FlowPane?>
 
-<FlowPane stylesheets="@base.css" styleClass="container" xmlns="http://javafx.com/javafx/15"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
-    <fx:include source="topmenu.fxml"/>
-    <fx:include source="container.fxml"/>
+
+<FlowPane stylesheets="@base.css" styleClass="mainview" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
+  <fx:include source="topmenu.fxml" />
+  <fx:include source="container.fxml" />
 </FlowPane>

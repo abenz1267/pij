@@ -3,7 +3,7 @@ package entities;
 import com.j256.ormlite.table.TableUtils;
 import entities.album.Album;
 import entities.album.AlbumService;
-import entities.albumMedia.AlbumMedia;
+import entities.albummedia.AlbumMedia;
 import entities.location.Location;
 import entities.location.LocationService;
 import entities.media.Media;

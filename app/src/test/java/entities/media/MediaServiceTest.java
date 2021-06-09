@@ -69,4 +69,41 @@ class MediaServiceTest extends BaseEntityTest {
 
     assertEquals(3, testfilesdest.listFiles().length);
   }
+
+  @Test
+  void testFilterMediaByInput() throws SQLException {
+    var input = "MediaFileName";
+    var input2 = "Media2";
+    var res = new Resolution(200, 200);
+
+    var media = new Media();
+    media.setName("TestMedia");
+    media.setFilename("TestMediaFileName");
+    media.setDataType(Media.DataType.JPEG);
+    media.setResolution(res);
+    mediaService.dao().create(media);
+
+    var media2 = new Media();
+    media2.setName("TestMedia2");
+    media2.setFilename("TestMediaFileName2");
+    media2.setDataType(Media.DataType.PNG);
+    media2.setResolution(res);
+    mediaService.dao().create(media2);
+
+    assertDoesNotThrow(
+        () -> {
+          mediaService.filterMediaByInput(input);
+        });
+
+    assertEquals(2, mediaService.filterMediaByInput(input).size());
+
+    assertEquals(1, mediaService.filterMediaByInput(input2).size());
+    assertEquals(media2.getName(), mediaService.filterMediaByInput(input2).get(0).getName());
+
+    assertThrows(
+        NullPointerException.class,
+        () -> {
+          mediaService.filterMediaByInput(null);
+        });
+  }
 }

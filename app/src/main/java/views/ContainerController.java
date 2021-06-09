@@ -1,5 +1,6 @@
 package views;
 
+import events.ShowImagesView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -12,5 +13,6 @@ public class ContainerController extends AbstractController implements Initializ
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     this.eventService.register(this);
+    this.eventService.post(new ShowImagesView());
   }
 }
