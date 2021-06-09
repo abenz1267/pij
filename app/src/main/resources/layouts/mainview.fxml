@@ -2,9 +2,11 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 
-<FlowPane stylesheets="@base.css" styleClass="mainview" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
+<VBox stylesheets="@base.css" styleClass="mainview" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
   <fx:include source="topmenu.fxml" />
   <fx:include source="container.fxml" />
-</FlowPane>
+</VBox>
