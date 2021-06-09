@@ -51,3 +51,7 @@
 #contextwrapper {
   -fx-background-color: #dddddd;
 }
+
+.scroll-pane > .viewport {
+   -fx-background-color: black;
+}
