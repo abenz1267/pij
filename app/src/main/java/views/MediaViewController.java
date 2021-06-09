@@ -13,6 +13,8 @@ import com.google.inject.Inject;
 import entities.media.Media;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -20,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class MediaViewController extends AbstractController implements Initializable {
 
@@ -32,62 +35,46 @@ public class MediaViewController extends AbstractController implements Initializ
     }
 
     @FXML
-    public ScrollPane initializeMediaView() {
-        List<Media> media;
-        HBox hb = new HBox();
-        gridPane = new GridPane();
+    public List<ImageView> getMediaListView(List<Media> mediaList) {
+        List<ImageView> listView = new ArrayList<>();
 
-        try {
-            media = mediaService.dao().queryForAll();
-            final int[] col = {0};
-            final int[] row = {0};
-            media.forEach(mediaFile -> {
-                
-                File file = new File(mediaFile.getFilename());
-                Image tempImage = new Image(file.toURI().toString());
-                PixelReader reader = tempImage.getPixelReader();
-                WritableImage newImage = null;
-                
-
-                if(tempImage.getHeight() == tempImage.getWidth()) {
-
-                } else if (tempImage.getHeight() < tempImage.getWidth()) {
-                    //höhe zum ausschneiden nehmen
-                    newImage = new WritableImage(reader, 0 , 0, (int) tempImage.getHeight(), (int) tempImage.getHeight());
-                } else {
-                    //breite zum ausschneiden nehmen
-                    newImage = new WritableImage(reader, 0 , 0, (int) tempImage.getWidth(), (int) tempImage.getWidth());
-                }
-
-                
-                ImageView imageView;
-                if (newImage != null) imageView = new ImageView(newImage);
-                else imageView = new ImageView(tempImage);
-
-                imageView.setFitHeight(200);
-                imageView.setPreserveRatio(true);
-                imageView.setSmooth(true);
-                imageView.setCache(true);
-
-
-                hb.getChildren().addAll(imageView);
-                gridPane.add(imageView , col[0], row[0] );
-                col[0]++;
-                if(col[0] == 4)  {
-                    col[0] = 0;
-                    row[0]++;
-                }
-
-            });
-
-            return new ScrollPane(gridPane);
-
-        } catch (SQLException e) {
-            // errorhandling
-            return null;
-
-        }
-
+        var thumbnailList = createThumbnails(mediaList);
+        thumbnailList.forEach(thumbnail -> {
+            ListCell listCell = new ListCell<>();
+            listCell.setGraphic(thumbnail);
+            listView.add(thumbnail);
+        });
+        return listView;
     }
 
+    private List<ImageView> createThumbnails(List<Media> mediaList) {
+        List<ImageView> resizedImages = new ArrayList<>();
+        mediaList.forEach(media -> {
+            File file = new File(media.getFilename());
+            Image tempImage = new Image(file.toURI().toString());
+            PixelReader reader = tempImage.getPixelReader();
+            WritableImage newImage = null;
+
+            if(tempImage.getHeight() == tempImage.getWidth()) {
+
+            } else if (tempImage.getHeight() < tempImage.getWidth()) {
+                //höhe zum ausschneiden nehmen
+                newImage = new WritableImage(reader, 0 , 0, (int) tempImage.getHeight(), (int) tempImage.getHeight());
+            } else {
+                //breite zum ausschneiden nehmen
+                newImage = new WritableImage(reader, 0 , 0, (int) tempImage.getWidth(), (int) tempImage.getWidth());
+            }
+
+            ImageView imageView = new ImageView();
+            if (newImage != null) imageView.setImage(newImage);
+            else imageView.setImage(tempImage);
+
+            imageView.setFitHeight(200);
+            imageView.setPreserveRatio(true);
+            imageView.setSmooth(true);
+            imageView.setCache(true);
+            resizedImages.add(imageView);
+        });
+        return resizedImages;
+    }
 }

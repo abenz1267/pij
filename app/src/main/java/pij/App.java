@@ -31,12 +31,9 @@ public class App extends Application {
     databaseService.createSchema(); 
 
     var pane = sceneService.load(View.MAINVIEW);
-    pane.getChildren().add(mediaViewController.initializeMediaView());
+    //pane.getChildren().add(mediaViewController.initializeMediaView());
     var scene = new Scene(pane);
     sceneService.setRootScene(scene);
-
-
-    mediaViewController.initializeMediaView();
 
 
     resourceService.setStageTitle(stage, Resource.CONFIG, View.MAINVIEW.toString());

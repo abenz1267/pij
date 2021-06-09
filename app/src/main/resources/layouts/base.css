@@ -38,3 +38,7 @@
 .mainview {
   -fx-orientation: vertical;
 }
+
+.scroll-pane > .viewport {
+   -fx-background-color: black;
+}
