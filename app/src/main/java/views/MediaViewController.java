@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
@@ -14,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 public class MediaViewController extends AbstractController implements Initializable {
@@ -70,6 +73,16 @@ public class MediaViewController extends AbstractController implements Initializ
           imageView.setPreserveRatio(true);
           imageView.setSmooth(true);
           imageView.setCache(true);
+
+            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    System.out.println("Image " + media.getFilename() + " was pressed");
+                    event.consume();
+                }
+            });
+
+
           resizedImages.add(imageView);
         });
     return resizedImages;
