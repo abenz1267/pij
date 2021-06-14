@@ -5,10 +5,6 @@
   -fx-orientation: vertical;
 }
 
-.top-controls {
-  -fx-background-color: #00ff00;
-}
-
 .top-controls Button {
   -fx-background-radius: 0;
   -fx-padding: 16px;
@@ -41,13 +37,15 @@
 
 .mainview {
   -fx-orientation: vertical;
-  -fx-background-color: #0000ff;
 }
 
 .main {
-  -fx-background-color: #ff00ff;
 }
 
-#contextwrapper {
-  -fx-background-color: #dddddd;
+FlowPane > ImageView {
+    -fx-cursor: hand;
+}
+
+FlowPane {
+  -fx-background-color: #0000ff;
 }

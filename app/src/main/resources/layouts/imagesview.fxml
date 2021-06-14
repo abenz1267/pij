@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
 
-<FlowPane xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesController">
+
+<VBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesController">
   <fx:include source="search.fxml" />
-  <ScrollPane>
-    <GridPane fx:id="grid">
-    </GridPane>
+  <ScrollPane VBox.vgrow="ALWAYS">
+    <FlowPane  vgap="2" hgap="2" fx:id="flowPane" >
+    </FlowPane>
   </ScrollPane>
-</FlowPane>
+</VBox>
 

@@ -2,17 +2,15 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import events.ShowImages;
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.FlowPane;
 
 public class ImagesController extends AbstractController implements Initializable {
-  @FXML private GridPane grid;
+  @FXML private FlowPane flowPane;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -20,16 +18,12 @@ public class ImagesController extends AbstractController implements Initializabl
   }
 
   @Subscribe
-  public void displayMedia(ShowImages event) {
-    this.grid.getChildren().clear();
+  public void displayMedia(ShowImages event) { flowPane.getChildren().clear();
+    var imageViews = new MediaViewController().getMediaListView(event.getMedia());
 
-    for (var item : event.getMedia()) {
-      var file = new File(item.getFilename());
-      var image = new Image(file.toURI().toString());
-      var view = new ImageView();
-      view.setImage(image);
+    imageViews.forEach(image -> {
+        flowPane.getChildren().add(image);
+    });
 
-      this.grid.getChildren().add(view);
-    }
   }
 }

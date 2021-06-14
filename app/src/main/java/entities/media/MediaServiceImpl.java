@@ -274,6 +274,10 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     this.keepOriginal = val;
   }
 
+  public List<Media> getAllMedia() throws SQLException {
+    return this.dao.queryForAll();
+  }
+
   public List<Media> filterMediaByInput(String input) throws SQLException {
     var dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     Date date = null;
