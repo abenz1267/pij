@@ -42,10 +42,10 @@
 .main {
 }
 
-.imagesgrid {
-  -fx-background-color: #ff00ff;
+FlowPane > ImageView {
+    -fx-cursor: hand;
 }
 
-GridPane > ImageView {
-    -fx-cursor: hand;
+FlowPane {
+  -fx-background-color: #0000ff;
 }

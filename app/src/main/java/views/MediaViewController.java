@@ -48,11 +48,10 @@ public class MediaViewController extends AbstractController implements Initializ
         media -> {
           File file = new File(media.getFilename());
           Image tempImage = new Image(file.toURI().toString());
-          PixelReader reader = tempImage.getPixelReader();
           WritableImage newImage = null;
 
-          if (tempImage.getHeight() == tempImage.getWidth()) {
-
+/*            PixelReader reader = tempImage.getPixelReader();
+            if (tempImage.getHeight() == tempImage.getWidth()) {
           } else if (tempImage.getHeight() < tempImage.getWidth()) {
             // höhe zum ausschneiden nehmen
             newImage =
@@ -63,7 +62,7 @@ public class MediaViewController extends AbstractController implements Initializ
             newImage =
                 new WritableImage(
                     reader, 0, 0, (int) tempImage.getWidth(), (int) tempImage.getWidth());
-          }
+          }*/
 
           ImageView imageView = new ImageView();
           if (newImage != null) imageView.setImage(newImage);
