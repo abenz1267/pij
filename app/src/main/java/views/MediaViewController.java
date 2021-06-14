@@ -1,6 +1,7 @@
 package views;
 
 import com.google.inject.Inject;
+import entities.album.Album;
 import entities.media.Media;
 import java.io.File;
 import java.net.URL;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import events.ShowAlbums;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,7 +52,7 @@ public class MediaViewController extends AbstractController implements Initializ
           Image tempImage = new Image(file.toURI().toString());
           WritableImage newImage = null;
 
-/*            PixelReader reader = tempImage.getPixelReader();
+          /*            PixelReader reader = tempImage.getPixelReader();
             if (tempImage.getHeight() == tempImage.getWidth()) {
           } else if (tempImage.getHeight() < tempImage.getWidth()) {
             // höhe zum ausschneiden nehmen
@@ -73,14 +75,12 @@ public class MediaViewController extends AbstractController implements Initializ
           imageView.setSmooth(true);
           imageView.setCache(true);
 
-            imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
+          imageView.addEventHandler(
+              MouseEvent.MOUSE_CLICKED,
+                  event -> {
                     System.out.println("Image " + media.getFilename() + " was pressed");
                     event.consume();
-                }
-            });
-
+                  });
 
           resizedImages.add(imageView);
         });

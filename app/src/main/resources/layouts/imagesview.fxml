@@ -5,8 +5,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-
-
 <VBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesController">
   <fx:include source="search.fxml" />
   <ScrollPane VBox.vgrow="ALWAYS">
@@ -14,4 +12,3 @@
     </FlowPane>
   </ScrollPane>
 </VBox>
-
