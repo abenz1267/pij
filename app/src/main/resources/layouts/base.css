@@ -45,3 +45,7 @@
 .imagesgrid {
   -fx-background-color: #ff00ff;
 }
+
+ImageView {
+    -fx-cursor: hand;
+}
