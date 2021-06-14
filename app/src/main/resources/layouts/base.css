@@ -46,6 +46,6 @@
   -fx-background-color: #ff00ff;
 }
 
-ImageView {
+GridPane > ImageView {
     -fx-cursor: hand;
 }
