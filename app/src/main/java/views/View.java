@@ -5,6 +5,7 @@ public enum View {
   SECONDVIEW("secondview"),
   ALBUMCONTEXT("albumcontext"),
   NEWALBUM("newalbum"),
+  ALBUMVIEW("albumview"),
   IMAGESVIEW("imagesview");
 
   private final String name;

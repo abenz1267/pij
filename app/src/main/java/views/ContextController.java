@@ -18,13 +18,4 @@ public class ContextController extends AbstractController implements Initializab
     eventService.register(this);
   }
 
-  @Subscribe
-  public void showAlbumContext(ShowAlbumView event) {
-
-    try {
-      sceneService.setContent(this.wrapper, View.ALBUMCONTEXT);
-    } catch (IOException e) {
-      this.logger.log(Level.SEVERE, e.getMessage());
-    }
-  }
 }
