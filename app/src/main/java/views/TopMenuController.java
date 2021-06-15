@@ -1,10 +1,8 @@
 package views;
 
 import com.google.common.io.Files;
-import entities.album.Album;
 import entities.media.Media.DataType;
 import events.ShowAlbumView;
-import events.ShowAlbums;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -98,6 +96,6 @@ public class TopMenuController extends AbstractController implements Initializab
 
   @FXML
   private void showAlbumView() throws SQLException {
-    eventService.post(new ShowAlbums(albumService.dao().queryForAll()));
+    eventService.post(new ShowAlbumView());
   }
 }
