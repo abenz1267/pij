@@ -3,6 +3,7 @@ package views;
 import com.google.common.io.Files;
 import entities.media.Media.DataType;
 import events.ShowAlbumView;
+import events.ShowImagesView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -95,7 +96,12 @@ public class TopMenuController extends AbstractController implements Initializab
   }
 
   @FXML
-  private void showAlbumView() throws SQLException {
+  private void showAlbumView() {
     eventService.post(new ShowAlbumView());
+  }
+
+  @FXML
+  private void showImagesView() {
+    eventService.post(new ShowImagesView());
   }
 }

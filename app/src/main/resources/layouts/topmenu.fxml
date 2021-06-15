@@ -5,17 +5,31 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 
-<FlowPane styleClass="top-controls" prefWrapLength="Infinity" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.TopMenuController">
-  <Button fx:id="importBtn" text="Importieren" onAction="#openFileDialog">
-    <graphic><FontIcon iconLiteral="mdi2i-import" /></graphic>
-  </Button>
-  <Button fx:id="exportBtn" text="Exportieren">
-    <graphic><FontIcon iconLiteral="mdi2e-export" /></graphic>
-  </Button>
-  <Button fx:id="albumBtn" text="Alben" onAction="#showAlbumView">
-    <graphic><FontIcon iconLiteral="mdi2i-image-album" /></graphic>
-  </Button>
-  <Button fx:id="createAlbumBtn" text="neues Album" onAction="#newAlbumDialog">
-    <graphic><FontIcon iconLiteral="mdi2f-folder-plus-outline"/></graphic>
-  </Button>
+<FlowPane styleClass="top-controls" prefWrapLength="Infinity" xmlns="http://javafx.com/javafx/15"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.TopMenuController">
+    <Button fx:id="imagesBtn" text="Alle Bilder anzeigen" onAction="#showImagesView">
+        <graphic>
+            <FontIcon iconLiteral="mdi2c-camera-burst"/>
+        </graphic>
+    </Button>
+    <Button fx:id="albumBtn" text="Alben" onAction="#showAlbumView">
+        <graphic>
+            <FontIcon iconLiteral="mdi2i-image-album"/>
+        </graphic>
+    </Button>
+    <Button fx:id="createAlbumBtn" text="neues Album" onAction="#newAlbumDialog">
+        <graphic>
+            <FontIcon iconLiteral="mdi2f-folder-plus-outline"/>
+        </graphic>
+    </Button>
+    <Button fx:id="importBtn" text="Importieren" onAction="#openFileDialog">
+        <graphic>
+            <FontIcon iconLiteral="mdi2i-import"/>
+        </graphic>
+    </Button>
+    <Button fx:id="exportBtn" text="Exportieren">
+        <graphic>
+            <FontIcon iconLiteral="mdi2e-export"/>
+        </graphic>
+    </Button>
 </FlowPane>
