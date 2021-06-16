@@ -3,42 +3,32 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="views.NewAlbumDialogController" prefHeight="400.0" prefWidth="600.0">
-    <children>
-        <VBox>
-            <children>
-
-                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-                    <children>
-                        <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Album Name: "/>
-                        <TextField fx:id="albumName" HBox.hgrow="ALWAYS"/>
-                    </children>
-                    <padding>
-                        <Insets right="30.0"/>
-                    </padding>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-                    <children>
-                        <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Album Thema: "/>
-                        <TextField fx:id="albumTheme" HBox.hgrow="ALWAYS"/>
-                    </children>
-                    <padding>
-                        <Insets right="30.0"/>
-                    </padding>
-                </HBox>
-                <HBox alignment="CENTER_RIGHT">
-                    <children>
-                        <Button mnemonicParsing="false" onAction="#btnNewAlbumClicked" text="OK"/>
-                    </children>
-                    <opaqueInsets>
-                        <Insets/>
-                    </opaqueInsets>
-                    <padding>
-                        <Insets right="30.0"/>
-                    </padding>
-                </HBox>
-            </children>
-        </VBox>
-    </children>
+    <VBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Album Name: "/>
+            <TextField fx:id="albumName" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Album Thema: "/>
+            <TextField fx:id="albumTheme" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <HBox alignment="CENTER_RIGHT">
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Button mnemonicParsing="false" onAction="#btnNewAlbumClicked" text="OK"/>
+        </HBox>
+    </VBox>
 </AnchorPane>

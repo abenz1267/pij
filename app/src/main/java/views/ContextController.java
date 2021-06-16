@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
+import events.ShowImage;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.FlowPane;
@@ -18,4 +20,12 @@ public class ContextController extends AbstractController implements Initializab
     eventService.register(this);
   }
 
+  @Subscribe
+  public void showMetadata(ShowImage event) {
+    try {
+      sceneService.setContent(this.wrapper, View.METADATAVIEW);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, e.getMessage());
+    }
+  }
 }

@@ -6,7 +6,7 @@
 
 <FlowPane styleClass="top-controls" prefWrapLength="Infinity" xmlns="http://javafx.com/javafx/15"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.TopMenuController">
-    <Button fx:id="imagesBtn" text="Alle Bilder anzeigen" onAction="#showImagesView">
+    <Button fx:id="imagesBtn" text="Bilder" onAction="#showImagesView">
         <graphic>
             <FontIcon iconLiteral="mdi2c-camera-burst"/>
         </graphic>

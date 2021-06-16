@@ -2,6 +2,7 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import events.ShowAlbumView;
+import events.ShowImage;
 import events.ShowImages;
 import events.ShowImagesView;
 import java.io.IOException;
@@ -39,4 +40,5 @@ public class MainWrapperController extends AbstractController implements Initial
       this.logger.log(Level.SEVERE, e.getMessage());
     }
   }
+
 }

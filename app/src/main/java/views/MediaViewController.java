@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import events.ShowImage;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
@@ -74,7 +75,8 @@ public class MediaViewController extends AbstractController implements Initializ
           imageView.addEventHandler(
               MouseEvent.MOUSE_CLICKED,
                   event -> {
-                    System.out.println("Image " + media.getFilename() + " was pressed");
+                    //System.out.println("Image " + media.getFilename() + " was pressed");
+                      this.eventService.post(new ShowImage(media.getId()));
                     event.consume();
                   });
 

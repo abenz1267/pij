@@ -1,12 +1,8 @@
 package pij;
 
 import entities.DatabaseConnectionService;
-import entities.media.MediaService;
 import fr.brouillard.oss.cssfx.CSSFX;
-import java.io.File;
-import java.io.IOException;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import resources.Resource;
@@ -15,6 +11,9 @@ import views.Loader;
 import views.MediaViewController;
 import views.SceneService;
 import views.View;
+
+import java.io.File;
+import java.io.IOException;
 
 public class App extends Application {
   @Override

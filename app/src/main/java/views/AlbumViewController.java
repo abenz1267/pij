@@ -24,13 +24,12 @@ public class AlbumViewController extends AbstractController implements Initializ
       var albums = albumService.dao().queryForAll();
       for (var album : albums) {
         var albumBtn = new Button();
-        albumBtn.setText(album.getName());
+        albumBtn.setText(album.getName() + " - " + album.getTheme());
 
         children.add(albumBtn);
       }
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
-
   }
 }
