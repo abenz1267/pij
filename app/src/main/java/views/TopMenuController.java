@@ -33,15 +33,28 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML Button exportBtn;
   @FXML Button albumBtn;
   @FXML Button createAlbumBtn;
+  @FXML Button imagesBtn;
+  @FXML Button addToAlbumBtn;
+
+  private static final String BTN_DISABLED = "btn--disabled";
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    exportBtn.getStyleClass().add("btn--disabled");
+    exportBtn.getStyleClass().add(BTN_DISABLED);
+    addToAlbumBtn.getStyleClass().add(BTN_DISABLED);
+    disable();
   }
 
   @FXML
   private void enable() {
-    exportBtn.getStyleClass().remove("btn--disabled");
+    addToAlbumBtn.getStyleClass().remove(BTN_DISABLED);
+    addToAlbumBtn.setDisable(false);
+  }
+
+  @FXML
+  private void disable() {
+    addToAlbumBtn.getStyleClass().add(BTN_DISABLED);
+    addToAlbumBtn.setDisable(true);
   }
 
   @FXML
@@ -88,7 +101,7 @@ public class TopMenuController extends AbstractController implements Initializab
 
   @FXML
   private void newAlbumDialog() throws IOException {
-    Stage stage = new Stage();
+    var stage = new Stage();
     stage.initModality(Modality.APPLICATION_MODAL);
     stage.setScene(new Scene(sceneService.load(View.NEWALBUM)));
     stage.setTitle("Neues Album erstellen");
@@ -98,10 +111,21 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML
   private void showAlbumView() {
     eventService.post(new ShowAlbumView());
+    enable();
   }
 
   @FXML
   private void showImagesView() {
     eventService.post(new ShowImagesView());
+    disable();
+  }
+
+  @FXML
+  private void addMediaDialog() throws IOException {
+    var stage = new Stage();
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.setScene(new Scene(sceneService.load(View.ADDMEDIAVIEW)));
+    stage.setTitle("Bilder zum Album hinzufügen");
+    stage.showAndWait();
   }
 }

@@ -7,7 +7,8 @@ public enum View {
   NEWALBUM("newalbum"),
   ALBUMVIEW("albumview"),
   IMAGESVIEW("imagesview"),
-  METADATAVIEW("metadataview");
+  METADATAVIEW("metadataview"),
+  ADDMEDIAVIEW("addmediaview");
 
   private final String name;
 
