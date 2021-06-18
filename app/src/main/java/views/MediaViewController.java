@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 
 public class MediaViewController extends AbstractController implements Initializable {
 
-    public int picturesPerSite = 5;
+    public int picturesPerSite = 10;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
