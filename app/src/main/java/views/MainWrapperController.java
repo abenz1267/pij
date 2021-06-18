@@ -21,12 +21,13 @@ public class MainWrapperController extends AbstractController implements Initial
   }
 
   @Subscribe
-  public void showAllImages(ShowImagesView event) {
+  public void showPage(ShowImagesView event) {
     try {
       sceneService.setContent(this.mainwrapper, View.IMAGESVIEW);
-      eventService.post(new ShowImages(mediaService.dao().queryForAll()));
+      eventService.post(new ShowImages(mediaService.getMediaByPage(1, mediaViewController.picturesPerSite)));
     } catch (SQLException | IOException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }
   }
+
 }
