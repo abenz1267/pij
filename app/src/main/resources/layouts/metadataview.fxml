@@ -2,7 +2,85 @@
 
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController"
-      prefHeight="400.0" prefWidth="600.0">
-    <FlowPane fx:id="flowPane" />
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.CheckBox?>
+
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
+    <FlowPane fx:id="flowPane">
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Id: "/>
+            <TextField fx:id="id" HBox.hgrow="ALWAYS" editable="false"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Filename: "/>
+            <TextField fx:id="filename" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Name: "/>
+            <TextField fx:id="name" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Date and Time: "/>
+            <TextField fx:id="datetime" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Description: "/>
+            <TextField fx:id="description" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Privat: "/>
+            <CheckBox fx:id="isPrivate" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Resolution: "/>
+            <TextField fx:id="resolution" HBox.hgrow="ALWAYS" editable="false"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Location: "/>
+            <TextField fx:id="location" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Datatype: "/>
+            <TextField fx:id="datatype" HBox.hgrow="ALWAYS" editable="false"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+            <padding>
+                <Insets right="30.0"/>
+            </padding>
+            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Album Name: "/>
+            <TextField fx:id="albumName" HBox.hgrow="ALWAYS" editable="false"/>
+        </HBox>
+        <Button mnemonicParsing="false" onAction="#btnSaveDataClicked" text="Save Changes"/>
+    </FlowPane>
 </VBox>

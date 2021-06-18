@@ -67,6 +67,4 @@ public class ImagesViewController extends AbstractController implements Initiali
       this.logger.log(Level.INFO, e.getMessage());
     }
   }
-
-
 }

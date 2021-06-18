@@ -40,7 +40,6 @@ public class MediaViewController extends AbstractController implements Initializ
           imageView.addEventHandler(
               MouseEvent.MOUSE_CLICKED,
               event -> {
-                // System.out.println("Image " + media.getFilename() + " was pressed");
                 var service = Loader.getInjector().getInstance(EventService.class);
                 service.post(new ShowImage(media.getId()));
                 event.consume();

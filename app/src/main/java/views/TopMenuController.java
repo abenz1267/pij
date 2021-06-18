@@ -42,19 +42,16 @@ public class TopMenuController extends AbstractController implements Initializab
   public void initialize(URL location, ResourceBundle resources) {
     exportBtn.getStyleClass().add(BTN_DISABLED);
     addToAlbumBtn.getStyleClass().add(BTN_DISABLED);
-    disable();
   }
 
   @FXML
   private void enable() {
     addToAlbumBtn.getStyleClass().remove(BTN_DISABLED);
-    addToAlbumBtn.setDisable(false);
   }
 
   @FXML
   private void disable() {
     addToAlbumBtn.getStyleClass().add(BTN_DISABLED);
-    addToAlbumBtn.setDisable(true);
   }
 
   @FXML
