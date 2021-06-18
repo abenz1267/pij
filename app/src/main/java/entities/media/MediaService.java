@@ -20,6 +20,11 @@ public interface MediaService {
 
   void setKeepOriginal(boolean val);
 
-  List<Media> getAllMedia() throws SQLException;
   List<Media> filterMediaByInput(String input) throws SQLException;
+
+  List<Media> getMediaByPage(int site, int maxItemsPerPage) throws  SQLException;
+
+  int getMaxRows() throws SQLException;
+
+
 }

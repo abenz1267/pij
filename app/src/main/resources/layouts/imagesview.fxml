@@ -4,11 +4,23 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 
-<VBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesController">
+<?import javafx.scene.control.Label?>
+<VBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesViewController">
   <fx:include source="search.fxml" />
   <ScrollPane VBox.vgrow="ALWAYS">
     <FlowPane  vgap="2" hgap="2" fx:id="flowPane" >
     </FlowPane>
   </ScrollPane>
+  <HBox>
+    <Button onAction="#back">&lt;</Button >
+    <TextField onAction="#loadPage" fx:id="textField"> 1 </TextField>
+    <Label fx:id="label"> </Label>
+    <Button onAction="#forward">&gt;</Button>
+  </HBox>
+
+
 </VBox>
+

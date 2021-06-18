@@ -58,7 +58,6 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
-
     return this.dao;
   }
 
@@ -309,5 +308,21 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     PreparedQuery<Media> preparedQuery = mediaQB.prepare();
 
     return dao.query(preparedQuery);
+  }
+
+  public List<Media> getMediaByPage(int site, int maxItemsPerPage) throws SQLException {
+    //TODO: Musste Dao callen da der Mainwrapper den dao wohl benutzt bevor er initialisiert wird und sonst das programm crasht, gehts noch "eleganter"?
+    dao();
+
+    QueryBuilder<Media, Integer> mediaQB = dao.queryBuilder();
+    Long row = ((long) (site - 1) * maxItemsPerPage);
+    mediaQB.offset(row);
+    mediaQB.limit((long)maxItemsPerPage);
+
+    return dao.query(mediaQB.prepare());
+  }
+
+  public int getMaxRows() throws SQLException {
+    return (int) dao().countOf();
   }
 }
