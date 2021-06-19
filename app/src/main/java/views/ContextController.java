@@ -28,7 +28,7 @@ public class ContextController extends AbstractController implements Initializab
           break;
         case METADATA:
           sceneService.setContent(this.wrapper, View.METADATAVIEW);
-          eventService.post(new LoadMetaData(event.));
+          eventService.post(new LoadMetaData(event.getMedia()));
           break;
         case IMAGES:
           sceneService.setContent(this.wrapper, View.IMAGESVIEW);

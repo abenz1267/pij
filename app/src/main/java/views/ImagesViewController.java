@@ -105,7 +105,7 @@ public class ImagesViewController extends AbstractController implements Initiali
                   var count = event.getClickCount();
                   if (count == 2) {
                     var service = Loader.getInjector().getInstance(EventService.class);
-                    service.post(new SetUIState(SetUIState.State.METADATA));
+                    service.post(new SetUIState(SetUIState.State.METADATA, item));
                     logger.log(Level.INFO, "DOUBLECLICK");
                   } else if (count == 1) {
                     logger.log(Level.INFO, "SINGLECLICK");
