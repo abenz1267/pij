@@ -8,13 +8,13 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Button?>
 
-<VBox stylesheets="@imagesview.css" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesViewController">
-  <FlowPane>
+<VBox stylesheets="@imagesview.css" styleClass="imagesview" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesViewController">
+  <HBox styleClass="controls">
     <fx:include source="search.fxml" />
-    <Pagination fx:id="pagination" />
+    <Pagination fx:id="pagination" styleClass="pagination" />
     <Button text="einzeln" fx:id="singleBtn" onAction="#singleView" />
     <Button text="mehrere" fx:id="multipleBtn" onAction="#multipleView" />
-  </FlowPane>
+  </HBox>
   <ScrollPane styleClass="scrollPane" fx:id="scrollPane" VBox.vgrow="ALWAYS">
     <TilePane fx:id="imageWrapper" />
   </ScrollPane>

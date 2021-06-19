@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 
@@ -9,6 +11,8 @@
   <Label text="Exportieren" />
   <VBox fx:id="list">
   </VBox>
-  <Button text="exportieren" onAction="#chooseDest" />
-  <Button text="abbrechen" onAction="#closeExport" />
+  <FlowPane>
+    <Button text="abbrechen" onAction="#closeExport" />
+    <Button text="exportieren" onAction="#chooseDest" />
+  </FlowPane>
 </VBox>

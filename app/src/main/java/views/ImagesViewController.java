@@ -74,7 +74,9 @@ public class ImagesViewController extends AbstractController implements Initiali
           var imageViews = this.createThumbnails(toShow);
           imageViews.forEach(image -> imageWrapper.getChildren().add(image));
 
-          return new Label();
+          var label = new Label();
+          label.setVisible(false);
+          return label;
         });
   }
 

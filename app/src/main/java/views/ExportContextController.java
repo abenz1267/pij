@@ -46,6 +46,7 @@ public class ExportContextController extends AbstractController implements Initi
     media.add(event.getMedia());
 
     var wrapper = new HBox();
+    wrapper.getStyleClass().add("file");
     var label = new Label(event.getMedia().getName());
     var button = new Button();
     var icon = new FontIcon("mdi2d-delete");
