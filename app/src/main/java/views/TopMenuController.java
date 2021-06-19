@@ -2,7 +2,8 @@ package views;
 
 import com.google.common.io.Files;
 import entities.media.Media.DataType;
-import events.ShowAlbumView;
+import events.SetUIState;
+import events.SetUIState.State;
 import events.ShowImages;
 import java.io.File;
 import java.io.IOException;
@@ -81,6 +82,6 @@ public class TopMenuController extends AbstractController implements Initializab
 
   @FXML
   private void showAlbumView() {
-    eventService.post(new ShowAlbumView());
+    eventService.post(new SetUIState(State.ALBUM));
   }
 }

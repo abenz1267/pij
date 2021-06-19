@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -27,7 +28,7 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML private Button singleBtn;
   @FXML private Button multipleBtn;
 
-  private static int MAX_IMAGES = 10;
+  private int maxImages = 10;
   private List<Media> media;
 
   @Override
@@ -48,32 +49,29 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   private void display() {
     var offset = 0;
-    if ((this.media.size() % MAX_IMAGES) != 0) {
+    if ((this.media.size() % maxImages) != 0) {
       offset = 1;
     }
 
-    pagination.setPageCount(this.media.size() / MAX_IMAGES + offset);
-    if ((this.media.size() / MAX_IMAGES + offset) == 0) {
+    pagination.setPageCount(this.media.size() / maxImages + offset);
+    if ((this.media.size() / maxImages + offset) == 0) {
       pagination.setPageCount(1);
     }
 
     pagination.setPageFactory(
-        (pageIndex) -> {
+        pageIndex -> {
           imageWrapper.getChildren().clear();
           List<Media> toShow = new ArrayList<>();
 
-          for (int i = 0; i < MAX_IMAGES; i++) {
-            var toGet = (pageIndex * MAX_IMAGES) + i;
+          for (var i = 0; i < maxImages; i++) {
+            var toGet = (pageIndex * maxImages) + i;
             if (toGet < this.media.size()) {
               toShow.add(this.media.get(toGet));
             }
           }
 
           var imageViews = this.createThumbnails(toShow);
-          imageViews.forEach(
-              image -> {
-                imageWrapper.getChildren().add(image);
-              });
+          imageViews.forEach(image -> imageWrapper.getChildren().add(image));
 
           return new Label();
         });
@@ -83,14 +81,14 @@ public class ImagesViewController extends AbstractController implements Initiali
     List<ImageView> resizedImages = new ArrayList<>();
 
     mediaList.forEach(
-        media -> {
-          File file = new File(media.getFilename());
-          Image tempImage = new Image(file.toURI().toString());
+        item -> {
+          var file = new File(item.getFilename());
+          var tempImage = new Image(file.toURI().toString());
 
-          ImageView imageView = new ImageView();
+          var imageView = new ImageView();
           imageView.setImage(tempImage);
 
-          if (MAX_IMAGES == 10) {
+          if (maxImages == 10) {
             imageView.setFitWidth(400);
           }
 
@@ -104,9 +102,9 @@ public class ImagesViewController extends AbstractController implements Initiali
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                   var count = event.getClickCount();
                   if (count == 2) {
-                    System.out.println("DOUBLECLICK");
+                    logger.log(Level.INFO, "DOUBLECLICK");
                   } else if (count == 1) {
-                    System.out.println("Image " + media.getFilename() + " was pressed");
+                    logger.log(Level.INFO, "SINGLECLIKC");
                   }
                 }
 
@@ -121,13 +119,13 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   @FXML
   public void singleView() {
-    MAX_IMAGES = 1;
+    maxImages = 1;
     display();
   }
 
   @FXML
   public void multipleView() {
-    MAX_IMAGES = 10;
+    maxImages = 10;
     display();
   }
 }

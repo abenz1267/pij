@@ -1,7 +1,7 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
-import events.ShowAlbumView;
+import events.SetUIState;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,10 +19,17 @@ public class ContextController extends AbstractController implements Initializab
   }
 
   @Subscribe
-  public void showAlbumContext(ShowAlbumView event) {
-
+  public void setView(SetUIState event) {
     try {
-      sceneService.setContent(this.wrapper, View.ALBUMCONTEXT);
+      switch (event.getState()) {
+        case ALBUM:
+          sceneService.setContent(this.wrapper, View.ALBUMCONTEXT);
+          break;
+        case INITIAL:
+          break;
+        default:
+          break;
+      }
     } catch (IOException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }
