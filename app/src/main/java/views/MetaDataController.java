@@ -35,6 +35,7 @@ public class MetaDataController extends AbstractController implements Initializa
   @Subscribe
   public void getMetaData(LoadMetaData event) {
     var media = event.getMedia();
+    mediaService.refreshAll(media);
     if (media.getDatetime() != null) {
       var input = new Date();
       var date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -43,12 +44,7 @@ public class MetaDataController extends AbstractController implements Initializa
 
     filenameField.setText(media.getFilename());
 
-    try {
-      resolutionService.dao().refresh(media.getResolution());
-      resolutionField.setText(event.getMedia().getResolution().toString());
-    } catch (SQLException e) {
-      logger.log(Level.SEVERE, e.getMessage());
-    }
+    resolutionField.setText(event.getMedia().getResolution().toString());
 
     }
 
