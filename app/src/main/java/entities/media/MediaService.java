@@ -22,5 +22,7 @@ public interface MediaService {
 
   void refreshAll(Media media);
 
+  void create(Media media) throws SQLException;
+
   List<Media> filterMediaByInput(String input) throws SQLException;
 }
