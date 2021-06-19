@@ -11,7 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.FlowPane;
 
 public class ContextController extends AbstractController implements Initializable {
-  @FXML FlowPane wrapper;
+  @FXML FlowPane contextwrapper;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -20,12 +20,20 @@ public class ContextController extends AbstractController implements Initializab
 
   @Subscribe
   public void setView(SetUIState event) {
+    sceneService.setState(event.getState());
+
     try {
       switch (event.getState()) {
         case ALBUM:
-          sceneService.setContent(this.wrapper, View.ALBUMCONTEXT);
+          sceneService.setContent(this.contextwrapper, View.ALBUMCONTEXT);
           break;
         case INITIAL:
+          break;
+        case CLOSE_CONTEXT:
+          sceneService.setContent(this.contextwrapper, View.CLEAR);
+          break;
+        case EXPORT:
+          sceneService.setContent(this.contextwrapper, View.EXPORTCONTEXT);
           break;
         default:
           break;

@@ -4,7 +4,9 @@ public enum View {
   MAINVIEW("mainview"),
   SECONDVIEW("secondview"),
   IMAGESVIEW("imagesview"),
-  ALBUMCONTEXT("albumcontext");
+  ALBUMCONTEXT("albumcontext"),
+  CLEAR("CLEAR"),
+  EXPORTCONTEXT("exportcontext");
 
   private final String name;
 

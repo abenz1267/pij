@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+
+<VBox styleClass="content" stylesheets="@exportcontext.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ExportContextController">
+  <Label text="Exportieren" />
+  <VBox fx:id="list">
+  </VBox>
+  <Button text="exportieren" onAction="#chooseDest" />
+  <Button text="abbrechen" onAction="#closeExport" />
+</VBox>

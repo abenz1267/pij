@@ -87,4 +87,9 @@ public class TopMenuController extends AbstractController implements Initializab
   private void showAlbumView() {
     eventService.post(new SetUIState(State.ALBUM));
   }
+
+  @FXML
+  private void showExport() {
+    eventService.post(new SetUIState(State.EXPORT));
+  }
 }

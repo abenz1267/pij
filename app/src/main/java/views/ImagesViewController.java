@@ -2,6 +2,7 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
+import events.AddToExport;
 import events.ShowImages;
 import java.io.File;
 import java.net.URL;
@@ -102,6 +103,13 @@ public class ImagesViewController extends AbstractController implements Initiali
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                   var count = event.getClickCount();
                   if (count == 2) {
+                    switch (sceneService.getState()) {
+                      case EXPORT:
+                        eventService.post(new AddToExport(item));
+                        break;
+                      default:
+                        break;
+                    }
                     logger.log(Level.INFO, "DOUBLECLICK");
                   } else if (count == 1) {
                     logger.log(Level.INFO, "SINGLECLIKC");
