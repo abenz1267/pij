@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
 
-<?import javafx.scene.control.Label?>
-<VBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesViewController">
-  <fx:include source="search.fxml" />
-  <ScrollPane VBox.vgrow="ALWAYS">
-    <FlowPane  vgap="2" hgap="2" fx:id="flowPane" >
-    </FlowPane>
+<VBox stylesheets="@imagesview.css" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesViewController">
+  <FlowPane>
+    <fx:include source="search.fxml" />
+    <Pagination fx:id="pagination" />
+    <Button text="einzeln" fx:id="singleBtn" onAction="#singleView" />
+    <Button text="mehrere" fx:id="multipleBtn" onAction="#multipleView" />
+  </FlowPane>
+  <ScrollPane styleClass="scrollPane" fx:id="scrollPane" VBox.vgrow="ALWAYS">
+    <TilePane fx:id="imageWrapper" />
   </ScrollPane>
-  <HBox>
-    <Button onAction="#back">&lt;</Button >
-    <TextField onAction="#loadPage" fx:id="textField"> 1 </TextField>
-    <Label fx:id="label"> </Label>
-    <Button onAction="#forward">&gt;</Button>
-  </HBox>
-
-
 </VBox>
 
