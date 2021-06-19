@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import resources.Resource;
 import resources.ResourceService;
 import views.Loader;
-import views.MediaViewController;
 import views.SceneService;
 import views.View;
 
@@ -23,17 +22,13 @@ public class App extends Application {
     var resourceService = i.getInstance(ResourceService.class);
     var databaseService = i.getInstance(DatabaseConnectionService.class);
     var sceneService = i.getInstance(SceneService.class);
-    var mediaViewController = i.getInstance(MediaViewController.class);
-
 
     resourceService.setContentFiles("mediafiles", "data.db");
-    databaseService.createSchema(); 
+    databaseService.createSchema();
 
     var pane = sceneService.load(View.MAINVIEW);
-    //pane.getChildren().add(mediaViewController.initializeMediaView());
     var scene = new Scene(pane);
     sceneService.setRootScene(scene);
-
 
     resourceService.setStageTitle(stage, Resource.CONFIG, View.MAINVIEW.toString());
     stage.setScene(scene);

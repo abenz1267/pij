@@ -14,5 +14,4 @@ abstract class AbstractController {
   @Inject protected MediaService mediaService;
   @Inject protected Logger logger;
   @Inject protected AlbumService albumService;
-  @Inject protected MediaViewController mediaViewController;
 }

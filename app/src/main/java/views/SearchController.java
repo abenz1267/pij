@@ -22,7 +22,7 @@ public class SearchController extends AbstractController implements Initializabl
     try {
       eventService.post(new ShowImages(mediaService.filterMediaByInput(searchInput.getText())));
     } catch (SQLException e) {
-      this.logger.log(Level.INFO, e.getMessage());
+      this.logger.log(Level.SEVERE, e.getMessage());
     }
   }
 }

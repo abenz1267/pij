@@ -1,0 +1,16 @@
+.topmenu Button {
+  -fx-background-radius: 0;
+  -fx-padding: 16px;
+  -fx-background-insets: none;
+  -fx-font-weight: bolder;
+  -fx-text-fill: #333;
+}
+
+.topmenu Button FontIcon {
+  -fx-icon-color: #333;
+  -fx-icon-size: 24px;
+}
+
+.topmenu Button:hover {
+  -fx-cursor: hand;
+}
