@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
     <FlowPane fx:id="flowPane">
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
@@ -16,14 +11,14 @@
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Id: "/>
-            <TextField fx:id="id" HBox.hgrow="ALWAYS" editable="false"/>
+            <TextField fx:id="id"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Filename: "/>
-            <TextField fx:id="filename" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="filenameField" HBox.hgrow="ALWAYS"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>

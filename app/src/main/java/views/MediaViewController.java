@@ -4,10 +4,13 @@ import entities.media.Media;
 import events.EventService;
 import events.ShowImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,8 +44,8 @@ public class MediaViewController extends AbstractController implements Initializ
               MouseEvent.MOUSE_CLICKED,
               event -> {
                 var service = Loader.getInjector().getInstance(EventService.class);
-                service.post(new ShowImage(media.getId()));
-                event.consume();
+                  service.post(new ShowImage(media.getId(), media.getFilename()));
+                  event.consume();
               });
         imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             System.out.println("Image " + media.getFilename() + " was pressed");

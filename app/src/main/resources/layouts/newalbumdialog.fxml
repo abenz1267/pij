@@ -28,7 +28,7 @@
             <padding>
                 <Insets right="30.0"/>
             </padding>
-            <Button mnemonicParsing="false" onAction="#btnNewAlbumClicked" text="OK"/>
+            <Button onAction="#btnNewAlbumClicked" text="OK"/>
         </HBox>
     </VBox>
 </AnchorPane>

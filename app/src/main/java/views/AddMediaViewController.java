@@ -3,10 +3,11 @@ package views;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,5 +27,8 @@ public class AddMediaViewController extends AbstractController implements Initia
     Node source = (Node) event.getSource();
     var stage = (Stage) source.getScene().getWindow();
     stage.close();
+  }
+
+  public void btnAddMediaClicked(ActionEvent actionEvent) {
   }
 }

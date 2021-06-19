@@ -2,10 +2,12 @@
 
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
 
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="views.AddMediaViewController"
       prefHeight="400.0" prefWidth="600.0">
     <FlowPane fx:id="flowPane">
         <fx:include source="imagesview.fxml" />
+        <Button onAction="#btnAddMediaClicked"/>
     </FlowPane>
 </VBox>
