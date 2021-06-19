@@ -60,7 +60,8 @@ public class TopMenuController extends AbstractController implements Initializab
           var ext = Files.getFileExtension(file.getName());
 
           if (ext.equals("zip") && files.size() > 1) {
-            // TODO: SOME ERROR
+            var alert = new Alert(AlertType.ERROR, "Nur eine Zip zur Zeit erlaubt", ButtonType.OK);
+            alert.showAndWait();
             return;
           }
         }
@@ -72,7 +73,9 @@ public class TopMenuController extends AbstractController implements Initializab
         }
       }
 
-      eventService.post(new ShowImages(mediaService.dao().queryForAll()));
+      if (files != null) {
+        eventService.post(new ShowImages(mediaService.dao().queryForAll()));
+      }
     } catch (SQLException | IOException e) {
       logger.log(Level.INFO, e.getMessage());
       var alert = new Alert(AlertType.ERROR, "Importieren fehlgeschlagen.", ButtonType.OK);
