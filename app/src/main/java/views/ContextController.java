@@ -27,8 +27,6 @@ public class ContextController extends AbstractController implements Initializab
         case ALBUM:
           sceneService.setContent(this.contextwrapper, View.ALBUMCONTEXT);
           break;
-        case INITIAL:
-          break;
         case CLOSE_CONTEXT:
           sceneService.setContent(this.contextwrapper, View.CLEAR);
           break;
