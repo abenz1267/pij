@@ -2,8 +2,8 @@ package views;
 
 import com.google.common.io.Files;
 import entities.media.Media.DataType;
-import events.ShowAlbumView;
-import events.ShowImagesView;
+import events.SetUIState;
+import events.ShowImages;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -17,7 +17,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import resources.Resource;
 
-import events.ShowImages;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -75,7 +74,8 @@ public class TopMenuController extends AbstractController implements Initializab
           var ext = Files.getFileExtension(file.getName());
 
           if (ext.equals("zip") && files.size() > 1) {
-            // TODO: SOME ERROR
+            var alert = new Alert(AlertType.ERROR, "Nur eine Zip zur Zeit erlaubt", ButtonType.OK);
+            alert.showAndWait();
             return;
           }
         }
@@ -87,7 +87,9 @@ public class TopMenuController extends AbstractController implements Initializab
         }
       }
 
-      eventService.post(new ShowImages(mediaService.dao().queryForAll()));
+      if (files != null) {
+        eventService.post(new ShowImages(mediaService.dao().queryForAll()));
+      }
     } catch (SQLException | IOException e) {
       logger.log(Level.INFO, e.getMessage());
       var alert = new Alert(AlertType.ERROR, "Importieren fehlgeschlagen.", ButtonType.OK);
@@ -106,13 +108,13 @@ public class TopMenuController extends AbstractController implements Initializab
 
   @FXML
   private void showAlbumView() {
-    eventService.post(new ShowAlbumView());
+    eventService.post(new SetUIState(SetUIState.State.ALBUM));
     enable();
   }
 
   @FXML
   private void showImagesView() {
-    eventService.post(new ShowImagesView());
+    eventService.post(new SetUIState(SetUIState.State.IMAGES));
     disable();
   }
 

@@ -10,9 +10,11 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.j256.ormlite.table.TableUtils;
 import entities.BaseEntityTest;
+import entities.location.Location;
 import entities.resolution.Resolution;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class MediaServiceTest extends BaseEntityTest {
@@ -68,6 +70,57 @@ class MediaServiceTest extends BaseEntityTest {
     File testfilesdest = new File(resourceService.getMediaDir());
 
     assertEquals(3, testfilesdest.listFiles().length);
+  }
+
+  @Test
+  void testRefreshAll() {
+    var res = new Resolution(200, 200);
+    var loc = new Location();
+    loc.setName("Kiel");
+
+    var media = new Media();
+    media.setName("TestMedia");
+    media.setFilename("TestMediaFileName");
+    media.setDataType(Media.DataType.JPEG);
+    media.setResolution(res);
+    media.setLocation(loc);
+
+    assertDoesNotThrow(
+        () -> {
+          mediaService.create(media);
+        });
+
+    assertDoesNotThrow(
+        () -> {
+          List<Media> r = mediaService.dao().queryForAll();
+          assertEquals(1, r.size());
+        });
+
+    assertDoesNotThrow(
+        () -> {
+          List<Resolution> r = resolutionService.dao().queryForAll();
+          assertEquals(1, r.size());
+        });
+
+    assertDoesNotThrow(
+        () -> {
+          List<Location> r = locationService.dao().queryForAll();
+          assertEquals(1, r.size());
+        });
+
+    assertDoesNotThrow(
+        () -> {
+          var m = mediaService.dao().queryForAll().get(0);
+
+          assertEquals(0, m.getResolution().getWidth());
+          assertEquals(0, m.getResolution().getHeight());
+          assertEquals(null, m.getLocation().getName());
+
+          mediaService.refreshAll(m);
+          assertEquals(200, m.getResolution().getWidth());
+          assertEquals(200, m.getResolution().getHeight());
+          assertEquals("Kiel", m.getLocation().getName());
+        });
   }
 
   @Test

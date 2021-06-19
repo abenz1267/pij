@@ -2,7 +2,7 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import events.LoadMetaData;
-import events.ShowImage;
+import events.SetUIState;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,7 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.FlowPane;
 
 public class ContextController extends AbstractController implements Initializable {
-  @FXML FlowPane contextwrapper;
+  @FXML FlowPane wrapper;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -20,12 +20,24 @@ public class ContextController extends AbstractController implements Initializab
   }
 
   @Subscribe
-  public void showMetadata(ShowImage event) {
+  public void setView(SetUIState event) {
     try {
-      sceneService.setContent(this.contextwrapper, View.METADATAVIEW);
-      eventService.post(new LoadMetaData(event.getMedia()));
+      switch (event.getState()) {
+        case ALBUM:
+          sceneService.setContent(this.wrapper, View.ALBUMCONTEXT);
+          break;
+        case METADATA:
+          sceneService.setContent(this.wrapper, View.METADATAVIEW);
+          eventService.post(new LoadMetaData(event.));
+          break;
+        case IMAGES:
+          sceneService.setContent(this.wrapper, View.IMAGESVIEW);
+          break;
+        default:
+          break;
+      }
     } catch (IOException e) {
-      logger.log(Level.SEVERE, e.getMessage());
+      this.logger.log(Level.SEVERE, e.getMessage());
     }
   }
 }

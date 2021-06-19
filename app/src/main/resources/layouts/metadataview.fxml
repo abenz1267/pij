@@ -11,7 +11,7 @@
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Id: "/>
-            <TextField fx:id="id"/>
+            <TextField fx:id="idField"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>
@@ -25,7 +25,7 @@
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Name: "/>
-            <TextField fx:id="name" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="nameField" HBox.hgrow="ALWAYS"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>
@@ -39,14 +39,14 @@
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Description: "/>
-            <TextField fx:id="description" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="descriptionField" HBox.hgrow="ALWAYS"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Privat: "/>
-            <CheckBox fx:id="isPrivate" HBox.hgrow="ALWAYS"/>
+            <CheckBox fx:id="isPrivateBox" HBox.hgrow="ALWAYS"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>
@@ -60,21 +60,14 @@
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Location: "/>
-            <TextField fx:id="location" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="locationField" HBox.hgrow="ALWAYS"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Datatype: "/>
-            <TextField fx:id="datatype" HBox.hgrow="ALWAYS" editable="false"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Album Name: "/>
-            <TextField fx:id="albumName" HBox.hgrow="ALWAYS" editable="false"/>
+            <TextField fx:id="datatypeField" HBox.hgrow="ALWAYS" editable="false"/>
         </HBox>
         <Button mnemonicParsing="false" onAction="#btnSaveDataClicked" text="Save Changes"/>
     </FlowPane>

@@ -1,10 +1,8 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
-import events.ShowAlbumView;
-import events.ShowImage;
+import events.SetUIState;
 import events.ShowImages;
-import events.ShowImagesView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,22 +21,20 @@ public class MainWrapperController extends AbstractController implements Initial
   }
 
   @Subscribe
-  public void showPage(ShowImagesView event) {
+  public void showPage(SetUIState event) {
     try {
-      sceneService.setContent(this.mainwrapper, View.IMAGESVIEW);
-      eventService.post(new ShowImages(mediaService.dao().queryForAll()));
+      switch (event.getState()) {
+        case ALBUM:
+          break;
+        case INITIAL:
+          sceneService.setContent(this.mainwrapper, View.IMAGESVIEW);
+          eventService.post(new ShowImages(mediaService.dao().queryForAll()));
+          break;
+        default:
+          break;
+      }
     } catch (SQLException | IOException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }
   }
-
-  @Subscribe
-  public void showAlbums(ShowAlbumView event) {
-    try {
-      sceneService.setContent(this.mainwrapper, View.ALBUMVIEW);
-    } catch (IOException e) {
-      this.logger.log(Level.SEVERE, e.getMessage());
-    }
-  }
-
 }

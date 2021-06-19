@@ -9,23 +9,20 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 
 public class MetaDataController extends AbstractController implements Initializable {
-  @FXML private TextField id;
+  @FXML private TextField idField;
   @FXML private TextField filenameField;
-  @FXML private TextField name;
-  @FXML private DatePicker dateTimePicker;
-  @FXML private TextField description;
+  @FXML private TextField nameField;
+  @FXML private DatePicker datetimePicker;
+  @FXML private TextField descriptionField;
   @FXML private TextField resolutionField;
-  @FXML private TextField location;
-  @FXML private TextField datatype;
-  @FXML private TextField albumName;
-  @FXML private CheckBox isPrivate;
+  @FXML private TextField locationField;
+  @FXML private TextField datatypeField;
+  @FXML private CheckBox isPrivateBox;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -36,17 +33,28 @@ public class MetaDataController extends AbstractController implements Initializa
   public void getMetaData(LoadMetaData event) {
     var media = event.getMedia();
     mediaService.refreshAll(media);
+
     if (media.getDatetime() != null) {
       var input = new Date();
       var date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-      dateTimePicker.setValue(date);
+      datetimePicker.setValue(date);
     }
 
+    if (media.getLocation() != null) {
+      locationField.setText(media.getLocation().toString());
+    }
+
+    idField.setText(String.valueOf(media.getId()));
     filenameField.setText(media.getFilename());
+    nameField.setText(media.getName());
+    descriptionField.setText(media.getDescription());
+    datatypeField.setText(media.getDataType().toString());
+    resolutionField.setText(media.getResolution().toString());
+    isPrivateBox.setSelected(media.isPrivate());
 
-    resolutionField.setText(event.getMedia().getResolution().toString());
+  }
 
-    }
+  public void btnSaveDataClicked(ActionEvent event) {
 
-  public void btnSaveDataClicked(ActionEvent actionEvent) {}
+  }
 }

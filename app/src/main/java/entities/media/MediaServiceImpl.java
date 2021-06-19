@@ -231,7 +231,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
         });
   }
 
-  private void create(Media media) throws SQLException {
+  public void create(Media media) throws SQLException {
     this.transaction(
         () -> {
           this.checkLocation(media);
