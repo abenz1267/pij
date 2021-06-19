@@ -25,6 +25,7 @@ public class MainWrapperController extends AbstractController implements Initial
     try {
       switch (event.getState()) {
         case ALBUM:
+          sceneService.setContent(this.mainwrapper, View.ALBUMVIEW);
           break;
         case INITIAL:
           sceneService.setContent(this.mainwrapper, View.IMAGESVIEW);

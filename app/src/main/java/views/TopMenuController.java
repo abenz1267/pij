@@ -114,7 +114,7 @@ public class TopMenuController extends AbstractController implements Initializab
 
   @FXML
   private void showImagesView() {
-    eventService.post(new SetUIState(SetUIState.State.IMAGES));
+    eventService.post(new SetUIState(SetUIState.State.INITIAL));
     disable();
   }
 
