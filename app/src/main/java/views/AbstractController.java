@@ -3,6 +3,8 @@ package views;
 import com.google.inject.Inject;
 import entities.album.AlbumService;
 import entities.media.MediaService;
+import entities.resolution.Resolution;
+import entities.resolution.ResolutionService;
 import events.EventService;
 import java.util.logging.Logger;
 import resources.ResourceService;
@@ -14,5 +16,5 @@ abstract class AbstractController {
   @Inject protected MediaService mediaService;
   @Inject protected Logger logger;
   @Inject protected AlbumService albumService;
-  @Inject protected MediaViewController mediaViewController;
+  @Inject protected ResolutionService resolutionService;
 }

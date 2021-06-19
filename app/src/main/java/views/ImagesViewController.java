@@ -1,70 +1,137 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
+import entities.media.Media;
+import events.EventService;
+import events.ShowImage;
 import events.ShowImages;
-
+import java.io.File;
 import java.net.URL;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.control.TextField;
-
+import javafx.scene.control.Pagination;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.TilePane;
 
 public class ImagesViewController extends AbstractController implements Initializable {
-  @FXML private FlowPane flowPane;
-  @FXML private TextField textField;
-  @FXML private Label label;
+  @FXML private TilePane imageWrapper;
+  @FXML private ScrollPane scrollPane;
+  @FXML private Pagination pagination;
+  @FXML private Button singleBtn;
+  @FXML private Button multipleBtn;
 
+  private static int MAX_IMAGES = 10;
+  private List<Media> media;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     eventService.register(this);
+
+    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+    scrollPane.setFitToWidth(true);
+    scrollPane.setFitToHeight(true);
   }
 
   @Subscribe
   public void displayMedia(ShowImages event) {
-    try {
-      label.setText(" / " + String.valueOf((mediaService.getMaxRows() / mediaViewController.picturesPerSite) + 1));
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    }
-    flowPane.getChildren().clear();
-    var imageViews = new MediaViewController().createThumbnails(event.getMedia(), 200);
-    imageViews.forEach(image -> {
-        flowPane.getChildren().add(image);
-    });
+    this.media = event.getMedia();
+    display();
   }
 
-  public void back() {
-    if (!textField.getText().equals("1")) {
-      var newSite = String.valueOf(Integer.parseInt(textField.getText()) - 1);
-      textField.setText(newSite);
-      loadPage();
+  private void display() {
+    var offset = 0;
+    if ((this.media.size() % MAX_IMAGES) != 0) {
+      offset = 1;
     }
+
+    pagination.setPageCount(this.media.size() / MAX_IMAGES + offset);
+    if ((this.media.size() / MAX_IMAGES + offset) == 0) {
+      pagination.setPageCount(1);
+    }
+
+    pagination.setPageFactory(
+        (pageIndex) -> {
+          imageWrapper.getChildren().clear();
+          List<Media> toShow = new ArrayList<>();
+
+          for (int i = 0; i < MAX_IMAGES; i++) {
+            var toGet = (pageIndex * MAX_IMAGES) + i;
+            if (toGet < this.media.size()) {
+              toShow.add(this.media.get(toGet));
+            }
+          }
+
+          var imageViews = this.createThumbnails(toShow);
+          imageViews.forEach(
+              image -> {
+                imageWrapper.getChildren().add(image);
+              });
+
+          return new Label();
+        });
   }
 
-  public void forward() {
-    try {
-      if (!textField.getText().equals(String.valueOf((mediaService.getMaxRows() / mediaViewController.picturesPerSite) + 1))) {
-        var newSite = String.valueOf(Integer.parseInt(textField.getText()) + 1);
-        textField.setText(newSite);
-        loadPage();
-      }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    }
+  private List<ImageView> createThumbnails(List<Media> mediaList) {
+    List<ImageView> resizedImages = new ArrayList<>();
+
+    mediaList.forEach(
+        media -> {
+          File file = new File(media.getFilename());
+          Image tempImage = new Image(file.toURI().toString());
+
+          ImageView imageView = new ImageView();
+          imageView.setImage(tempImage);
+
+          if (MAX_IMAGES == 10) {
+            imageView.setFitWidth(400);
+          }
+
+          imageView.setPreserveRatio(true);
+          imageView.setSmooth(true);
+          imageView.setCache(true);
+
+          imageView.addEventHandler(
+              MouseEvent.MOUSE_CLICKED,
+              event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                  var count = event.getClickCount();
+                  if (count == 2) {
+                    var service = Loader.getInjector().getInstance(EventService.class);
+                    service.post(new ShowImage(media));
+                    System.out.println("DOUBLECLICK");
+                  } else if (count == 1) {
+                    System.out.println("Image " + media.getFilename() + " was pressed");
+                  }
+                }
+
+                event.consume();
+              });
+
+          resizedImages.add(imageView);
+        });
+
+    return resizedImages;
   }
 
-  public void loadPage() {
-    try {
-      eventService.post(new ShowImages(mediaService.getMediaByPage(Integer.parseInt(textField.getText()), mediaViewController.picturesPerSite)));
-    } catch (SQLException e) {
-      this.logger.log(Level.INFO, e.getMessage());
-    }
+  @FXML
+  public void singleView() {
+    MAX_IMAGES = 1;
+    display();
+  }
+
+  @FXML
+  public void multipleView() {
+    MAX_IMAGES = 10;
+    display();
   }
 }

@@ -26,7 +26,7 @@ public class MainWrapperController extends AbstractController implements Initial
   public void showPage(ShowImagesView event) {
     try {
       sceneService.setContent(this.mainwrapper, View.IMAGESVIEW);
-      eventService.post(new ShowImages(mediaService.getMediaByPage(1, mediaViewController.picturesPerSite)));
+      eventService.post(new ShowImages(mediaService.dao().queryForAll()));
     } catch (SQLException | IOException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }

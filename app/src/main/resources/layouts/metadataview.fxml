@@ -32,7 +32,7 @@
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Date and Time: "/>
-            <TextField fx:id="datetime" HBox.hgrow="ALWAYS"/>
+            <DatePicker fx:id="datetimePicker" HBox.hgrow="ALWAYS"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>
@@ -53,7 +53,7 @@
                 <Insets right="30.0"/>
             </padding>
             <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Resolution: "/>
-            <TextField fx:id="resolution" HBox.hgrow="ALWAYS" editable="false"/>
+            <TextField fx:id="resolutionField" HBox.hgrow="ALWAYS" editable="false"/>
         </HBox>
         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
             <padding>

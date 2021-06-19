@@ -1,0 +1,15 @@
+.mainview {
+  -fx-font-family: "sans-serif";
+  -fx-font-size: 16px;
+  -fx-orientation: vertical;
+}
+
+.btn--disabled,
+.btn--disabled:hover {
+  -fx-text-fill: #bbb;
+  -fx-cursor: normal;
+}
+
+.btn--disabled FontIcon {
+  -fx-icon-color: #bbb;
+}

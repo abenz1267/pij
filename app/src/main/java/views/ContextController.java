@@ -1,6 +1,7 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
+import events.LoadMetaData;
 import events.ShowImage;
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +23,7 @@ public class ContextController extends AbstractController implements Initializab
   public void showMetadata(ShowImage event) {
     try {
       sceneService.setContent(this.contextwrapper, View.METADATAVIEW);
+      eventService.post(new LoadMetaData(event.getMedia()));
     } catch (IOException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }

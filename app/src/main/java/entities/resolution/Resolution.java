@@ -46,4 +46,9 @@ public class Resolution {
   public void setHeight(int height) {
     this.height = height;
   }
+
+  @Override
+  public String toString() {
+    return this.width + "x" + this.height;
+  }
 }

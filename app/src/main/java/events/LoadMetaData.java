@@ -2,9 +2,9 @@ package events;
 
 import entities.media.Media;
 
-public class ShowImage {
+public class LoadMetaData {
     private Media media;
-    public ShowImage(Media media) {
+    public LoadMetaData(Media media) {
         this.media = media;
     }
 
