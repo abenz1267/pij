@@ -20,5 +20,7 @@ public interface MediaService {
 
   void setKeepOriginal(boolean val);
 
+  void refreshAll(Media media);
+
   List<Media> filterMediaByInput(String input) throws SQLException;
 }

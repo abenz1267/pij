@@ -306,4 +306,14 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
     return dao.query(preparedQuery);
   }
+
+  public void refreshAll(Media media) {
+    try {
+      dao().refresh(media);
+      resolutionService.dao().refresh(media.getResolution());
+      locationService.dao().refresh(media.getLocation());
+    } catch (SQLException e) {
+      this.logger.log(Level.SEVERE, e.getMessage());
+    }
+  }
 }
