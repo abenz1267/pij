@@ -4,7 +4,7 @@ import entities.media.Media;
 import java.util.List;
 
 public class PlayDiashow {
-    private final List<Media> media;
+    private List<Media> media;
 
     public PlayDiashow(List<Media> media) {
         this.media = media;

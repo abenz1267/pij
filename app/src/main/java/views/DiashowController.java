@@ -32,12 +32,13 @@ public class DiashowController extends AbstractController implements Initializab
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventService.register(this);
-        stackPane.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     @Subscribe
     public void playDiashow(PlayDiashow event) {
         logger.log(Level.INFO, "Diashow started");
+        stackPane.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+
         this.currentImage = 0;
         this.media = event.getMedia();
         this.stackPane.getChildren().clear();

@@ -2,6 +2,7 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
+import events.AddToDiashow;
 import events.AddToExport;
 import events.PlayDiashow;
 import events.ShowImages;
@@ -107,6 +108,9 @@ public class ImagesViewController extends AbstractController implements Initiali
                     switch (sceneService.getState()) {
                       case EXPORT:
                         eventService.post(new AddToExport(item));
+                        break;
+                      case DIASHOW:
+                        eventService.post(new AddToDiashow(item));
                         break;
                       default:
                         break;

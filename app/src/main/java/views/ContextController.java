@@ -33,6 +33,9 @@ public class ContextController extends AbstractController implements Initializab
         case EXPORT:
           sceneService.setContent(this.contextwrapper, View.EXPORTCONTEXT);
           break;
+        case DIASHOW:
+          sceneService.setContent(this.contextwrapper, View.DIASHOW);
+          break;
         default:
           break;
       }

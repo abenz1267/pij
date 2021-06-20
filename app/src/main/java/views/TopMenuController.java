@@ -85,4 +85,9 @@ public class TopMenuController extends AbstractController implements Initializab
   private void showExport() {
     eventService.post(new SetUIState(State.EXPORT));
   }
+
+  @FXML
+  private void showDiashowPrep() {
+    eventService.post(new SetUIState(State.DIASHOW));
+  }
 }
