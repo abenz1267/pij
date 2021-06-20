@@ -1,10 +1,15 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
+import com.j256.ormlite.field.DatabaseField;
+import entities.PersonMedia.PersonMedia;
+import entities.PersonMedia.PersonMediaService;
 import entities.media.Media;
 import entities.person.Person;
+import events.EventService;
 import events.LoadMetaData;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -12,15 +17,15 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class MetaDataController extends AbstractController implements Initializable {
   @FXML private TextField nameField;
@@ -79,6 +84,8 @@ public class MetaDataController extends AbstractController implements Initializa
   @FXML
   public void btnSaveDataClicked(ActionEvent event) {
     this.media.setName(nameField.getText().trim());
+    this.media.setDescription(descriptionField.getText().trim());
+    this.media.setPrivate(isPrivateBox.isSelected());
     try {
       mediaService.update(media);
     } catch (SQLException e) {
@@ -95,6 +102,7 @@ public class MetaDataController extends AbstractController implements Initializa
     var person = new Person();
     person.setFirstname(personFieldFirstName.getText().trim());
     person.setLastname(personFieldLastName.getText().trim());
+
     media.getPersons().add(person);
     try {
       mediaService.update(media);
@@ -119,7 +127,25 @@ public class MetaDataController extends AbstractController implements Initializa
     for (var p : media.getPersons()) {
       var wrapper = new HBox();
       var label = new Label(p.toString());
+      var button = new Button();
+      var id = p.getId();
+
+      button.setGraphic(new FontIcon("mdi2d-delete"));
+
+      button.setOnAction(
+          new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+              var service = Loader.getInjector().getInstance(PersonMediaService.class);
+              try {
+                service.dao().deleteById(id);
+              } catch (SQLException e) {
+                logger.log(Level.SEVERE, e.getMessage());
+              }
+            }
+          });
       wrapper.getChildren().add(label);
+      wrapper.getChildren().add(button);
       children.add(wrapper);
     }
   }
