@@ -7,6 +7,7 @@ import events.LoadMetaData;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +19,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class MetaDataController extends AbstractController implements Initializable {
   @FXML private TextField nameField;
@@ -29,6 +32,7 @@ public class MetaDataController extends AbstractController implements Initializa
   @FXML private CheckBox isPrivateBox;
   @FXML private TextField personFieldFirstName;
   @FXML private TextField personFieldLastName;
+  @FXML private VBox personBox;
 
   private Media media;
 
@@ -68,6 +72,8 @@ public class MetaDataController extends AbstractController implements Initializa
 
     isPrivateBox.setSelected(media.isPrivate());
     isPrivateBox.setAlignment(Pos.CENTER_RIGHT);
+
+    this.listPersons(media);
   }
 
   @FXML
@@ -82,14 +88,39 @@ public class MetaDataController extends AbstractController implements Initializa
 
   @FXML
   public void addPerson(ActionEvent event) {
+    if (personFieldFirstName.getText().isEmpty() || personFieldLastName.getText().isEmpty()) {
+      return;
+    }
+
     var person = new Person();
     person.setFirstname(personFieldFirstName.getText().trim());
     person.setLastname(personFieldLastName.getText().trim());
     media.getPersons().add(person);
     try {
       mediaService.update(media);
+      mediaService.refreshAll(media);
+
+      personFieldLastName.clear();
+      personFieldFirstName.clear();
+
+      this.listPersons(media);
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
+    }
+  }
+
+  private void listPersons(Media media) {
+    var children = personBox.getChildren();
+    children.clear();
+
+    media.setPersons(new ArrayList<>());
+    mediaService.refreshAll(media);
+
+    for (var p : media.getPersons()) {
+      var wrapper = new HBox();
+      var label = new Label(p.toString());
+      wrapper.getChildren().add(label);
+      children.add(wrapper);
     }
   }
 }

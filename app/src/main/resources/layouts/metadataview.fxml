@@ -15,7 +15,6 @@
                     <TextField fx:id="personFieldFirstName"/>
                     <TextField fx:id="personFieldLastName"/>
                 </HBox>
-
                 <Button mnemonicParsing="false" onAction="#addPerson">
                     <graphic>
                         <FontIcon iconLiteral="mdi2a-account-plus"/>
@@ -23,7 +22,7 @@
                 </Button>
             </HBox>
             <ScrollPane>
-            <VBox VBox.vgrow="ALWAYS" fx:id="personBox"/>
+              <VBox VBox.vgrow="ALWAYS" styleClass="personbox" fx:id="personBox"/>
             </ScrollPane>
         </VBox>
     </VBox>

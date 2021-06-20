@@ -11,10 +11,10 @@ public class PersonMedia {
   @DatabaseField(generatedId = true)
   private int id;
 
-  @DatabaseField(foreign = true, columnName = "person_id")
+  @DatabaseField(foreign = true, columnName = "person_id", uniqueCombo = true)
   Person person;
 
-  @DatabaseField(foreign = true, columnName = "media_id")
+  @DatabaseField(foreign = true, columnName = "media_id", uniqueCombo = true)
   Media media;
 
   PersonMedia() {}

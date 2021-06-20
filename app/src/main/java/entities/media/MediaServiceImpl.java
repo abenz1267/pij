@@ -312,45 +312,64 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       dao().refresh(media);
       resolutionService.dao().refresh(media.getResolution());
       locationService.dao().refresh(media.getLocation());
+
+      List<PersonMedia> res = personMediaService.dao().queryForEq("media_id", media.getId());
+
+      for (var i : res) {
+        personService.dao().refresh(i.getPerson());
+        media.getPersons().add(i.getPerson());
+      }
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }
   }
 
   public void update(Media media) throws SQLException {
+    this.refreshAll(media);
     this.checkPersons(media);
     this.checkLocation(media);
     this.dao().update(media);
+
+    media.setPersons(new ArrayList<>());
+    this.refreshAll(media);
   }
 
   private void checkPersons(Media media) throws SQLException {
     var persons = media.getPersons();
 
-    List<Integer> toRemove = new ArrayList<>();
-
     for (var i = 0; i < persons.size(); i++) {
+      var person = persons.get(i);
+      if (person.getFirstname().isEmpty() || person.getLastname().isEmpty()) {
+        continue;
+      }
+
+      if (person.getId() != 0) {
+        continue;
+      }
+
       var b = personService.dao().queryBuilder();
-      b.where()
-          .eq("firstname", persons.get(i).getFirstname())
-          .and()
-          .eq("lastname", persons.get(i).getLastname());
+      b.where().eq("firstname", person.getFirstname()).and().eq("lastname", person.getLastname());
 
       PreparedQuery<Person> preparedQuery = b.prepare();
       List<Person> personList = personService.dao().query(preparedQuery);
 
       if (!personList.isEmpty()) {
-        toRemove.add(i);
-        persons.add(personList.get(0));
+        persons.get(i).setId(personList.get(0).getId());
+
+        var qb = personMediaService.dao().queryBuilder();
+        qb.where().eq("person_id", personList.get(0).getId()).and().eq("media_id", media.getId());
+
+        List<PersonMedia> res = qb.query();
+
+        if (res.isEmpty()) {
+          var personMedia = new PersonMedia(persons.get(i), media);
+          personMediaService.dao().createIfNotExists(personMedia);
+        }
       } else {
-        personService.dao().create(persons);
+        personService.dao().create(persons.get(i));
         var personMedia = new PersonMedia(persons.get(i), media);
         personMediaService.dao().create(personMedia);
       }
     }
-
-    toRemove.forEach(
-        el -> {
-          persons.remove(el);
-        });
   }
 }
