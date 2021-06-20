@@ -53,25 +53,29 @@ public class DiashowController extends AbstractController implements Initializab
         stackPane.addEventHandler(KeyEvent.KEY_RELEASED, event1 -> {
             if (event1.getCode().equals(KeyCode.ESCAPE)) {
                 this.logger.log(Level.INFO, "Diashow closed");
+                newWindow.close();
                 timer.stop();
             }
         });
+        
         cycleThroughImages();
     }
 
     private void cycleThroughImages() {
         timer = new Timeline(
-                new KeyFrame(Duration.seconds(slideDuration), event -> setCurrentImage(currentImage++)));
+                new KeyFrame(Duration.seconds(slideDuration), event -> setCurrentImage(currentImage)));
         timer.play();
     }
 
     private void setCurrentImage(int index) {
+        if (index >= media.size() - 1) currentImage = 0;
         stackPane.getChildren().clear();
         this.currentImage = index;
         ImageView imageView = new ImageView(new Image(media.get(index).getFilename(), stackPane.getWidth(), stackPane.getHeight(), true,true));
         stackPane.getChildren().add(imageView);
-
+        currentImage++;
     }
+
 
 
 
