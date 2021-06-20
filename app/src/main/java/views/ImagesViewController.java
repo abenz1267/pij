@@ -86,19 +86,7 @@ public class ImagesViewController extends AbstractController implements Initiali
     List<ImageView> resizedImages = new ArrayList<>();
     mediaList.forEach(
         item -> {
-          var file = new File(item.getFilename());
-          var imageView = new ImageView();
-
-          Image tempImage;
-          if (maxImages == 10) {
-              tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
-          } else {
-              tempImage = new Image(file.toURI().toString(), scrollPane.getWidth(), scrollPane.getHeight(),true,true);
-          }
-          imageView.setImage(tempImage);
-          imageView.setCache(true);
-          imageView.setCacheHint(CacheHint.SPEED);
-
+          var imageView = loadImageViewFromMedia(item);
           imageView.addEventHandler(
               MouseEvent.MOUSE_CLICKED,
               event -> {
@@ -130,7 +118,22 @@ public class ImagesViewController extends AbstractController implements Initiali
     return resizedImages;
   }
 
-  @FXML
+  private ImageView loadImageViewFromMedia(Media media) {
+    var file = new File(media.getFilename());
+    Image tempImage;
+    if (maxImages == 10) {
+        tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
+    } else {
+        tempImage = new Image(file.toURI().toString(), scrollPane.getWidth(), scrollPane.getHeight(), true, true);
+    }
+    var tempImageView = new ImageView();
+    tempImageView.setImage(tempImage);
+    tempImageView.setCache(true);
+    tempImageView.setCacheHint(CacheHint.SPEED);
+    return tempImageView;
+  }
+
+    @FXML
   public void singleView() {
     maxImages = 1;
     display();
@@ -143,6 +146,6 @@ public class ImagesViewController extends AbstractController implements Initiali
   }
 
   @FXML void playAllAsDiashow() {
-      this.eventService.post(new PlayDiashow(media));
+      this.eventService.post(new PlayDiashow(this.media));
   }
 }

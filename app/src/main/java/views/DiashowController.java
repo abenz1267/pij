@@ -3,6 +3,7 @@ package views;
 import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
 import events.PlayDiashow;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.Initializable;
@@ -10,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -27,9 +27,8 @@ import java.util.logging.Level;
 public class DiashowController extends AbstractController implements Initializable {
     private List<Media> media = new ArrayList<>();
     private StackPane stackPane = new StackPane();
-    private Timeline timer;
     private int currentImage = 0;
-    private final int slideDuration = 5;
+    private static int slideDuration = 5;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,14 +43,11 @@ public class DiashowController extends AbstractController implements Initializab
         stackPane.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         this.currentImage = 0;
         this.stackPane.getChildren().clear();
+        var timer= new Timeline(
+                new KeyFrame(Duration.seconds(slideDuration), event1 -> setCurrentImage(currentImage + 1)));
 
-        timer = new Timeline(
-                new KeyFrame(Duration.seconds(slideDuration), event1 -> {
-                    setCurrentImage(currentImage + 1);
-                }));
-
-        Scene secondScene = new Scene(stackPane, 230, 100);
-        Stage newWindow = new Stage();
+        var secondScene = new Scene(stackPane, 230, 100);
+        var newWindow = new Stage();
         newWindow.setFullScreen(true);
         newWindow.setTitle("Diashow");
         newWindow.setScene(secondScene);
@@ -81,19 +77,20 @@ public class DiashowController extends AbstractController implements Initializab
             event2.consume();
         });
 
-        timer.setCycleCount(Timeline.INDEFINITE);
+        timer.setCycleCount(Animation.INDEFINITE);
         timer.play();
     }
 
 
     private void setCurrentImage(int index) {
         if (index > media.size() - 1) currentImage = 0;
+        else if (index < 0) currentImage = media.size() -1;
         else currentImage = index;
 
         stackPane.getChildren().clear();
         var file = new File(media.get(currentImage).getFilename());
-        Image tempImage = new Image(file.toURI().toString(), stackPane.getWidth(), stackPane.getHeight(), true,true);
-        ImageView imageView = new ImageView(tempImage);
+        var tempImage = new Image(file.toURI().toString(), stackPane.getWidth(), stackPane.getHeight(), true,true);
+        var imageView = new ImageView(tempImage);
         stackPane.getChildren().add(imageView);
     }
 }

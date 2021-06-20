@@ -30,7 +30,9 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML Button albumBtn;
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+    //empty initialize
+  }
 
   @FXML
   private void openFileDialog() {
