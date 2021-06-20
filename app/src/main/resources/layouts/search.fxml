@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
-<FlowPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.SearchController">
+<HBox HBox.hgrow="ALWAYS" stylesheets="@search.css" styleClass="searchcontainer" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.SearchController">
       <TextField fx:id="searchInput"  onAction="#onSearch" />
       <Button mnemonicParsing="false" onAction="#onSearch" >
           <graphic>
               <FontIcon iconLiteral="mdi2c-card-search-outline" iconSize="20" />
           </graphic>
       </Button>
-</FlowPane>
+</HBox>

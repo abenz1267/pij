@@ -10,6 +10,8 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import entities.AbstractEntityService;
+import entities.PersonMedia.PersonMedia;
+import entities.PersonMedia.PersonMediaService;
 import entities.location.Location;
 import entities.location.LocationService;
 import entities.person.Person;
@@ -27,10 +29,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -46,6 +45,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   @Inject private ResourceService resourceService;
   @Inject private PersonService personService;
   @Inject private TagService tagService;
+  @Inject private PersonMediaService personMediaService;
 
   private Dao<Media, Integer> dao = null;
   private boolean keepOriginal = true;
@@ -315,5 +315,41 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }
+  }
+
+  public void update(Media media) throws SQLException {
+    this.checkPersons(media);
+    this.checkLocation(media);
+    this.dao().update(media);
+  }
+
+  private void checkPersons(Media media) throws SQLException {
+    var persons = media.getPersons();
+
+    List<Integer> toRemove = new ArrayList<>();
+
+    for (var i = 0; i < persons.size(); i++) {
+      var b = personService.dao().queryBuilder();
+      b.where()
+          .eq("firstname", persons.get(i).getFirstname())
+          .and()
+          .eq("lastname", persons.get(i).getLastname());
+
+      PreparedQuery<Person> preparedQuery = b.prepare();
+      List<Person> personList = personService.dao().query(preparedQuery);
+
+      if (!personList.isEmpty()) {
+        toRemove.add(i);
+        persons.add(personList.get(0));
+      } else {
+        personService.dao().create(persons);
+        var personMedia = new PersonMedia(persons.get(i), media);
+        personMediaService.dao().create(personMedia);
+      }
+    }
+
+    toRemove.forEach(el -> {
+      persons.remove(el);
+    });
   }
 }

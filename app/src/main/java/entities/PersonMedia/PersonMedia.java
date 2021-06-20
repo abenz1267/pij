@@ -1,0 +1,50 @@
+package entities.PersonMedia;
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+import entities.media.Media;
+import entities.person.Person;
+
+@DatabaseTable()
+public class PersonMedia {
+
+    @DatabaseField(generatedId = true)
+    private int id;
+
+    @DatabaseField(foreign = true, columnName = "person_id")
+    Person person;
+
+    @DatabaseField(foreign = true, columnName = "media_id")
+    Media media;
+
+    PersonMedia() {}
+
+    public PersonMedia(Person person, Media media) {
+        this.person = person;
+        this.media = media;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+}

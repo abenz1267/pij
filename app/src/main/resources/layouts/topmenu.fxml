@@ -31,7 +31,7 @@
             <FontIcon iconLiteral="mdi2i-import"/>
         </graphic>
     </Button>
-    <Button fx:id="exportBtn" text="Exportieren">
+    <Button fx:id="exportBtn" text="Exportieren" onAction="#showExport">
         <graphic>
             <FontIcon iconLiteral="mdi2e-export"/>
         </graphic>

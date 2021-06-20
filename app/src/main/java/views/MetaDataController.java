@@ -1,6 +1,8 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
+import entities.media.Media;
+import entities.person.Person;
 import events.LoadMetaData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,22 +10,27 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class MetaDataController extends AbstractController implements Initializable {
-  @FXML private TextField idField;
-  @FXML private TextField filenameField;
   @FXML private TextField nameField;
   @FXML private DatePicker datetimePicker;
   @FXML private TextField descriptionField;
-  @FXML private TextField resolutionField;
+  @FXML private Label resolutionField;
   @FXML private TextField locationField;
-  @FXML private TextField datatypeField;
+  @FXML private Label datatypeField;
   @FXML private CheckBox isPrivateBox;
+  @FXML private TextField personFieldFirstName;
+  @FXML private TextField personFieldLastName;
+
+  private Media media;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -34,6 +41,7 @@ public class MetaDataController extends AbstractController implements Initializa
   public void getMetaData(LoadMetaData event) {
     var media = event.getMedia();
     mediaService.refreshAll(media);
+    this.media = media;
 
     if (media.getDatetime() != null) {
       var input = new Date();
@@ -46,11 +54,7 @@ public class MetaDataController extends AbstractController implements Initializa
       locationField.setAlignment(Pos.CENTER_RIGHT);
     }
 
-    idField.setText(String.valueOf(media.getId()));
-    idField.setAlignment(Pos.CENTER_RIGHT);
 
-    filenameField.setText(media.getFilename());
-    filenameField.setAlignment(Pos.CENTER_RIGHT);
 
     nameField.setText(media.getName());
     nameField.setAlignment(Pos.CENTER_RIGHT);
@@ -69,7 +73,27 @@ public class MetaDataController extends AbstractController implements Initializa
 
   }
 
+  @FXML
   public void btnSaveDataClicked(ActionEvent event) {
+    this.media.setName(nameField.getText().trim());
+    try {
+      mediaService.update(media);
+    } catch (SQLException e) {
+      logger.log(Level.SEVERE, e.getMessage());
+    }
+  }
+
+  @FXML
+  public void addPerson(ActionEvent event) {
+    var person = new Person();
+    person.setFirstname(personFieldFirstName.getText().trim());
+    person.setLastname(personFieldLastName.getText().trim());
+    media.getPersons().add(person);
+    try {
+      mediaService.update(media);
+    } catch (SQLException e) {
+      logger.log(Level.SEVERE, e.getMessage());
+    }
 
   }
 }

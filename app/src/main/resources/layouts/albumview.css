@@ -1,11 +1,14 @@
-TilePane > Button {
+.container > Button {
     -fx-cursor: hand;
     -fx-background-color: #9933dd;
 }
 
-#albumBtn {
-    -fx-hgap: 10px;
-    -fx-vgap: 10px;
+.container {
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
+}
+
+.albumBtn {
     -fx-padding: 20px;
     -fx-background-color: #ffffff;
     -fx-alignment: top-center;

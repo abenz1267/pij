@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox VBox.vgrow="ALWAYS" styleClass="main" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContainerController">
+<HBox VBox.vgrow="ALWAYS" stylesheets="@container.css" styleClass="container" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContainerController">
     <fx:include source="contextwrapper.fxml" />
     <fx:include source="mainwrapper.fxml" />
 </HBox>

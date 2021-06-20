@@ -21,11 +21,22 @@ public class ContextController extends AbstractController implements Initializab
 
   @Subscribe
   public void setView(SetUIState event) {
+    sceneService.setState(event.getState());
+
     try {
       switch (event.getState()) {
         case METADATA:
           sceneService.setContent(this.contextwrapper, View.METADATAVIEW);
           eventService.post(new LoadMetaData(event.getMedia()));
+          break;
+        case ALBUM:
+          sceneService.setContent(this.contextwrapper, View.ALBUMCONTEXT);
+          break;
+        case CLOSE_CONTEXT:
+          sceneService.setContent(this.contextwrapper, View.CLEAR);
+          break;
+        case EXPORT:
+          sceneService.setContent(this.contextwrapper, View.EXPORTCONTEXT);
           break;
         default:
           break;

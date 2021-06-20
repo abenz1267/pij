@@ -2,5 +2,6 @@
 
 <?import javafx.scene.layout.HBox?>
 
-<HBox HBox.hgrow="ALWAYS" fx:id="mainwrapper" styleClass="mainwrapper" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainWrapperController">
+
+<HBox stylesheets="@mainwrapper.css" HBox.hgrow="ALWAYS" fx:id="mainwrapper" styleClass="mainwrapper" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainWrapperController">
 </HBox>

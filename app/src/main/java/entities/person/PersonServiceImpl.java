@@ -3,6 +3,8 @@ package entities.person;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractEntityService;
+import entities.media.Media;
+
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.inject.Singleton;

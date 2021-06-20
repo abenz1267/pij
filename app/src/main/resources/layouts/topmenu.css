@@ -1,16 +1,6 @@
-.topmenu Button {
-  -fx-background-radius: 0;
-  -fx-padding: 16px;
-  -fx-background-insets: none;
-  -fx-font-weight: bolder;
-  -fx-text-fill: #333;
-}
-
-.topmenu Button FontIcon {
-  -fx-icon-color: #333;
-  -fx-icon-size: 24px;
-}
-
-.topmenu Button:hover {
-  -fx-cursor: hand;
+.topmenu {
+  -fx-padding: 20px;
+  -fx-hgap: 10px;
+  -fx-background-color: #354358;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0);
 }

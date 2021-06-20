@@ -4,6 +4,6 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox stylesheets="albumview.css" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.AlbumViewController">
-    <TilePane fx:id="tilePane"/>
+<VBox stylesheets="@albumview.css" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.AlbumViewController">
+    <TilePane styleClass="container" fx:id="tilePane"/>
 </VBox>

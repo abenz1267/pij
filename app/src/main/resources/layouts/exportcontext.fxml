@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+
+<VBox styleClass="content" stylesheets="@exportcontext.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ExportContextController">
+  <Label text="Exportieren" />
+  <VBox fx:id="list" minWidth="300">
+  </VBox>
+  <HBox styleClass="exportBtns">
+    <HBox HBox.hgrow="ALWAYS" styleClass="cancel">
+      <Button text="abbrechen" onAction="#closeExport" />
+    </HBox>
+    <HBox HBox.hgrow="ALWAYS" styleClass="export">
+      <Button text="exportieren" onAction="#chooseDest" />
+    </HBox>
+  </HBox>
+</VBox>

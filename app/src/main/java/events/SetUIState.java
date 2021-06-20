@@ -8,6 +8,7 @@ public class SetUIState {
 
   public enum State {
     INITIAL,
+    CLOSE_CONTEXT,
     ALBUM,
     METADATA,
     IMAGES,

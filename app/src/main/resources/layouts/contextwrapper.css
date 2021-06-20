@@ -1,0 +1,8 @@
+.contextwrapper {
+  -fx-background-color: #354358;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0);
+}
+
+.contextwrapper Label {
+  -fx-text-fill: #fefefe;
+}

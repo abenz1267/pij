@@ -1,0 +1,7 @@
+.inputContainer {
+    -fx-alignment: center-right;
+}
+
+.container {
+    -fx-padding: 20px;
+}

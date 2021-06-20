@@ -3,7 +3,17 @@ package views;
 import com.google.common.io.Files;
 import entities.media.Media.DataType;
 import events.SetUIState;
+import events.SetUIState.State;
 import events.ShowImages;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -38,20 +48,7 @@ public class TopMenuController extends AbstractController implements Initializab
   private static final String BTN_DISABLED = "btn--disabled";
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {
-    exportBtn.getStyleClass().add(BTN_DISABLED);
-    addToAlbumBtn.getStyleClass().add(BTN_DISABLED);
-  }
-
-  @FXML
-  private void enable() {
-    addToAlbumBtn.getStyleClass().remove(BTN_DISABLED);
-  }
-
-  @FXML
-  private void disable() {
-    addToAlbumBtn.getStyleClass().add(BTN_DISABLED);
-  }
+  public void initialize(URL location, ResourceBundle resources) {}
 
   @FXML
   private void openFileDialog() {
@@ -109,13 +106,11 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML
   private void showAlbumView() {
     eventService.post(new SetUIState(SetUIState.State.ALBUM));
-    enable();
   }
 
   @FXML
   private void showImagesView() {
     eventService.post(new SetUIState(SetUIState.State.INITIAL));
-    disable();
   }
 
   @FXML
@@ -125,5 +120,10 @@ public class TopMenuController extends AbstractController implements Initializab
     stage.setScene(new Scene(sceneService.load(View.ADDMEDIAVIEW)));
     stage.setTitle("Bilder zum Album hinzufügen");
     stage.showAndWait();
+  }
+
+  @FXML
+  private void showExport() {
+    eventService.post(new SetUIState(State.EXPORT));
   }
 }

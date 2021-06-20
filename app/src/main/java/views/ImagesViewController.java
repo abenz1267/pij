@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
 import events.EventService;
 import events.SetUIState;
+import events.AddToExport;
 import events.ShowImages;
 import java.io.File;
 import java.net.URL;
@@ -38,7 +39,6 @@ public class ImagesViewController extends AbstractController implements Initiali
     eventService.register(this);
 
     scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
   }
@@ -75,7 +75,9 @@ public class ImagesViewController extends AbstractController implements Initiali
           var imageViews = this.createThumbnails(toShow);
           imageViews.forEach(image -> imageWrapper.getChildren().add(image));
 
-          return new Label();
+          var label = new Label();
+          label.setVisible(false);
+          return label;
         });
   }
 
@@ -104,8 +106,14 @@ public class ImagesViewController extends AbstractController implements Initiali
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                   var count = event.getClickCount();
                   if (count == 2) {
-                    var service = Loader.getInjector().getInstance(EventService.class);
-                    service.post(new SetUIState(SetUIState.State.METADATA, item));
+                    switch (sceneService.getState()) {
+                      case EXPORT:
+                        eventService.post(new AddToExport(item));
+                        break;
+                      default:
+                          eventService.post(new SetUIState(SetUIState.State.METADATA, item));
+                        break;
+                    }
                     logger.log(Level.INFO, "DOUBLECLICK");
                   } else if (count == 1) {
                     logger.log(Level.INFO, "SINGLECLICK");

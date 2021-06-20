@@ -25,6 +25,7 @@ public class AlbumViewController extends AbstractController implements Initializ
       var albums = albumService.dao().queryForAll();
       for (var album : albums) {
         var albumBtn = new Button();
+        albumBtn.getStyleClass().add("albumBtn");
         albumBtn.setMnemonicParsing(false);
         albumBtn.setText("Titel: " + album.getName() + ", Thema: " + album.getTheme());
 

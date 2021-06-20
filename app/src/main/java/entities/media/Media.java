@@ -10,7 +10,9 @@ import entities.resolution.Resolution;
 import entities.tag.Tag;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.imageio.ImageIO;
 
 @DatabaseTable()
@@ -46,7 +48,7 @@ public class Media {
   @DatabaseField(foreign = true, columnName = "resolution_id", canBeNull = false)
   private Resolution resolution;
 
-  private Person[] persons;
+  private List<Person> persons = new ArrayList<>();
   private Tag[] tags;
 
   public enum DataType {
@@ -171,11 +173,11 @@ public class Media {
     this.location = location;
   }
 
-  public Person[] getPersons() {
+  public List<Person> getPersons() {
     return persons;
   }
 
-  public void setPersons(Person[] persons) {
+  public void setPersons(List<Person> persons) {
     this.persons = persons;
   }
 

@@ -7,6 +7,8 @@ public enum View {
   NEWALBUM("newalbum"),
   ALBUMVIEW("albumview"),
   IMAGESVIEW("imagesview"),
+  CLEAR("CLEAR"),
+  EXPORTCONTEXT("exportcontext"),
   METADATAVIEW("metadataview"),
   ADDMEDIAVIEW("addmediaview");
 

@@ -4,75 +4,86 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox stylesheets="@metadataview.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Id: "/>
-        <TextField fx:id="idField" HBox.hgrow="ALWAYS"/>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<VBox styleClass="container" stylesheets="@metadataview.css" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
+    <VBox>
+        <Label text="Person:"/>
+        <VBox VBox.vgrow="ALWAYS">
+            <HBox HBox.hgrow="ALWAYS">
+                <HBox>
+                    <TextField fx:id="personFieldFirstName"/>
+                    <TextField fx:id="personFieldLastName"/>
+                </HBox>
+
+                <Button mnemonicParsing="false" onAction="#addPerson">
+                    <graphic>
+                        <FontIcon iconLiteral="mdi2a-account-plus"/>
+                    </graphic>
+                </Button>
+            </HBox>
+            <ScrollPane>
+            <VBox VBox.vgrow="ALWAYS" fx:id="personBox"/>
+            </ScrollPane>
+        </VBox>
+    </VBox>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS">
+            <Label text="Name:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <TextField fx:id="nameField"/>
+        </HBox>
     </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Filename: "/>
-        <TextField fx:id="filenameField" HBox.hgrow="ALWAYS" maxWidth="300"/>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS">
+            <Label text="Datetime:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <DatePicker fx:id="datetimePicker"/>
+        </HBox>
     </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Name: "/>
-        <TextField fx:id="nameField" HBox.hgrow="ALWAYS"/>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS">
+            <Label text="Description:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <TextField fx:id="descriptionField"/>
+        </HBox>
     </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Date and Time: "/>
-        <DatePicker fx:id="datetimePicker" HBox.hgrow="ALWAYS"/>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS">
+            <Label text="Private:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <CheckBox fx:id="isPrivateBox"/>
+        </HBox>
     </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Description: "/>
-        <TextField fx:id="descriptionField" HBox.hgrow="ALWAYS"/>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS">
+            <Label text="Resolution:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <Label fx:id="resolutionField"/>
+        </HBox>
     </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Privat: "/>
-        <CheckBox fx:id="isPrivateBox"/>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS">
+            <Label text="Location:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <TextField fx:id="locationField"/>
+        </HBox>
     </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Resolution: "/>
-        <TextField fx:id="resolutionField" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" editable="false"/>
+    <HBox>
+        <HBox HBox.hgrow="ALWAYS">
+            <Label text="Datatype:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <Label fx:id="datatypeField"/>
+        </HBox>
     </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Location: "/>
-        <TextField fx:id="locationField" HBox.hgrow="ALWAYS"/>
-    </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
-        <padding>
-            <Insets right="30.0" left="30"/>
-        </padding>
-        <Label text="Datatype: "/>
-        <TextField fx:id="datatypeField" HBox.hgrow="ALWAYS" editable="false" VBox.vgrow="ALWAYS"/>
-    </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="50" spacing="10">
-        <padding>
-            <Insets right="30" left="30"/>
-        </padding>
+    <HBox>
         <Button mnemonicParsing="false" onAction="#btnSaveDataClicked" text="Save Changes"/>
     </HBox>
-
 </VBox>

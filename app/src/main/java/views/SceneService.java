@@ -1,6 +1,7 @@
 package views;
 
 import com.google.inject.ImplementedBy;
+import events.SetUIState.State;
 import java.io.IOException;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -17,4 +18,8 @@ public interface SceneService {
   void setRootScene(Scene scene);
 
   void setContent(Pane pane, View view) throws IOException;
+
+  State getState();
+
+  void setState(State state);
 }
