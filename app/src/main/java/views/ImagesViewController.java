@@ -3,6 +3,7 @@ package views;
 import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
 import events.AddToExport;
+import events.PlayDiashow;
 import events.ShowImages;
 import java.io.File;
 import java.net.URL;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.CacheHint;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
@@ -81,22 +83,20 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   private List<ImageView> createThumbnails(List<Media> mediaList) {
     List<ImageView> resizedImages = new ArrayList<>();
-
     mediaList.forEach(
         item -> {
           var file = new File(item.getFilename());
-          var tempImage = new Image(file.toURI().toString());
-
           var imageView = new ImageView();
-          imageView.setImage(tempImage);
 
+          Image tempImage;
           if (maxImages == 10) {
-            imageView.setFitWidth(400);
+              tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
+          } else {
+              tempImage = new Image(file.toURI().toString(), scrollPane.getWidth(), scrollPane.getHeight(),true,true);
           }
-
-          imageView.setPreserveRatio(true);
-          imageView.setSmooth(true);
+          imageView.setImage(tempImage);
           imageView.setCache(true);
+          imageView.setCacheHint(CacheHint.SPEED);
 
           imageView.addEventHandler(
               MouseEvent.MOUSE_CLICKED,
