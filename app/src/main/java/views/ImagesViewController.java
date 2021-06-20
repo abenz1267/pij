@@ -141,4 +141,8 @@ public class ImagesViewController extends AbstractController implements Initiali
     maxImages = 10;
     display();
   }
+
+  @FXML void playAllAsDiashow() {
+      this.eventService.post(new PlayDiashow(media));
+  }
 }

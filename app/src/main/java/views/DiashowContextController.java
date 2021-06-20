@@ -41,11 +41,12 @@ public class DiashowContextController extends AbstractController implements Init
     private StackPane stackPane = new StackPane();
     private Timeline timer;
     private int currentImage = 0;
-    private final int slideDuration = 1;
+    private final int slideDuration = 3;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.logger.log(Level.INFO, this.getClass() + "initialized");
         eventService.register(this);
     }
 
@@ -54,7 +55,6 @@ public class DiashowContextController extends AbstractController implements Init
         if (this.media.contains(event.getMedia())) {
             return;
         }
-        this.media.add(event.getMedia());
 
         var children = list.getChildren();
         media.add(event.getMedia());
@@ -99,53 +99,8 @@ public class DiashowContextController extends AbstractController implements Init
         eventService.post(new SetUIState(SetUIState.State.CLOSE_CONTEXT));
     }
 
-
-    /*
-Vorher in eigener View, konnte aber kein event hin posten (Immernoch in DiashowController.. falls es ich etwas übersehen habe
- */
     @FXML
     private void startDiashow() {
-        logger.log(Level.INFO, "Diashow started");
-        stackPane = new StackPane();
-        stackPane.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        this.currentImage = 0;
-        this.stackPane.getChildren().clear();
-
-        Scene secondScene = new Scene(stackPane, 230, 100);
-        Stage newWindow = new Stage();
-        newWindow.setFullScreen(true);
-        newWindow.setTitle("Diashow");
-        newWindow.setScene(secondScene);
-        newWindow.show();
-
-        newWindow.addEventHandler(KeyEvent.KEY_RELEASED, event1 -> {
-            if (event1.getCode().equals(KeyCode.ESCAPE)) {
-                this.logger.log(Level.INFO, "Diashow closed");
-                newWindow.close();
-                timer.stop();
-            }
-        });
-
-        cycleThroughImages();
-
-    }
-
-
-    private void cycleThroughImages() {
-        timer = new Timeline(
-                new KeyFrame(Duration.seconds(slideDuration), event -> {
-                    setCurrentImage(currentImage);
-                }));
-        timer.setCycleCount(Timeline.INDEFINITE);
-        timer.play();
-    }
-
-    private void setCurrentImage(int index) {
-        if (index > media.size() - 1) currentImage = 0;
-        stackPane.getChildren().clear();
-        var file = new File(media.get(currentImage++).getFilename());
-        Image tempImage = new Image(file.toURI().toString(), stackPane.getWidth(), stackPane.getHeight(), true,true);
-        ImageView imageView = new ImageView(tempImage);
-        stackPane.getChildren().add(imageView);
+        this.eventService.post(new PlayDiashow(media));
     }
 }
