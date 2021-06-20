@@ -5,6 +5,7 @@ import events.LoadMetaData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -42,15 +43,29 @@ public class MetaDataController extends AbstractController implements Initializa
 
     if (media.getLocation() != null) {
       locationField.setText(media.getLocation().toString());
+      locationField.setAlignment(Pos.CENTER_RIGHT);
     }
 
     idField.setText(String.valueOf(media.getId()));
+    idField.setAlignment(Pos.CENTER_RIGHT);
+
     filenameField.setText(media.getFilename());
+    filenameField.setAlignment(Pos.CENTER_RIGHT);
+
     nameField.setText(media.getName());
+    nameField.setAlignment(Pos.CENTER_RIGHT);
+
     descriptionField.setText(media.getDescription());
+    descriptionField.setAlignment(Pos.CENTER_RIGHT);
+
     datatypeField.setText(media.getDataType().toString());
+    datatypeField.setAlignment(Pos.CENTER_RIGHT);
+
     resolutionField.setText(media.getResolution().toString());
+    resolutionField.setAlignment(Pos.CENTER_RIGHT);
+
     isPrivateBox.setSelected(media.isPrivate());
+    isPrivateBox.setAlignment(Pos.CENTER_RIGHT);
 
   }
 

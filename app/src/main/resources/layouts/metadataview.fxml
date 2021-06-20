@@ -4,71 +4,75 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
-    <FlowPane fx:id="flowPane">
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Id: "/>
-            <TextField fx:id="idField"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Filename: "/>
-            <TextField fx:id="filenameField" HBox.hgrow="ALWAYS"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Name: "/>
-            <TextField fx:id="nameField" HBox.hgrow="ALWAYS"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Date and Time: "/>
-            <DatePicker fx:id="datetimePicker" HBox.hgrow="ALWAYS"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Description: "/>
-            <TextField fx:id="descriptionField" HBox.hgrow="ALWAYS"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Privat: "/>
-            <CheckBox fx:id="isPrivateBox" HBox.hgrow="ALWAYS"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Resolution: "/>
-            <TextField fx:id="resolutionField" HBox.hgrow="ALWAYS" editable="false"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Location: "/>
-            <TextField fx:id="locationField" HBox.hgrow="ALWAYS"/>
-        </HBox>
-        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
-            <padding>
-                <Insets right="30.0"/>
-            </padding>
-            <Label alignment="CENTER_RIGHT" minWidth="100.0" text="Datatype: "/>
-            <TextField fx:id="datatypeField" HBox.hgrow="ALWAYS" editable="false"/>
-        </HBox>
+<VBox stylesheets="@metadataview.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Id: "/>
+        <TextField fx:id="idField" HBox.hgrow="ALWAYS"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Filename: "/>
+        <TextField fx:id="filenameField" HBox.hgrow="ALWAYS" maxWidth="300"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Name: "/>
+        <TextField fx:id="nameField" HBox.hgrow="ALWAYS"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Date and Time: "/>
+        <DatePicker fx:id="datetimePicker" HBox.hgrow="ALWAYS"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Description: "/>
+        <TextField fx:id="descriptionField" HBox.hgrow="ALWAYS"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Privat: "/>
+        <CheckBox fx:id="isPrivateBox"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Resolution: "/>
+        <TextField fx:id="resolutionField" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" editable="false"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Location: "/>
+        <TextField fx:id="locationField" HBox.hgrow="ALWAYS"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0">
+        <padding>
+            <Insets right="30.0" left="30"/>
+        </padding>
+        <Label text="Datatype: "/>
+        <TextField fx:id="datatypeField" HBox.hgrow="ALWAYS" editable="false" VBox.vgrow="ALWAYS"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="50" spacing="10">
+        <padding>
+            <Insets right="30" left="30"/>
+        </padding>
         <Button mnemonicParsing="false" onAction="#btnSaveDataClicked" text="Save Changes"/>
-    </FlowPane>
+    </HBox>
+
 </VBox>
