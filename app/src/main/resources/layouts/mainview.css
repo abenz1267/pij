@@ -2,6 +2,23 @@
   -fx-font-family: "sans-serif";
   -fx-font-size: 16px;
   -fx-orientation: vertical;
+  -fx-background-color: #222b38;
+}
+
+Button {
+  -fx-background-radius: 0;
+  -fx-background-insets: none;
+  -fx-background-color: #ffffff;
+  -fx-text-fill: #333;
+}
+
+Button FontIcon {
+  -fx-icon-color: #333;
+  -fx-icon-size: 24px;
+}
+
+Button:hover {
+  -fx-cursor: hand;
 }
 
 .btn--disabled,

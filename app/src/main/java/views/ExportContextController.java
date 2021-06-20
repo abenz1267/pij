@@ -10,10 +10,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,7 +32,7 @@ import resources.Resource;
 
 public class ExportContextController extends AbstractController implements Initializable {
   @FXML VBox list;
-  List<Media> media = new ArrayList<>();
+  HashSet<Media> media = new HashSet<>();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -42,6 +41,10 @@ public class ExportContextController extends AbstractController implements Initi
 
   @Subscribe
   private void add(AddToExport event) {
+    if (this.media.contains(event.getMedia())) {
+      return;
+    }
+
     var children = list.getChildren();
     media.add(event.getMedia());
 
@@ -56,8 +59,7 @@ public class ExportContextController extends AbstractController implements Initi
         new EventHandler<ActionEvent>() {
           @Override
           public void handle(ActionEvent e) {
-            media =
-                media.stream().filter(i -> i.equals(event.getMedia())).collect(Collectors.toList());
+            media.remove(event.getMedia());
 
             Node node = null;
             for (var child : children) {
@@ -103,7 +105,7 @@ public class ExportContextController extends AbstractController implements Initi
     }
 
     try {
-      mediaService.exportMedia(this.media, file.toPath());
+      mediaService.exportMedia(new ArrayList<Media>(this.media), file.toPath());
     } catch (IOException | SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }

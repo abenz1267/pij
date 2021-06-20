@@ -30,14 +30,7 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML Button albumBtn;
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {
-    exportBtn.getStyleClass().add("btn--disabled");
-  }
-
-  @FXML
-  private void enable() {
-    exportBtn.getStyleClass().remove("btn--disabled");
-  }
+  public void initialize(URL location, ResourceBundle resources) {}
 
   @FXML
   private void openFileDialog() {

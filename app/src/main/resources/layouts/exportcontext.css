@@ -8,16 +8,28 @@
   -fx-padding: 0 0 20px 0;
 }
 
-.content FlowPane {
+.exportBtns {
   -fx-alignment: center-right;
   -fx-hgap: 10px;
   -fx-padding: 20px 0 0 0;
 }
 
+.cancel {
+  -fx-alignment: center-left;
+}
+
+.export {
+  -fx-alignment: center-right;
+}
+
 #list {
   -fx-spacing: 10px;
-  -fx-background-color: #ffffff;
+  -fx-background-color: #fefefe;
   -fx-padding: 20px;
+}
+
+#list Label {
+  -fx-text-fill: #000000;
 }
 
 .file {

@@ -37,7 +37,6 @@ public class ImagesViewController extends AbstractController implements Initiali
     eventService.register(this);
 
     scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
   }

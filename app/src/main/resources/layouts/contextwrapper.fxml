@@ -4,5 +4,5 @@
 <?import javafx.scene.control.Label?>
 
 
-<FlowPane styleClass="contextWrapper" fx:id="contextwrapper" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContextController">
+<FlowPane stylesheets="@contextwrapper.css" styleClass="contextwrapper" fx:id="contextwrapper" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ContextController">
 </FlowPane>
