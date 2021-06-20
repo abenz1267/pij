@@ -8,43 +8,43 @@ import entities.person.Person;
 @DatabaseTable()
 public class PersonMedia {
 
-    @DatabaseField(generatedId = true)
-    private int id;
+  @DatabaseField(generatedId = true)
+  private int id;
 
-    @DatabaseField(foreign = true, columnName = "person_id")
-    Person person;
+  @DatabaseField(foreign = true, columnName = "person_id")
+  Person person;
 
-    @DatabaseField(foreign = true, columnName = "media_id")
-    Media media;
+  @DatabaseField(foreign = true, columnName = "media_id")
+  Media media;
 
-    PersonMedia() {}
+  PersonMedia() {}
 
-    public PersonMedia(Person person, Media media) {
-        this.person = person;
-        this.media = media;
-    }
+  public PersonMedia(Person person, Media media) {
+    this.person = person;
+    this.media = media;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public Person getPerson() {
-        return person;
-    }
+  public Person getPerson() {
+    return person;
+  }
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+  public void setPerson(Person person) {
+    this.person = person;
+  }
 
-    public Media getMedia() {
-        return media;
-    }
+  public Media getMedia() {
+    return media;
+  }
 
-    public void setMedia(Media media) {
-        this.media = media;
-    }
+  public void setMedia(Media media) {
+    this.media = media;
+  }
 }

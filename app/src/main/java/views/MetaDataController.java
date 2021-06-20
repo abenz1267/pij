@@ -4,6 +4,12 @@ import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
 import entities.person.Person;
 import events.LoadMetaData;
+import java.net.URL;
+import java.sql.SQLException;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,12 +18,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import java.net.URL;
-import java.sql.SQLException;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
 
 public class MetaDataController extends AbstractController implements Initializable {
   @FXML private TextField nameField;
@@ -54,8 +54,6 @@ public class MetaDataController extends AbstractController implements Initializa
       locationField.setAlignment(Pos.CENTER_RIGHT);
     }
 
-
-
     nameField.setText(media.getName());
     nameField.setAlignment(Pos.CENTER_RIGHT);
 
@@ -70,7 +68,6 @@ public class MetaDataController extends AbstractController implements Initializa
 
     isPrivateBox.setSelected(media.isPrivate());
     isPrivateBox.setAlignment(Pos.CENTER_RIGHT);
-
   }
 
   @FXML
@@ -94,6 +91,5 @@ public class MetaDataController extends AbstractController implements Initializa
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
-
   }
 }

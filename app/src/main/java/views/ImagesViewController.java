@@ -2,9 +2,8 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
-import events.EventService;
-import events.SetUIState;
 import events.AddToExport;
+import events.SetUIState;
 import events.ShowImages;
 import java.io.File;
 import java.net.URL;
@@ -111,7 +110,7 @@ public class ImagesViewController extends AbstractController implements Initiali
                         eventService.post(new AddToExport(item));
                         break;
                       default:
-                          eventService.post(new SetUIState(SetUIState.State.METADATA, item));
+                        eventService.post(new SetUIState(SetUIState.State.METADATA, item));
                         break;
                     }
                     logger.log(Level.INFO, "DOUBLECLICK");

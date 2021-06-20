@@ -1,6 +1,5 @@
 package views;
 
-import entities.media.Media;
 import events.SetUIState;
 import events.SetUIState.State;
 import java.net.URL;

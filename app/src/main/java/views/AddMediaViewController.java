@@ -1,15 +1,13 @@
 package views;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-
-import javafx.event.ActionEvent;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class AddMediaViewController extends AbstractController implements Initializable {
   @FXML private FlowPane flowPane;
@@ -29,6 +27,5 @@ public class AddMediaViewController extends AbstractController implements Initia
     stage.close();
   }
 
-  public void btnAddMediaClicked(ActionEvent actionEvent) {
-  }
+  public void btnAddMediaClicked(ActionEvent actionEvent) {}
 }

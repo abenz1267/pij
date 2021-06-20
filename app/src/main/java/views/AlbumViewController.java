@@ -1,19 +1,16 @@
 package views;
 
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.layout.TilePane;
 
 public class AlbumViewController extends AbstractController implements Initializable {
-  @FXML
-  private TilePane tilePane;
+  @FXML private TilePane tilePane;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {

@@ -348,8 +348,9 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       }
     }
 
-    toRemove.forEach(el -> {
-      persons.remove(el);
-    });
+    toRemove.forEach(
+        el -> {
+          persons.remove(el);
+        });
   }
 }

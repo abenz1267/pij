@@ -3,7 +3,6 @@ package views;
 import com.google.inject.Inject;
 import entities.album.AlbumService;
 import entities.media.MediaService;
-import entities.resolution.Resolution;
 import entities.resolution.ResolutionService;
 import events.EventService;
 import java.util.logging.Logger;

@@ -5,5 +5,5 @@ import com.j256.ormlite.dao.Dao;
 
 @ImplementedBy(PersonMediaServiceImpl.class)
 public interface PersonMediaService {
-    Dao<PersonMedia, Integer> dao();
+  Dao<PersonMedia, Integer> dao();
 }

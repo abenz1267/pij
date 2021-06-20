@@ -2,6 +2,8 @@ package pij;
 
 import entities.DatabaseConnectionService;
 import fr.brouillard.oss.cssfx.CSSFX;
+import java.io.File;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,9 +12,6 @@ import resources.ResourceService;
 import views.Loader;
 import views.SceneService;
 import views.View;
-
-import java.io.File;
-import java.io.IOException;
 
 public class App extends Application {
   @Override
