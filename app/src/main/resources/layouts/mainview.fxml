@@ -9,4 +9,5 @@
 <VBox stylesheets="@mainview.css" styleClass="mainview" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.MainController">
   <fx:include source="topmenu.fxml" />
   <fx:include source="container.fxml" />
+  <fx:include source="diashow.fxml" />
 </VBox>

@@ -7,7 +7,8 @@ public class SetUIState {
     INITIAL,
     CLOSE_CONTEXT,
     ALBUM,
-    EXPORT;
+    EXPORT,
+    DIASHOW;
   }
 
   public SetUIState(State state) {

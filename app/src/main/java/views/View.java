@@ -6,6 +6,7 @@ public enum View {
   IMAGESVIEW("imagesview"),
   ALBUMCONTEXT("albumcontext"),
   CLEAR("CLEAR"),
+  DIASHOW("diashowcontext"),
   EXPORTCONTEXT("exportcontext");
 
   private final String name;

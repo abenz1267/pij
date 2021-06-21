@@ -15,4 +15,7 @@
   <Button fx:id="albumBtn" text="Alben" onAction="#showAlbumView">
     <graphic><FontIcon iconLiteral="mdi2i-image-album" /></graphic>
   </Button>
+  <Button fx:id="diashowBtn" text="Diashow" onAction="#showDiashowPrep">
+    <graphic><FontIcon iconLiteral="mdi2a-animation-play" /></graphic>
+  </Button>
 </FlowPane>
