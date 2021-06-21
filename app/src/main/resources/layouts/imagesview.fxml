@@ -9,17 +9,22 @@
 <?import javafx.scene.control.Button?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
+<?import javafx.scene.control.Label?>
 <VBox stylesheets="@imagesview.css" styleClass="imagesview" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesViewController">
+  <Label fx:id="albumTitle" styleClass="albumTitle"/>
   <HBox styleClass="controls">
     <fx:include source="search.fxml" />
     <Button text="Als Diashow Abspielen" onAction="#playAllAsDiashow">
       <graphic><FontIcon iconLiteral="mdi2a-animation-play-outline" /></graphic>
     </Button>
+    <Button fx:id="addToAlbumBtn" text="Bilder hinzufügen" onAction="#addToAlbum">
+      <graphic><FontIcon iconLiteral="mdi2i-image-plus" /></graphic>
+    </Button>
     <HBox HBox.hgrow="ALWAYS" styleClass="viewcontrols">
       <Button fx:id="singleBtn" onAction="#singleView">
         <graphic><FontIcon iconLiteral="mdi2i-image" /></graphic>
       </Button>
-      <Button fx:id="singleBtn" onAction="#multipleView">
+      <Button fx:id="multipleBtn" onAction="#multipleView">
         <graphic><FontIcon iconLiteral="mdi2i-image-multiple" /></graphic>
       </Button>
     </HBox>

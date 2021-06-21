@@ -3,9 +3,11 @@ package views;
 import com.google.inject.Inject;
 import entities.PersonMedia.PersonMediaService;
 import entities.album.AlbumService;
+import entities.albummedia.AlbumMediaService;
 import entities.media.Media;
 import entities.media.MediaService;
 import entities.resolution.ResolutionService;
+import entities.tag.TagService;
 import events.EventService;
 import java.util.HashSet;
 import java.util.logging.Logger;
@@ -29,8 +31,10 @@ abstract class AbstractController {
   @Inject protected MediaService mediaService;
   @Inject protected Logger logger;
   @Inject protected AlbumService albumService;
+  @Inject protected AlbumMediaService albumMediaService;
   @Inject protected ResolutionService resolutionService;
   @Inject protected PersonMediaService personMediaService;
+  @Inject protected TagService tagService;
 
   protected HashSet<Media> itemList = new HashSet<>();
 

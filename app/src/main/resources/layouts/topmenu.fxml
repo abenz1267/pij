@@ -16,11 +16,7 @@
             <FontIcon iconLiteral="mdi2i-image-album"/>
         </graphic>
     </Button>
-    <Button fx:id="createAlbumBtn" text="neues Album" onAction="#newAlbumDialog">
-        <graphic>
-            <FontIcon iconLiteral="mdi2f-folder-plus-outline"/>
-        </graphic>
-    </Button>
+
     <Button fx:id="importBtn" text="Importieren" onAction="#openFileImportDialog">
         <graphic>
             <FontIcon iconLiteral="mdi2i-import"/>

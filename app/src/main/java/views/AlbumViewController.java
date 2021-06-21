@@ -1,16 +1,19 @@
 package views;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 import events.SetUIState;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class AlbumViewController extends AbstractController implements Initializable {
   @FXML private TilePane tilePane;
@@ -31,7 +34,7 @@ public class AlbumViewController extends AbstractController implements Initializ
 
         albumBtn.setOnAction(
             e -> {
-              eventService.post(new SetUIState(SetUIState.State.ALBUMCONTEXT, album));
+              eventService.post(new SetUIState(SetUIState.State.ALBUM, album));
             });
 
         children.add(albumBtn);
@@ -39,5 +42,14 @@ public class AlbumViewController extends AbstractController implements Initializ
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
+  }
+
+  @FXML
+  private void newAlbumDialog() throws IOException {
+    var stage = new Stage();
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.setScene(new Scene(sceneService.load(View.NEWALBUM)));
+    stage.setTitle("Neues Album erstellen");
+    stage.showAndWait();
   }
 }

@@ -3,8 +3,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.Button?>
 
 <VBox stylesheets="@albumview.css" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.AlbumViewController">
+    <Button fx:id="createAlbumBtn" text="neues Album" onAction="#newAlbumDialog">
+        <graphic>
+            <FontIcon iconLiteral="mdi2f-folder-plus-outline"/>
+        </graphic>
+    </Button>
     <TilePane styleClass="container" fx:id="tilePane"/>
 </VBox>

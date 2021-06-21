@@ -2,6 +2,7 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import events.LoadMetaData;
+import events.SetAlbumToAdd;
 import events.SetUIState;
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +32,7 @@ public class ContextController extends AbstractController implements Initializab
   }
 
   @Subscribe
-  public void setView(SetUIState event) {
+  private void setView(SetUIState event) {
     sceneService.setState(event.getState());
 
     try {
@@ -41,9 +42,10 @@ public class ContextController extends AbstractController implements Initializab
           eventService.post(new LoadMetaData(event.getMedia()));
           break;
         case ADDTOALBUM:
-          sceneService.setContent(this.contextwrapper, View.ADDTOALBUMVIEW);
+          sceneService.setContent(this.contextwrapper, View.ADDTOALBUMCONTEXT);
+          eventService.post(new SetAlbumToAdd(event.getAlbum()));
           break;
-        case CLOSE_CONTEXT:
+        case CLOSE_CONTEXT, ALBUMLIST, INITIAL:
           sceneService.setContent(this.contextwrapper, View.CLEAR);
           break;
         case EXPORT:

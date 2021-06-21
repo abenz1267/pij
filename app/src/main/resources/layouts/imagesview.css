@@ -33,3 +33,9 @@ FlowPane > ImageView {
 .pagination .page {
   visibility: hidden;
 }
+
+.albumTitle {
+  -fx-font-size: 22px;
+  -fx-text-fill: #FEFEFE;
+  -fx-padding: 0 0 20px 0;
+}

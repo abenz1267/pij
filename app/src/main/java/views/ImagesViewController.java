@@ -1,15 +1,9 @@
 package views;
 
 import com.google.common.eventbus.Subscribe;
+import entities.album.Album;
 import entities.media.Media;
 import events.*;
-
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.CacheHint;
@@ -22,19 +16,28 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class ImagesViewController extends AbstractController implements Initializable {
   @FXML private TilePane imageWrapper;
   @FXML private ScrollPane scrollPane;
   @FXML private Pagination pagination;
-  @FXML private Button singleBtn;
-  @FXML private Button multipleBtn;
+  @FXML private Button addToAlbumBtn;
+  @FXML private Label albumTitle;
 
   private int maxImages = 10;
   private List<Media> media;
+  private Album album;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    addToAlbumBtn.setVisible(false);
+    albumTitle.setText("Alle Bilder");
     eventService.register(this);
 
     scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -45,6 +48,13 @@ public class ImagesViewController extends AbstractController implements Initiali
   @Subscribe
   public void displayMedia(ShowImages event) {
     this.media = event.getMedia();
+    this.album = event.getAlbum();
+
+    if (this.album != null) {
+      addToAlbumBtn.setVisible(true);
+      albumTitle.setText("Album: " + this.album.getName());
+    }
+
     display();
   }
 
@@ -95,11 +105,9 @@ public class ImagesViewController extends AbstractController implements Initiali
                       case EXPORT:
                         eventService.post(new AddToExport(item));
                         break;
-                      case ALBUM:
-                        eventService.post(new AddToAlbum(item));
-                        break;
                       case ADDTOALBUM:
                         eventService.post(new AddToAlbum(item));
+                        break;
                       case DIASHOW:
                         eventService.post(new AddToDiashow(item));
                         break;
@@ -128,9 +136,13 @@ public class ImagesViewController extends AbstractController implements Initiali
     if (maxImages == 10) {
       tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
     } else {
-      tempImage =
-          new Image(
-              file.toURI().toString(), scrollPane.getWidth(), scrollPane.getHeight(), true, true);
+      var width = media.getResolution().getWidth();
+      var height = media.getResolution().getHeight();
+      if (width > scrollPane.getWidth() || height > scrollPane.getHeight()) {
+        width = (int) scrollPane.getWidth();
+        height = (int) scrollPane.getHeight();
+      }
+      tempImage = new Image(file.toURI().toString(), width, height, true, true);
     }
     var tempImageView = new ImageView();
     tempImageView.setImage(tempImage);
@@ -154,5 +166,10 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML
   void playAllAsDiashow() {
     this.eventService.post(new PlayDiashow(this.media));
+  }
+
+  @FXML
+  private void addToAlbum() {
+    eventService.post(new SetUIState(SetUIState.State.ADDTOALBUM, this.album));
   }
 }

@@ -3,6 +3,8 @@ package views;
 import entities.album.Album;
 import java.sql.SQLException;
 import java.util.logging.Level;
+
+import events.SetUIState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -36,5 +38,6 @@ public class NewAlbumDialogController extends AbstractController {
     Node source = (Node) event.getSource();
     var stage = (Stage) source.getScene().getWindow();
     stage.close();
+    eventService.post(new SetUIState(SetUIState.State.ALBUMLIST));
   }
 }

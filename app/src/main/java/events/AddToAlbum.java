@@ -1,5 +1,6 @@
 package events;
 
+import entities.album.Album;
 import entities.media.Media;
 
 /**

@@ -22,6 +22,7 @@ public class SetUIState {
   public enum State {
     INITIAL,
     CLOSE_CONTEXT,
+    ALBUMLIST,
     ALBUM,
     ALBUMCONTEXT,
     ADDTOALBUM,
@@ -51,5 +52,9 @@ public class SetUIState {
 
   public Media getMedia() {
     return this.media;
+  }
+
+  public Album getAlbum() {
+    return album;
   }
 }

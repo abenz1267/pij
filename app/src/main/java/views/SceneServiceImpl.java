@@ -37,8 +37,10 @@ public class SceneServiceImpl implements SceneService {
     children.clear();
 
     if (view.equals(View.CLEAR)) {
+      pane.setVisible(false);
       return;
     }
+    pane.setVisible(true);
 
     var nPane = this.load(view);
     children.add(nPane);

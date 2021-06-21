@@ -45,7 +45,6 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML Button imagesBtn;
   @FXML Button diashowBtn;
 
-
   private static final String BTN_DISABLED = "btn--disabled";
 
   @Override
@@ -98,17 +97,8 @@ public class TopMenuController extends AbstractController implements Initializab
   }
 
   @FXML
-  private void newAlbumDialog() throws IOException {
-    var stage = new Stage();
-    stage.initModality(Modality.APPLICATION_MODAL);
-    stage.setScene(new Scene(sceneService.load(View.NEWALBUM)));
-    stage.setTitle("Neues Album erstellen");
-    stage.showAndWait();
-  }
-
-  @FXML
   private void showAlbumView() {
-    eventService.post(new SetUIState(State.ALBUM));
+    eventService.post(new SetUIState(State.ALBUMLIST));
   }
 
   @FXML

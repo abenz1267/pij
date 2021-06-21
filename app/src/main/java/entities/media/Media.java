@@ -49,7 +49,7 @@ public class Media {
   private Resolution resolution;
 
   private List<Person> persons = new ArrayList<>();
-  private Tag[] tags;
+  private List<Tag> tags = new ArrayList<>();
 
   public enum DataType {
     JPEG("*.jpeg"),
@@ -181,11 +181,11 @@ public class Media {
     this.persons = persons;
   }
 
-  public Tag[] getTags() {
+  public List<Tag> getTags() {
     return tags;
   }
 
-  public void setTags(Tag[] tags) {
+  public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
 

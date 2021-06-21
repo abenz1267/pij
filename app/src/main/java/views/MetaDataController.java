@@ -1,11 +1,19 @@
 package views;
 
-import static java.time.ZoneOffset.UTC;
-
 import com.google.common.eventbus.Subscribe;
+import entities.location.Location;
 import entities.media.Media;
 import entities.person.Person;
 import events.LoadMetaData;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import org.kordamp.ikonli.javafx.FontIcon;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
@@ -14,15 +22,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import org.kordamp.ikonli.javafx.FontIcon;
 
+/**
+ * Controller to handle metadata view
+ *
+ * @author Timm Lohmann
+ * @author Phillip Knutzen
+ * @author Joey Wille
+ */
 public class MetaDataController extends AbstractController implements Initializable {
   @FXML private TextField nameField;
   @FXML private DatePicker datetimePicker;
@@ -34,12 +41,22 @@ public class MetaDataController extends AbstractController implements Initializa
   @FXML private TextField personFieldFirstName;
   @FXML private TextField personFieldLastName;
   @FXML private VBox personBox;
+  @FXML private ComboBox tagBox;
+  @FXML private TilePane tagPane;
 
   private Media media;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     eventService.register(this);
+
+    try {
+      tagService.dao().queryForAll().forEach(tag -> {
+        tagBox.getItems().add(tag.getName());
+      });
+    } catch (SQLException e) {
+      logger.log(Level.SEVERE, e.getMessage());
+    }
   }
 
   @Subscribe
@@ -58,6 +75,8 @@ public class MetaDataController extends AbstractController implements Initializa
       locationField.setText(media.getLocation().toString());
       locationField.setAlignment(Pos.CENTER_RIGHT);
     }
+
+
 
     nameField.setText(media.getName());
     nameField.setAlignment(Pos.CENTER_RIGHT);
@@ -79,15 +98,19 @@ public class MetaDataController extends AbstractController implements Initializa
 
   @FXML
   public void btnSaveDataClicked(ActionEvent event) {
-    this.media.setName(nameField.getText().trim());
+    this.media.setName(nameField.getText());
     this.media.setDescription(descriptionField.getText());
     this.media.setPrivate(isPrivateBox.isSelected());
-    //    this.media.setLocation(locationField.getText().trim());
+
+    var location = new Location();
+    location.setName(locationField.getText());
+    this.media.setLocation(location);
 
     var localDate = datetimePicker.getValue();
-    var date = Date.from(localDate.atStartOfDay().toInstant(ZoneOffset.UTC));
-    this.media.setDatetime(date);
-
+    if (localDate != null) {
+      var date = Date.from(localDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+      this.media.setDatetime(date);
+    }
 
     try {
       mediaService.update(media);
@@ -103,8 +126,8 @@ public class MetaDataController extends AbstractController implements Initializa
     }
 
     var person = new Person();
-    person.setFirstname(personFieldFirstName.getText().trim());
-    person.setLastname(personFieldLastName.getText().trim());
+    person.setFirstname(personFieldFirstName.getText());
+    person.setLastname(personFieldLastName.getText());
     media.getPersons().add(person);
     try {
       mediaService.update(media);
@@ -117,6 +140,11 @@ public class MetaDataController extends AbstractController implements Initializa
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
+  }
+
+  @FXML
+  public void addTag() {
+
   }
 
   private void listPersons(Media media) {

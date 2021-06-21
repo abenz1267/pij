@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+
 <VBox styleClass="container" stylesheets="@metadataview.css" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
     <VBox>
@@ -82,6 +81,17 @@
             <Label fx:id="datatypeField"/>
         </HBox>
     </HBox>
+    <VBox>
+        <HBox>
+            <ComboBox fx:id="tagBox"/>
+            <Button fx:id="addTagBtn" onAction="#addTag">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2b-bookmark-plus-outline"/>
+                </graphic>
+            </Button>
+        </HBox>
+        <TilePane fx:id="tagPane"/>
+    </VBox>
     <HBox>
         <Button mnemonicParsing="false" onAction="#btnSaveDataClicked" text="Save Changes"/>
     </HBox>

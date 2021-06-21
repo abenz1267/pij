@@ -7,6 +7,7 @@ import entities.albummedia.AlbumMedia;
 import entities.albummedia.AlbumMediaService;
 import entities.media.Media;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import javax.inject.Inject;
 import javax.inject.Singleton;
