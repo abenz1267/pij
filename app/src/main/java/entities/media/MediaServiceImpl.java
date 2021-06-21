@@ -298,6 +298,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   }
 
   public void update(Media media) throws SQLException {
+    
     this.refreshAll(media);
     this.checkPersons(media);
     locationService.checkLocation(media);

@@ -22,7 +22,7 @@
                 </Button>
             </HBox>
             <ScrollPane>
-              <VBox VBox.vgrow="ALWAYS" styleClass="personbox" fx:id="personBox"/>
+              <VBox VBox.vgrow="ALWAYS" styleClass="personbox" fx:id="list" minWidth="300"/>
             </ScrollPane>
         </VBox>
     </VBox>
