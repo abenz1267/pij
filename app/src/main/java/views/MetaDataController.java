@@ -7,6 +7,7 @@ import events.LoadMetaData;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -48,9 +49,9 @@ public class MetaDataController extends AbstractController implements Initializa
     this.media = media;
 
     if (media.getDatetime() != null) {
-      var input = media.getDatetime();
-      var date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-      datetimePicker.setValue(date);
+      var date = media.getDatetime();
+      var localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+      datetimePicker.setValue(localDate);
     }
 
     if (media.getLocation() != null) {
@@ -84,8 +85,9 @@ public class MetaDataController extends AbstractController implements Initializa
 //    this.media.setLocation(locationField.getText().trim());
 
     var localDate = datetimePicker.getValue();
-    var date = Date.from(localDate.atStartOfDay().toInstant(UTC));
+    var date = Date.from(localDate.atStartOfDay().toInstant(ZoneOffset.UTC));
     this.media.setDatetime(date);
+
 
     try {
       mediaService.update(media);

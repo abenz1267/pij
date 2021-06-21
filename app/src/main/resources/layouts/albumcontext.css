@@ -1,0 +1,15 @@
+.container > Button {
+    -fx-cursor: hand;
+    -fx-background-color: #9933dd;
+}
+
+.container {
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
+}
+
+.btn {
+    -fx-padding: 20px;
+    -fx-background-color: #ffffff;
+    -fx-alignment: top-center;
+}

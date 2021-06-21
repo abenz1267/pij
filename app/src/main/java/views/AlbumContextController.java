@@ -7,10 +7,15 @@ import events.SetUIState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 public class AlbumContextController extends AbstractController implements Initializable {
+  @FXML
+  Label albumLabel;
+
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+  }
 
   @FXML
   private void addToAlbum(ActionEvent actionEvent) {

@@ -11,7 +11,7 @@
           fx:controller="views.AlbumContextController">
     <HBox>
         <Label fx:id="AlbumLabel"/>
-        <Button fx:id="addToAlbumBtn" text="zu Album hinzufügen" onAction="#addToAlbum">
+        <Button styleClass="btn" text="zu Album hinzufügen" onAction="#addToAlbum">
             <graphic>
                 <FontIcon iconLiteral="mdi2i-image-plus"/>
             </graphic>
