@@ -26,7 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
 /**
- * Controller handling the images that will be displayed
+ * Controller handling the images that will be displayed in the mainwrapper.
  *
  * @author Andrej Benz
  * @author Christian Paulsen
@@ -36,8 +36,6 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML private TilePane imageWrapper;
   @FXML private ScrollPane scrollPane;
   @FXML private Pagination pagination;
-  @FXML private Button singleBtn;
-  @FXML private Button multipleBtn;
 
   private int maxImages = 10;
   private List<Media> media;
