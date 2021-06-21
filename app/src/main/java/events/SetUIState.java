@@ -10,6 +10,7 @@ public class SetUIState {
     INITIAL,
     CLOSE_CONTEXT,
     ALBUM,
+    DIASHOW,
     METADATA,
     IMAGES,
     EXPORT;

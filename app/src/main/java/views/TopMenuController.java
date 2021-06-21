@@ -38,7 +38,9 @@ public class TopMenuController extends AbstractController implements Initializab
   private static final String BTN_DISABLED = "btn--disabled";
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+    //empty initialize
+  }
 
   @FXML
   private void openFileDialog() {
@@ -115,5 +117,10 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML
   private void showExport() {
     eventService.post(new SetUIState(State.EXPORT));
+  }
+
+  @FXML
+  private void showDiashowPrep() {
+    eventService.post(new SetUIState(State.DIASHOW));
   }
 }

@@ -2,7 +2,9 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
+import events.AddToDiashow;
 import events.AddToExport;
+import events.PlayDiashow;
 import events.SetUIState;
 import events.ShowImages;
 import java.io.File;
@@ -13,6 +15,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.CacheHint;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
@@ -82,23 +85,9 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   private List<ImageView> createThumbnails(List<Media> mediaList) {
     List<ImageView> resizedImages = new ArrayList<>();
-
     mediaList.forEach(
         item -> {
-          var file = new File(item.getFilename());
-          var tempImage = new Image(file.toURI().toString());
-
-          var imageView = new ImageView();
-          imageView.setImage(tempImage);
-
-          if (maxImages == 10) {
-            imageView.setFitWidth(400);
-          }
-
-          imageView.setPreserveRatio(true);
-          imageView.setSmooth(true);
-          imageView.setCache(true);
-
+          var imageView = loadImageViewFromMedia(item);
           imageView.addEventHandler(
               MouseEvent.MOUSE_CLICKED,
               event -> {
@@ -108,6 +97,9 @@ public class ImagesViewController extends AbstractController implements Initiali
                     switch (sceneService.getState()) {
                       case EXPORT:
                         eventService.post(new AddToExport(item));
+                        break;
+                      case DIASHOW:
+                        eventService.post(new AddToDiashow(item));
                         break;
                       default:
                         eventService.post(new SetUIState(SetUIState.State.METADATA, item));
@@ -128,7 +120,22 @@ public class ImagesViewController extends AbstractController implements Initiali
     return resizedImages;
   }
 
-  @FXML
+  private ImageView loadImageViewFromMedia(Media media) {
+    var file = new File(media.getFilename());
+    Image tempImage;
+    if (maxImages == 10) {
+        tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
+    } else {
+        tempImage = new Image(file.toURI().toString(), scrollPane.getWidth(), scrollPane.getHeight(), true, true);
+    }
+    var tempImageView = new ImageView();
+    tempImageView.setImage(tempImage);
+    tempImageView.setCache(true);
+    tempImageView.setCacheHint(CacheHint.SPEED);
+    return tempImageView;
+  }
+
+    @FXML
   public void singleView() {
     maxImages = 1;
     display();
@@ -138,5 +145,9 @@ public class ImagesViewController extends AbstractController implements Initiali
   public void multipleView() {
     maxImages = 10;
     display();
+  }
+
+  @FXML void playAllAsDiashow() {
+      this.eventService.post(new PlayDiashow(this.media));
   }
 }

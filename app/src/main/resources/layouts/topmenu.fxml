@@ -36,4 +36,7 @@
             <FontIcon iconLiteral="mdi2e-export"/>
         </graphic>
     </Button>
+    <Button fx:id="diashowBtn" text="Diashow" onAction="#showDiashowPrep">
+        <graphic><FontIcon iconLiteral="mdi2a-animation-play" /></graphic>
+    </Button>
 </FlowPane>

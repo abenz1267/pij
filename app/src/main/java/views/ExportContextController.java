@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -56,22 +54,19 @@ public class ExportContextController extends AbstractController implements Initi
     button.setGraphic(icon);
 
     button.setOnAction(
-        new EventHandler<ActionEvent>() {
-          @Override
-          public void handle(ActionEvent e) {
-            media.remove(event.getMedia());
+            e -> {
+              media.remove(event.getMedia());
 
-            Node node = null;
-            for (var child : children) {
-              var id = (int) child.getProperties().get("key");
-              if (id == event.getMedia().getId()) {
-                node = child;
+              Node node = null;
+              for (var child : children) {
+                var id = (int) child.getProperties().get("key");
+                if (id == event.getMedia().getId()) {
+                  node = child;
+                }
               }
-            }
 
-            children.remove(node);
-          }
-        });
+              children.remove(node);
+            });
 
     wrapper.getChildren().add(label);
     wrapper.getChildren().add(button);
@@ -98,14 +93,14 @@ public class ExportContextController extends AbstractController implements Initi
     var file = f.showSaveDialog(sceneService.getWindow());
     var ext = Files.getFileExtension(file.getName());
 
-    if (ext == "") {
+    if (ext.equals("")) {
       var alert = new Alert(AlertType.ERROR, "Datei muss auf '.zip' enden", ButtonType.OK);
       alert.showAndWait();
       return;
     }
 
     try {
-      mediaService.exportMedia(new ArrayList<Media>(this.media), file.toPath());
+      mediaService.exportMedia(new ArrayList<>(this.media), file.toPath());
     } catch (IOException | SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
