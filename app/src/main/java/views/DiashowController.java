@@ -23,12 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class DiashowController extends AbstractController implements Initializable {
     private List<Media> media = new ArrayList<>();
     private StackPane stackPane = new StackPane();
     private int currentImage = 0;
-    private static int slideDuration = 5;
+    private static final int SLIDEDURATION = 5;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,14 +38,18 @@ public class DiashowController extends AbstractController implements Initializab
 
     @Subscribe
     public void playDiashow(PlayDiashow event) {
-        this.media = event.getMedia();
+        this.media = event.getMedia()
+                .stream()
+                .filter(item -> !item.isPrivate())
+                .collect(Collectors.toList());
+
         logger.log(Level.INFO, "Diashow started");
         stackPane = new StackPane();
         stackPane.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         this.currentImage = 0;
         this.stackPane.getChildren().clear();
         var timer= new Timeline(
-                new KeyFrame(Duration.seconds(slideDuration), event1 -> setCurrentImage(currentImage + 1)));
+                new KeyFrame(Duration.seconds(SLIDEDURATION), event1 -> setCurrentImage(currentImage + 1)));
 
         var secondScene = new Scene(stackPane, 230, 100);
         var newWindow = new Stage();
@@ -80,7 +85,6 @@ public class DiashowController extends AbstractController implements Initializab
         timer.setCycleCount(Animation.INDEFINITE);
         timer.play();
     }
-
 
     private void setCurrentImage(int index) {
         if (index > media.size() - 1) currentImage = 0;
