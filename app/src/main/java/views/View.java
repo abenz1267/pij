@@ -1,5 +1,15 @@
 package views;
 
+/**
+ * Enum for all loadable views.
+ *
+ * @author Andrej Benz
+ * @author Timm Lohmann
+ * @author Joey Wille
+ * @author Phillip Knutzen
+ * @author Christian Paulsen
+ * @author Kelvin Leclaire
+ */
 public enum View {
   MAINVIEW("mainview"),
   SECONDVIEW("secondview"),

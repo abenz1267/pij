@@ -9,17 +9,17 @@ import java.util.logging.Level;
 
 @Singleton
 public class TagServiceImpl extends AbstractEntityService implements TagService {
-  private Dao<Tag, Integer> dao = null;
+  private Dao<Tag, Integer> _dao = null;
 
   public Dao<Tag, Integer> dao() {
-    if (this.dao == null) {
+    if (this._dao == null) {
       try {
-        this.dao = DaoManager.createDao(this.databaseConnectionService.get(), Tag.class);
+        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), Tag.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this.dao;
+    return this._dao;
   }
 }

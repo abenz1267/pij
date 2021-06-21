@@ -27,6 +27,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import resources.Resource;
 
+/**
+ * Controller to handle the top menu
+ *
+ * @author Andrej Benz
+ * @author Timm Lohmann
+ * @author Joey Wille
+ * @author Phillip Knutzen
+ * @author Christian Paulsen
+ * @author Kelvin Leclaire
+ */
 public class TopMenuController extends AbstractController implements Initializable {
   @FXML Button importBtn;
   @FXML Button exportBtn;
@@ -40,11 +50,11 @@ public class TopMenuController extends AbstractController implements Initializab
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    //empty initialize
+    // empty initialize
   }
 
   @FXML
-  private void openFileDialog() {
+  private void openFileImportDialog() {
     var filter =
         new ExtensionFilter(
             "Media files",

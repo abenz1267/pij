@@ -1,5 +1,10 @@
 package resources;
 
+/**
+ * Enum for resources bundles.
+ *
+ * @author Andrej Benz
+ */
 public enum Resource {
   GENERIC("generic"),
   CONFIG("config");

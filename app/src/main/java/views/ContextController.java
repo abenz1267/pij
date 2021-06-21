@@ -11,6 +11,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.FlowPane;
 
+/**
+ * Controller handling the context state.
+ *
+ * @author Andrej Benz
+ * @author Timm Lohmann
+ * @author Joey Wille
+ * @author Phillip Knutzen
+ * @author Christian Paulsen
+ * @author Kelvin Leclaire
+ * @author Huilun Chen
+ */
 public class ContextController extends AbstractController implements Initializable {
   @FXML FlowPane contextwrapper;
 

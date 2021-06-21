@@ -47,19 +47,19 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   @Inject private TagService tagService;
   @Inject private PersonMediaService personMediaService;
 
-  private Dao<Media, Integer> dao = null;
+  private Dao<Media, Integer> _dao = null;
   private boolean keepOriginal = true;
 
   public Dao<Media, Integer> dao() {
-    if (this.dao == null) {
+    if (this._dao == null) {
       try {
-        this.dao = DaoManager.createDao(this.databaseConnectionService.get(), Media.class);
+        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), Media.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this.dao;
+    return this._dao;
   }
 
   public void importMedia(List<File> files) throws IOException, SQLException {
@@ -221,8 +221,8 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     this.transaction(
         () -> {
           for (var m : media) {
-            this.checkLocation(m);
-            this.checkResolution(m);
+            locationService.checkLocation(m);
+            resolutionService.checkResolution(m);
 
             this.dao().createIfNotExists(m);
           }
@@ -234,40 +234,13 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   public void create(Media media) throws SQLException {
     this.transaction(
         () -> {
-          this.checkLocation(media);
-          this.checkResolution(media);
+          locationService.checkLocation(media);
+          resolutionService.checkResolution(media);
 
           this.dao().createIfNotExists(media);
 
           return null;
         });
-  }
-
-  private void checkLocation(Media media) throws SQLException {
-    if (media.getLocation() != null) {
-      List<Location> res =
-          this.locationService.dao().queryForEq("name", media.getLocation().getName());
-
-      if (!res.isEmpty()) {
-        media.setLocation(res.get(0));
-      } else {
-        this.locationService.dao().createIfNotExists(media.getLocation());
-      }
-    }
-  }
-
-  private void checkResolution(Media media) throws SQLException {
-    Map<String, Object> kv = new HashMap<>();
-    kv.put("height", media.getResolution().getHeight());
-    kv.put("width", media.getResolution().getWidth());
-
-    List<Resolution> res = this.resolutionService.dao().queryForFieldValuesArgs(kv);
-
-    if (!res.isEmpty()) {
-      media.setResolution(res.get(0));
-    } else {
-      this.resolutionService.dao().createIfNotExists(media.getResolution());
-    }
   }
 
   public void setKeepOriginal(boolean val) {
@@ -286,7 +259,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
     input = "%" + input + "%";
 
-    QueryBuilder<Media, Integer> mediaQB = dao.queryBuilder();
+    QueryBuilder<Media, Integer> mediaQB = dao().queryBuilder();
     QueryBuilder<Location, Integer> locationQB = locationService.dao().queryBuilder();
     QueryBuilder<Person, Integer> personQB = personService.dao().queryBuilder();
     QueryBuilder<Tag, Integer> tagQB = tagService.dao().queryBuilder();
@@ -304,7 +277,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
     PreparedQuery<Media> preparedQuery = mediaQB.prepare();
 
-    return dao.query(preparedQuery);
+    return dao().query(preparedQuery);
   }
 
   public void refreshAll(Media media) {
@@ -327,7 +300,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   public void update(Media media) throws SQLException {
     this.refreshAll(media);
     this.checkPersons(media);
-    this.checkLocation(media);
+    locationService.checkLocation(media);
     this.dao().update(media);
 
     media.setPersons(new ArrayList<>());
