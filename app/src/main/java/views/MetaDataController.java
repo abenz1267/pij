@@ -1,5 +1,7 @@
 package views;
 
+import static java.time.ZoneOffset.UTC;
+
 import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
 import entities.person.Person;
@@ -20,8 +22,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
-
-import static java.time.ZoneOffset.UTC;
 
 public class MetaDataController extends AbstractController implements Initializable {
   @FXML private TextField nameField;
@@ -82,7 +82,7 @@ public class MetaDataController extends AbstractController implements Initializa
     this.media.setName(nameField.getText().trim());
     this.media.setDescription(descriptionField.getText());
     this.media.setPrivate(isPrivateBox.isSelected());
-//    this.media.setLocation(locationField.getText().trim());
+    //    this.media.setLocation(locationField.getText().trim());
 
     var localDate = datetimePicker.getValue();
     var date = Date.from(localDate.atStartOfDay().toInstant(ZoneOffset.UTC));
@@ -133,15 +133,14 @@ public class MetaDataController extends AbstractController implements Initializa
       button.setGraphic(new FontIcon("mdi2d-delete"));
 
       button.setOnAction(
-              event -> {
-                try {
-                  personMediaService.remove(p, media);
-                  listPersons(media);
-                } catch (SQLException e) {
-                  logger.log(Level.SEVERE, e.getMessage());
-                }
-              }
-      );
+          event -> {
+            try {
+              personMediaService.remove(p, media);
+              listPersons(media);
+            } catch (SQLException e) {
+              logger.log(Level.SEVERE, e.getMessage());
+            }
+          });
 
       wrapper.getChildren().add(label);
       wrapper.getChildren().add(button);
