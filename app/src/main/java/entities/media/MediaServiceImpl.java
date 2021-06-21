@@ -16,7 +16,6 @@ import entities.location.Location;
 import entities.location.LocationService;
 import entities.person.Person;
 import entities.person.PersonService;
-import entities.resolution.Resolution;
 import entities.resolution.ResolutionService;
 import entities.tag.Tag;
 import entities.tag.TagService;
@@ -298,13 +297,10 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   }
 
   public void update(Media media) throws SQLException {
-    this.refreshAll(media);
     this.checkPersons(media);
     locationService.checkLocation(media);
     this.dao().update(media);
-
     media.setPersons(new ArrayList<>());
-    this.refreshAll(media);
   }
 
   private void checkPersons(Media media) throws SQLException {
