@@ -32,10 +32,6 @@ public class SceneServiceImpl implements SceneService {
     return this.scene.getWindow();
   }
 
-  public void change(View view) throws IOException {
-    scene.setRoot(new Loader(App.class, view, resourceService).load());
-  }
-
   public void setContent(Pane pane, View view) throws IOException {
     ObservableList<Node> children = pane.getChildren();
     children.clear();

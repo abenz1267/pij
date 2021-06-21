@@ -12,6 +12,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 
+/**
+ * Controller handling the main wrapper
+ *
+ * @author Andrej Benz
+ * @author Christian Paulsen
+ * @author Kelvin Leclaire
+ */
 public class MainWrapperController extends AbstractController implements Initializable {
   @FXML HBox mainwrapper;
 

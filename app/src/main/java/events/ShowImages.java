@@ -3,6 +3,11 @@ package events;
 import entities.media.Media;
 import java.util.List;
 
+/**
+ * Event to show images.
+ *
+ * @author Andrej Benz
+ */
 public class ShowImages {
   private List<Media> media;
 

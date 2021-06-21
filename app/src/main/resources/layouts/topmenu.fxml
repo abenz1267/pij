@@ -6,7 +6,7 @@
 
 
 <FlowPane stylesheets="@topmenu.css" styleClass="topmenu" prefWrapLength="Infinity" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.TopMenuController">
-  <Button fx:id="importBtn" text="Importieren" onAction="#openFileDialog">
+  <Button fx:id="importBtn" text="Importieren" onAction="#openFileImportDialog">
     <graphic><FontIcon iconLiteral="mdi2i-import" /></graphic>
   </Button>
   <Button fx:id="exportBtn" text="Exportieren" onAction="#showExport">

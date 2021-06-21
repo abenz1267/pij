@@ -21,6 +21,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import resources.Resource;
 
+/**
+ * Controller handling the export context
+ *
+ * @author Andrej Benz
+ */
 public class ExportContextController extends AbstractController implements Initializable {
   @FXML VBox list;
 

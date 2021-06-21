@@ -3,6 +3,11 @@ package entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 
+/**
+ * Generic abstract entity to avoid code duplication
+ *
+ * @author Andrej Benz
+ */
 public abstract class GenericSingle {
   @DatabaseField(generatedId = true)
   @JsonIgnore

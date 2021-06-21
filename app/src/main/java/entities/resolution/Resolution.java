@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * Resolution entity
+ *
+ * @author Andrej Benz
+ */
 @DatabaseTable
 public class Resolution {
   @DatabaseField(generatedId = true)

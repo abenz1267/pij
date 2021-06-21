@@ -14,6 +14,11 @@ import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 import resources.ResourceService;
 
+/**
+ * AbstractController to reduce code duplication.
+ *
+ * @author Andrej Benz.
+ */
 abstract class AbstractController {
   @Inject protected ResourceService resourceService;
   @Inject protected SceneService sceneService;
