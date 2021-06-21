@@ -298,7 +298,6 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   }
 
   public void update(Media media) throws SQLException {
-    
     this.refreshAll(media);
     this.checkPersons(media);
     locationService.checkLocation(media);
@@ -330,10 +329,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       if (!personList.isEmpty()) {
         persons.get(i).setId(personList.get(0).getId());
 
-        var qb = personMediaService.dao().queryBuilder();
-        qb.where().eq("person_id", personList.get(0).getId()).and().eq("media_id", media.getId());
-
-        List<PersonMedia> res = qb.query();
+        List<PersonMedia> res = personMediaService.get(personList.get(0), media);
 
         if (res.isEmpty()) {
           var personMedia = new PersonMedia(persons.get(i), media);

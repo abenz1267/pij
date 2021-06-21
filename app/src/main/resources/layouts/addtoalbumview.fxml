@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox styleClass="content" stylesheets="@exportcontext.css" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml" fx:controller="views.AddToAlbumViewController"
-      prefHeight="400.0" prefWidth="600.0">
+      xmlns:fx="http://javafx.com/fxml" fx:controller="views.AddToAlbumViewController">
     <Label text="Zu Album hinzufügen"/>
     <VBox fx:id="list" minWidth="300"/>
     <HBox styleClass="exportBtns">
