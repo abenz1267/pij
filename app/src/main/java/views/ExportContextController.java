@@ -2,7 +2,6 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.common.io.Files;
-import entities.media.Media;
 import events.AddToExport;
 import events.SetUIState;
 import events.SetUIState.State;
@@ -10,27 +9,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import org.kordamp.ikonli.javafx.FontIcon;
 import resources.Resource;
 
 public class ExportContextController extends AbstractController implements Initializable {
   @FXML VBox list;
-  HashSet<Media> media = new HashSet<>();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -39,46 +31,12 @@ public class ExportContextController extends AbstractController implements Initi
 
   @Subscribe
   private void add(AddToExport event) {
-    if (this.media.contains(event.getMedia())) {
-      return;
-    }
-
-    var children = list.getChildren();
-    media.add(event.getMedia());
-
-    var wrapper = new HBox();
-    wrapper.getStyleClass().add("file");
-    var label = new Label(event.getMedia().getName());
-    var button = new Button();
-    var icon = new FontIcon("mdi2d-delete");
-    button.setGraphic(icon);
-
-    button.setOnAction(
-            e -> {
-              media.remove(event.getMedia());
-
-              Node node = null;
-              for (var child : children) {
-                var id = (int) child.getProperties().get("key");
-                if (id == event.getMedia().getId()) {
-                  node = child;
-                }
-              }
-
-              children.remove(node);
-            });
-
-    wrapper.getChildren().add(label);
-    wrapper.getChildren().add(button);
-
-    wrapper.getProperties().put("key", event.getMedia().getId());
-
-    children.add(wrapper);
+    this.addToList(event.getMedia(), list);
   }
 
   @FXML
   private void chooseDest() {
-    if (this.media.isEmpty()) {
+    if (this.itemList.isEmpty()) {
       var alert = new Alert(AlertType.ERROR, "Keine Dateien zum export ausgewählt", ButtonType.OK);
       alert.showAndWait();
       return;
@@ -100,7 +58,7 @@ public class ExportContextController extends AbstractController implements Initi
     }
 
     try {
-      mediaService.exportMedia(new ArrayList<>(this.media), file.toPath());
+      mediaService.exportMedia(new ArrayList<>(this.itemList), file.toPath());
     } catch (IOException | SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
