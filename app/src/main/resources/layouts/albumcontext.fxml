@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <FlowPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="views.AlbumContextController">
-
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="views.AlbumContextController">
+    <HBox>
+        <Label fx:id="AlbumLabel"/>
+        <Button fx:id="addToAlbumBtn" text="zu Album hinzufügen" onAction="#addToAlbum">
+            <graphic>
+                <FontIcon iconLiteral="mdi2i-image-plus"/>
+            </graphic>
+        </Button>
+    </HBox>
+    <fx:include source="imagesview.fxml"/>
 </FlowPane>

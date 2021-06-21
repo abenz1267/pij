@@ -1,15 +1,19 @@
 package events;
 
+import entities.album.Album;
 import entities.media.Media;
 
 public class SetUIState {
   private State state;
   private Media media;
+  private Album album;
 
   public enum State {
     INITIAL,
     CLOSE_CONTEXT,
     ALBUM,
+    ALBUMCONTEXT,
+    ADDTOALBUM,
     DIASHOW,
     METADATA,
     IMAGES,
@@ -19,6 +23,11 @@ public class SetUIState {
   public SetUIState(State state, Media media) {
     this.state = state;
     this.media = media;
+  }
+
+  public SetUIState(State state, Album album) {
+    this.state = state;
+    this.album = album;
   }
 
   public SetUIState(State state) {

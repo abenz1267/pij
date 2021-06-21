@@ -10,7 +10,7 @@ public enum View {
   CLEAR("CLEAR"),
   EXPORTCONTEXT("exportcontext"),
   METADATAVIEW("metadataview"),
-  ADDMEDIAVIEW("addmediaview"),
+  ADDTOALBUMVIEW("addtoalbumview"),
   DIASHOW("diashowcontext");
 
   private final String name;

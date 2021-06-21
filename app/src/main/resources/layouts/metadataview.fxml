@@ -8,7 +8,7 @@
 <VBox styleClass="container" stylesheets="@metadataview.css" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
     <VBox>
-        <Label text="Person:"/>
+        <Label text="Personen im Bild:"/>
         <VBox VBox.vgrow="ALWAYS">
             <HBox HBox.hgrow="ALWAYS">
                 <HBox>

@@ -2,11 +2,8 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import entities.media.Media;
-import events.AddToDiashow;
-import events.AddToExport;
-import events.PlayDiashow;
-import events.SetUIState;
-import events.ShowImages;
+import events.*;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -98,6 +95,11 @@ public class ImagesViewController extends AbstractController implements Initiali
                       case EXPORT:
                         eventService.post(new AddToExport(item));
                         break;
+                      case ALBUM:
+                        eventService.post(new AddToAlbum(item));
+                        break;
+                      case ADDTOALBUM:
+                        eventService.post(new AddToAlbum(item));
                       case DIASHOW:
                         eventService.post(new AddToDiashow(item));
                         break;
@@ -124,9 +126,11 @@ public class ImagesViewController extends AbstractController implements Initiali
     var file = new File(media.getFilename());
     Image tempImage;
     if (maxImages == 10) {
-        tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
+      tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
     } else {
-        tempImage = new Image(file.toURI().toString(), scrollPane.getWidth(), scrollPane.getHeight(), true, true);
+      tempImage =
+          new Image(
+              file.toURI().toString(), scrollPane.getWidth(), scrollPane.getHeight(), true, true);
     }
     var tempImageView = new ImageView();
     tempImageView.setImage(tempImage);
@@ -135,7 +139,7 @@ public class ImagesViewController extends AbstractController implements Initiali
     return tempImageView;
   }
 
-    @FXML
+  @FXML
   public void singleView() {
     maxImages = 1;
     display();
@@ -147,7 +151,8 @@ public class ImagesViewController extends AbstractController implements Initiali
     display();
   }
 
-  @FXML void playAllAsDiashow() {
-      this.eventService.post(new PlayDiashow(this.media));
+  @FXML
+  void playAllAsDiashow() {
+    this.eventService.post(new PlayDiashow(this.media));
   }
 }

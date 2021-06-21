@@ -4,6 +4,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
+import events.SetUIState;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -25,6 +28,11 @@ public class AlbumViewController extends AbstractController implements Initializ
         albumBtn.getStyleClass().add("albumBtn");
         albumBtn.setMnemonicParsing(false);
         albumBtn.setText("Titel: " + album.getName() + ", Thema: " + album.getTheme());
+
+        albumBtn.setOnAction(
+            e -> {
+              eventService.post(new SetUIState(SetUIState.State.ALBUMCONTEXT, album));
+            });
 
         children.add(albumBtn);
       }
