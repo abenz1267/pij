@@ -6,7 +6,6 @@ import entities.AbstractEntityService;
 import entities.album.Album;
 import entities.media.Media;
 import entities.media.MediaService;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,11 +14,9 @@ import javax.inject.Singleton;
 
 @Singleton
 public class AlbumMediaServiceImpl extends AbstractEntityService implements AlbumMediaService {
+  @Inject private MediaService mediaService;
 
-  @Inject
-  private MediaService mediaService;
-
-  private Dao<AlbumMedia, Integer> _dao = null;
+  private Dao<AlbumMedia, Integer> iDao = null;
 
   public Dao<AlbumMedia, Integer> dao() {
     if (this.iDao == null) {

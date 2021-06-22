@@ -3,11 +3,9 @@ package entities.PersonMedia;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractEntityService;
-import entities.album.Album;
 import entities.media.Media;
 import entities.person.Person;
 import entities.person.PersonService;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;

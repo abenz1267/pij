@@ -1,12 +1,11 @@
 package views;
 
+import events.SetUIState;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-
-import events.SetUIState;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -22,7 +21,6 @@ import javafx.stage.Stage;
  * @author Phillip Knutzen
  * @author Joey Wille
  */
-
 public class AlbumViewController extends AbstractController implements Initializable {
   @FXML private TilePane tilePane;
 
@@ -57,7 +55,6 @@ public class AlbumViewController extends AbstractController implements Initializ
    *
    * @throws SQLException if there's a problem with the database.
    */
-
   @FXML
   private void newAlbumDialog() throws IOException {
     var stage = new Stage();

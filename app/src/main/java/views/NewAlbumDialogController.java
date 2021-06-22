@@ -1,10 +1,9 @@
 package views;
 
 import entities.album.Album;
+import events.SetUIState;
 import java.sql.SQLException;
 import java.util.logging.Level;
-
-import events.SetUIState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -20,7 +19,6 @@ import javafx.stage.Stage;
  * @author Phillip Knutzen
  * @author Joey Wille
  */
-
 public class NewAlbumDialogController extends AbstractController {
 
   @FXML private TextField albumName;

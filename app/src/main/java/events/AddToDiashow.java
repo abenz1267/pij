@@ -12,6 +12,7 @@ public class AddToDiashow {
 
   /**
    * Add the media, that will be added to a custom diashow
+   *
    * @param media the media
    */
   public AddToDiashow(Media media) {
@@ -20,6 +21,7 @@ public class AddToDiashow {
 
   /**
    * Returns the media for this event
+   *
    * @return the media document for this event
    */
   public Media getMedia() {

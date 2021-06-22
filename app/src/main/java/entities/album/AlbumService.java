@@ -4,7 +4,6 @@ import com.google.inject.ImplementedBy;
 import com.j256.ormlite.dao.Dao;
 import entities.media.Media;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Service to handle albums.
@@ -22,7 +21,6 @@ public interface AlbumService {
    *
    * @param album the album entity.
    * @throws SQLException if there's a problem with the database.
-   *
    * @author Timm Lohmann
    * @author Phillip Knutzen
    * @author Joey Wille
@@ -30,12 +28,12 @@ public interface AlbumService {
   void createAlbum(Album album) throws SQLException;
 
   /**
-   * Persists the connection between media and album entities into the database to add media files to an album.
+   * Persists the connection between media and album entities into the database to add media files
+   * to an album.
    *
    * @param album the album entity.
    * @param media the media entity.
    * @throws SQLException if there's a problem with the database.
    */
   void addMedia(Album album, Media... media) throws SQLException;
-
 }

@@ -9,7 +9,6 @@ import entities.media.Media;
  * @author Joey Wille
  * @author Phillip Knutzen
  */
-
 public class LoadMetaData {
   private Media media;
 

@@ -11,8 +11,8 @@ import entities.GenericSingle;
 @DatabaseTable()
 public class Location extends GenericSingle {
 
-    @Override
-    public String toString() {
-        return this.getName();
-    }
+  @Override
+  public String toString() {
+    return this.getName();
+  }
 }

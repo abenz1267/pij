@@ -2,10 +2,8 @@ package entities.PersonMedia;
 
 import com.google.inject.ImplementedBy;
 import com.j256.ormlite.dao.Dao;
-import entities.album.Album;
 import entities.media.Media;
 import entities.person.Person;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -21,7 +19,8 @@ public interface PersonMediaService {
   Dao<PersonMedia, Integer> dao();
 
   /**
-   * Removes a person entity from person media and removes person from person if the person doesnt exist in person media database.
+   * Removes a person entity from person media and removes person from person if the person doesnt
+   * exist in person media database.
    *
    * @param person the person entity. media the media entity.
    * @throws SQLException if there's a problem with the database.
@@ -38,7 +37,8 @@ public interface PersonMediaService {
   List<PersonMedia> get(Person person, Media media) throws SQLException;
 
   /**
-   * Gets a List a List with {@link Person} entities which are connected to a given {@link Media} entity.
+   * Gets a List a List with {@link Person} entities which are connected to a given {@link Media}
+   * entity.
    *
    * @param media the media entities.
    * @return returns the given list.

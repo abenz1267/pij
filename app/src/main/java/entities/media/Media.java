@@ -25,7 +25,6 @@ import javax.imageio.ImageIO;
  * @author Christian Paulsen
  * @author Kelvin Leclaire
  */
-
 @DatabaseTable()
 public class Media {
   @DatabaseField(generatedId = true)

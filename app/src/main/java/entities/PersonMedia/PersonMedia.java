@@ -13,7 +13,6 @@ import entities.person.Person;
  * @author Joey Wille
  * @author Phillip Knutzen
  */
-
 @DatabaseTable()
 public class PersonMedia {
 

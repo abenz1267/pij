@@ -10,7 +10,6 @@ import com.j256.ormlite.table.DatabaseTable;
  * @author Timm Lohmann
  * @author Joey Wille
  * @author Phillip Knutzen
-
  */
 @DatabaseTable()
 public class Person {

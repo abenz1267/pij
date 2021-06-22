@@ -4,7 +4,6 @@ import com.google.inject.ImplementedBy;
 import com.j256.ormlite.dao.Dao;
 import entities.album.Album;
 import entities.media.Media;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,7 +19,8 @@ public interface AlbumMediaService {
   Dao<AlbumMedia, Integer> dao();
 
   /**
-   * Gets a List of given {@link Media} entitites which are connected with a given {@link Album} entity.
+   * Gets a List of given {@link Media} entitites which are connected with a given {@link Album}
+   * entity.
    *
    * @param album the Album entities.
    * @throws SQLException if there's a problem with the Database.

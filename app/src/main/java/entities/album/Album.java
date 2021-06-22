@@ -9,7 +9,6 @@ import com.j256.ormlite.field.DatabaseField;
  * @author Phillip Knutzen
  * @author Joey Wille
  */
-
 public class Album {
 
   public static final String ID_FIELD_NAME = "id";

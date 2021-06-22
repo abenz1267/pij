@@ -1,9 +1,8 @@
 package views;
 
+import events.SetUIState;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import events.SetUIState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,12 +16,10 @@ import javafx.scene.control.Label;
  * @author Phillip Knutzen
  */
 public class AlbumContextController extends AbstractController implements Initializable {
-  @FXML
-  Label albumLabel;
+  @FXML Label albumLabel;
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {
-  }
+  public void initialize(URL location, ResourceBundle resources) {}
 
   @FXML
   private void addToAlbum(ActionEvent actionEvent) {

@@ -5,15 +5,6 @@ import entities.media.Media.DataType;
 import events.SetUIState;
 import events.SetUIState.State;
 import events.ShowImages;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import resources.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +14,15 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import resources.Resource;
 
 /**
  * Controller to handle the top menu
@@ -41,8 +41,6 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML Button createAlbumBtn;
   @FXML Button imagesBtn;
   @FXML Button diashowBtn;
-
-  private static final String BTN_DISABLED = "btn--disabled";
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {

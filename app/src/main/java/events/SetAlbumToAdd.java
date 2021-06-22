@@ -2,7 +2,6 @@ package events;
 
 import entities.album.Album;
 
-
 /**
  * Event to get album entity to add.
  *
@@ -10,15 +9,14 @@ import entities.album.Album;
  * @author Phillip Knutzen
  * @author Joey Wille
  */
-
 public class SetAlbumToAdd {
-    private Album album;
+  private Album album;
 
-    public SetAlbumToAdd(Album album) {
-        this.album = album;
-    }
+  public SetAlbumToAdd(Album album) {
+    this.album = album;
+  }
 
-    public Album getAlbum() {
-        return album;
-    }
+  public Album getAlbum() {
+    return album;
+  }
 }

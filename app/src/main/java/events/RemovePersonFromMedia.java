@@ -9,15 +9,14 @@ import entities.person.Person;
  * @author Phillip Knutzen
  * @author Joey Wille
  */
-
 public class RemovePersonFromMedia {
-    private Person person;
+  private Person person;
 
-    public RemovePersonFromMedia(Person person) {
-        this.person = person;
-    }
+  public RemovePersonFromMedia(Person person) {
+    this.person = person;
+  }
 
-    public Person getPerson() {
-        return this.person;
-    }
+  public Person getPerson() {
+    return this.person;
+  }
 }

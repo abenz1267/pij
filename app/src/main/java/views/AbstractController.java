@@ -34,7 +34,6 @@ abstract class AbstractController {
   @Inject protected Logger logger;
   @Inject protected AlbumService albumService;
   @Inject protected AlbumMediaService albumMediaService;
-  @Inject protected ResolutionService resolutionService;
   @Inject protected PersonMediaService personMediaService;
   @Inject protected TagService tagService;
   @Inject protected TagMediaService tagMediaService;

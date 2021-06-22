@@ -10,7 +10,6 @@ import com.j256.ormlite.dao.Dao;
  * @author Phillip Knutzen
  * @author Joey Wille
  */
-
 @ImplementedBy(PersonServiceImpl.class)
 public interface PersonService {
   Dao<Person, Integer> dao();

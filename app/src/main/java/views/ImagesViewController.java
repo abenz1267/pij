@@ -48,6 +48,7 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML private Button addToAlbumBtn;
   @FXML private Label albumTitle;
 
+  private Album album;
   private int maxImages = 10;
   private List<Media> media;
   private static final String ACTIVE = "active";

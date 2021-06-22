@@ -7,14 +7,14 @@ import events.AddToAlbum;
 import events.SetAlbumToAdd;
 import events.SetUIState;
 import events.SetUIState.State;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.VBox;
 
 /**
  * Controller handling the context to add media to an album.
@@ -23,7 +23,6 @@ import java.util.logging.Level;
  * @author Timm Lohmann
  * @author Joey Wille
  */
-
 public class AddToAlbumContextController extends AbstractController implements Initializable {
   @FXML VBox list;
 
@@ -52,14 +51,15 @@ public class AddToAlbumContextController extends AbstractController implements I
 
   @FXML
   public void addToAlbum(ActionEvent actionEvent) {
-    itemList.forEach(item -> {
-      var albumMedia = new AlbumMedia(album, item);
-      try {
-        albumMediaService.dao().create(albumMedia);
-      } catch (SQLException e) {
-        logger.log(Level.SEVERE, e.getMessage());
-      }
-    });
+    itemList.forEach(
+        item -> {
+          var albumMedia = new AlbumMedia(album, item);
+          try {
+            albumMediaService.dao().create(albumMedia);
+          } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+          }
+        });
 
     this.closeAdd();
   }

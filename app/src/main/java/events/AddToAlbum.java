@@ -1,6 +1,5 @@
 package events;
 
-import entities.album.Album;
 import entities.media.Media;
 
 /**
@@ -9,13 +8,13 @@ import entities.media.Media;
  * @author Timm Lohmann
  */
 public class AddToAlbum {
-    private Media media;
+  private Media media;
 
-    public AddToAlbum(Media media) {
-        this.media = media;
-    }
+  public AddToAlbum(Media media) {
+    this.media = media;
+  }
 
-    public Media getMedia() {
-        return this.media;
-    }
+  public Media getMedia() {
+    return this.media;
+  }
 }

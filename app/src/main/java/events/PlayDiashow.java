@@ -13,6 +13,7 @@ public class PlayDiashow {
 
   /**
    * Play Diashow calls an event to start a diashow
+   *
    * @param media the documents that will be displayed in the diashow
    */
   public PlayDiashow(List<Media> media) {
@@ -21,6 +22,7 @@ public class PlayDiashow {
 
   /**
    * Returns the media for the diashow
+   *
    * @return list of media elements
    */
   public List<Media> getMedia() {

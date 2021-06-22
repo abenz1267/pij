@@ -33,7 +33,8 @@ public class MainWrapperController extends AbstractController implements Initial
       switch (event.getState()) {
         case ALBUM:
           sceneService.setContent(this.mainwrapper, View.IMAGESVIEW);
-          eventService.post(new ShowImages(albumMediaService.getMedia(event.getAlbum()), event.getAlbum()));
+          eventService.post(
+              new ShowImages(albumMediaService.getMedia(event.getAlbum()), event.getAlbum()));
           break;
         case ALBUMLIST:
           sceneService.setContent(this.mainwrapper, View.ALBUMVIEW);
