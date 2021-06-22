@@ -2,6 +2,7 @@ package views;
 
 import com.google.inject.Inject;
 import entities.PersonMedia.PersonMediaService;
+import entities.TagMedia.TagMediaService;
 import entities.album.AlbumService;
 import entities.albummedia.AlbumMediaService;
 import entities.media.Media;
@@ -35,6 +36,7 @@ abstract class AbstractController {
   @Inject protected ResolutionService resolutionService;
   @Inject protected PersonMediaService personMediaService;
   @Inject protected TagService tagService;
+  @Inject protected TagMediaService tagMediaService;
 
   protected HashSet<Media> itemList = new HashSet<>();
 

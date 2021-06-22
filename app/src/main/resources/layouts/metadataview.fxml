@@ -84,7 +84,7 @@
     <VBox>
         <HBox>
             <ComboBox fx:id="tagBox"/>
-            <Button fx:id="addTagBtn" onAction="#addTag">
+            <Button fx:id="addTagBtn" onAction="#addTagToImage">
                 <graphic>
                     <FontIcon iconLiteral="mdi2b-bookmark-plus-outline"/>
                 </graphic>

@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import entities.location.Location;
 import entities.media.Media;
 import entities.person.Person;
+import entities.tag.Tag;
 import events.LoadMetaData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,6 +58,8 @@ public class MetaDataController extends AbstractController implements Initializa
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
+
+    tagBox.setEditable(true);
   }
 
   @Subscribe
@@ -143,14 +146,46 @@ public class MetaDataController extends AbstractController implements Initializa
   }
 
   @FXML
-  public void addTag() {
+  public void addTagToImage() {
+    var tag = new Tag();
+    tag.setName(tagBox.getValue().toString());
+    media.getTags().add(tag);
+
+    try {
+      mediaService.update(media);
+      mediaService.refreshAll(media);
+      tagBox.setValue("");
+
+      this.listTags(media);
+    } catch (SQLException e) {
+      logger.log(Level.SEVERE, e.getMessage());
+    }
+
+  }
+
+  private void listTags(Media media) {
     var children = tagPane.getChildren();
     children.clear();
 
     media.setTags(new ArrayList<>());
     mediaService.refreshAll(media);
 
+    for (var t : media.getTags()) {
+      var wrapper = new HBox();
+      var button = new Button();
+      button.setGraphic(new FontIcon("mdi2b-bookmark-remove-outline"));
 
+      button.setOnAction(event -> {
+        try {
+          tagMediaService.remove(t, media);
+        } catch (SQLException e) {
+          logger.log(Level.SEVERE, e.getMessage());
+        }
+      });
+
+      wrapper.getChildren().add(button);
+      children.add(wrapper);
+    }
   }
 
   private void listPersons(Media media) {
