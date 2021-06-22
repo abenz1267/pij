@@ -4,6 +4,7 @@ import com.google.inject.Singleton;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import entities.PersonMedia.PersonMedia;
+import entities.TagMedia.TagMedia;
 import entities.album.Album;
 import entities.albummedia.AlbumMedia;
 import entities.location.Location;
@@ -39,6 +40,7 @@ public class DatabaseConnectionServiceImpl implements DatabaseConnectionService 
       TableUtils.createTableIfNotExists(this.connection, Album.class);
       TableUtils.createTableIfNotExists(this.connection, PersonMedia.class);
       TableUtils.createTableIfNotExists(this.connection, AlbumMedia.class);
+      TableUtils.createTableIfNotExists(this.connection, TagMedia.class);
 
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());

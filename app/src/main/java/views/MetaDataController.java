@@ -19,9 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -50,21 +48,24 @@ public class MetaDataController extends AbstractController implements Initializa
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     eventService.register(this);
+  }
 
+  private void setTags(List<Tag> tags) {
     try {
-      tagService
-          .dao()
-          .queryForAll()
-          .forEach(
-              tag -> {
-                tagBox.getItems().add(tag.getName());
-              });
-
+      tagBox.getItems().clear();
       tagBox.setEditable(true);
-      tagBox.setOnAction((event) -> {
-        var sel = tagBox.getSelectionModel().getSelectedItem().toString();
-        logger.info("selected Tag:" + sel);
-      });
+      var allTags = tagService.dao().queryForAll();
+      allTags.addAll(tags);
+      var filteredTags = new HashSet<>(allTags);
+      filteredTags.forEach(
+          tag -> {
+            tagBox.getItems().add(tag.getName());
+          });
+
+      tagBox.setOnAction(
+          (event) -> {
+            tagBox.getSelectionModel().getSelectedItem().toString();
+          });
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
@@ -103,6 +104,8 @@ public class MetaDataController extends AbstractController implements Initializa
     isPrivateBox.setAlignment(Pos.CENTER_RIGHT);
 
     this.listPersons(media);
+    this.listTags(media);
+    this.setTags(media.getTags());
   }
 
   @FXML
@@ -162,6 +165,7 @@ public class MetaDataController extends AbstractController implements Initializa
       mediaService.refreshAll(media);
 
       this.listTags(media);
+      this.setTags(media.getTags());
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
@@ -184,6 +188,8 @@ public class MetaDataController extends AbstractController implements Initializa
           event -> {
             try {
               tagMediaService.remove(t, media);
+              this.listTags(media);
+              this.setTags(media.getTags());
             } catch (SQLException e) {
               logger.log(Level.SEVERE, e.getMessage());
             }

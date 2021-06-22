@@ -4,7 +4,6 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractEntityService;
 import entities.media.Media;
-import entities.person.Person;
 import entities.tag.Tag;
 import entities.tag.TagService;
 
@@ -36,7 +35,7 @@ public class TagMediaServiceImpl extends AbstractEntityService implements TagMed
 
     @Override
     public void remove(Tag tag, Media media) throws SQLException {
-        var result = get(tag, media);
+        var result = this.get(tag, media);
 
         dao().delete(result.get(0));
         var others = dao().queryForEq("tag_id", tag.getId());

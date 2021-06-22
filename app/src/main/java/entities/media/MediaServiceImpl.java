@@ -294,8 +294,6 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }
-
-
   }
 
   public void delete(Media media) throws SQLException {
@@ -310,6 +308,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     locationService.checkLocation(media);
     this.dao().update(media);
     media.setPersons(new ArrayList<>());
+    media.setTags(new ArrayList<>());
   }
 
   private void checkPersons(Media media) throws SQLException {
@@ -330,6 +329,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
       PreparedQuery<Person> preparedQuery = b.prepare();
       List<Person> personList = personService.dao().query(preparedQuery);
+      var personMedia = new PersonMedia(persons.get(i), media);
 
       if (!personList.isEmpty()) {
         persons.get(i).setId(personList.get(0).getId());
@@ -337,12 +337,11 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
         List<PersonMedia> res = personMediaService.get(personList.get(0), media);
 
         if (res.isEmpty()) {
-          var personMedia = new PersonMedia(persons.get(i), media);
+
           personMediaService.dao().createIfNotExists(personMedia);
         }
       } else {
         personService.dao().create(persons.get(i));
-        var personMedia = new PersonMedia(persons.get(i), media);
         personMediaService.dao().create(personMedia);
       }
     }
@@ -362,6 +361,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       }
 
       List<Tag> tagList = tagService.dao().queryForEq("name", tag.getName());
+      var tagMedia = new TagMedia(tags.get(i), media);
 
       if (!tagList.isEmpty()) {
         tags.get(i).setId(tagList.get(0).getId());
@@ -369,12 +369,10 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
         List<TagMedia> res = tagMediaService.get(tagList.get(0), media);
 
         if (res.isEmpty()) {
-          var tagMedia = new TagMedia(tags.get(i), media);
           tagMediaService.dao().createIfNotExists(tagMedia);
         }
       } else {
         tagService.dao().create(tags.get(i));
-        var tagMedia = new TagMedia(tags.get(i), media);
         tagMediaService.dao().create(tagMedia);
       }
     }
