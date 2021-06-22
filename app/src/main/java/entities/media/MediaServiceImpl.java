@@ -10,17 +10,17 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import entities.AbstractEntityService;
-import entities.PersonMedia.PersonMedia;
-import entities.PersonMedia.PersonMediaService;
-import entities.TagMedia.TagMedia;
-import entities.TagMedia.TagMediaService;
 import entities.location.Location;
 import entities.location.LocationService;
 import entities.person.Person;
 import entities.person.PersonService;
+import entities.personmedia.PersonMedia;
+import entities.personmedia.PersonMediaService;
 import entities.resolution.ResolutionService;
 import entities.tag.Tag;
 import entities.tag.TagService;
+import entities.tagmedia.TagMedia;
+import entities.tagmedia.TagMediaService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -354,11 +354,8 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
     for (var i = 0; i < persons.size(); i++) {
       var person = persons.get(i);
-      if (person.getFirstname().isEmpty() || person.getLastname().isEmpty()) {
-        continue;
-      }
-
-      if (person.getId() != 0) {
+      if ((person.getFirstname().isEmpty() || person.getLastname().isEmpty())
+          || person.getId() != 0) {
         continue;
       }
 
@@ -390,11 +387,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
     for (var i = 0; i < tags.size(); i++) {
       var tag = tags.get(i);
-      if (tag.getName().isEmpty()) {
-        continue;
-      }
-
-      if (tag.getId() != 0) {
+      if (tag.getName().isEmpty() || tag.getId() != 0) {
         continue;
       }
 

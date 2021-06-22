@@ -42,7 +42,7 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML Button imagesBtn;
   @FXML Button diashowBtn;
 
-  private static String ACTIVE = "active";
+  private static final String ACTIVE = "active";
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {

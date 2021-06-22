@@ -1,14 +1,14 @@
 package views;
 
 import com.google.inject.Inject;
-import entities.PersonMedia.PersonMediaService;
-import entities.TagMedia.TagMediaService;
 import entities.album.AlbumService;
 import entities.albummedia.AlbumMediaService;
 import entities.media.Media;
 import entities.media.MediaService;
+import entities.personmedia.PersonMediaService;
 import entities.resolution.ResolutionService;
 import entities.tag.TagService;
+import entities.tagmedia.TagMediaService;
 import events.EventService;
 import java.util.HashSet;
 import java.util.logging.Logger;

@@ -1,4 +1,4 @@
-package entities.PersonMedia;
+package entities.personmedia;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -14,8 +14,9 @@ import javax.inject.Singleton;
 
 @Singleton
 public class PersonMediaServiceImpl extends AbstractEntityService implements PersonMediaService {
-
   @Inject private PersonService personService;
+
+  private static final String PID = "person_id";
 
   private Dao<PersonMedia, Integer> dao = null;
 
@@ -36,7 +37,7 @@ public class PersonMediaServiceImpl extends AbstractEntityService implements Per
     var result = get(person, media);
 
     dao().delete(result.get(0));
-    var others = dao().queryForEq("person_id", person.getId());
+    var others = dao().queryForEq(PID, person.getId());
     if (others.isEmpty()) {
       personService.dao().delete(person);
     }
@@ -46,7 +47,7 @@ public class PersonMediaServiceImpl extends AbstractEntityService implements Per
   public List<PersonMedia> get(Person person, Media media) throws SQLException {
 
     var qb = dao().queryBuilder();
-    qb.where().eq("person_id", person.getId()).and().eq("media_id", media.getId());
+    qb.where().eq(PID, person.getId()).and().eq("media_id", media.getId());
 
     return qb.query();
   }
@@ -56,7 +57,7 @@ public class PersonMediaServiceImpl extends AbstractEntityService implements Per
     var qb = dao().queryBuilder();
     var mQb = personService.dao().queryBuilder();
 
-    qb.selectColumns("person_id");
+    qb.selectColumns(PID);
     qb.where().eq("media_id", media.getId());
 
     mQb.where().in("id", qb);

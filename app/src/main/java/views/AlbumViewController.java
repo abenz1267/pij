@@ -38,10 +38,7 @@ public class AlbumViewController extends AbstractController implements Initializ
         albumBtn.setMnemonicParsing(false);
         albumBtn.setText("Titel: " + album.getName() + ", Thema: " + album.getTheme());
 
-        albumBtn.setOnAction(
-            e -> {
-              eventService.post(new SetUIState(SetUIState.State.ALBUM, album));
-            });
+        albumBtn.setOnAction(e -> eventService.post(new SetUIState(SetUIState.State.ALBUM, album)));
 
         children.add(albumBtn);
       }

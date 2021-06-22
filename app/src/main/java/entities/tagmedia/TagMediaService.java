@@ -1,4 +1,4 @@
-package entities.TagMedia;
+package entities.tagmedia;
 
 import com.google.inject.ImplementedBy;
 import com.j256.ormlite.dao.Dao;
