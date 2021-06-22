@@ -4,18 +4,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
-
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <VBox styleClass="content" stylesheets="@exportcontext.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.DiashowContextController">
-  <Label text="Diashow" />
-  <VBox fx:id="list" minWidth="300">
+  <Label styleClass="header" text="Diashow" />
+  <VBox fx:id="list" minWidth="300" styleClass="list">
   </VBox>
-  <HBox styleClass="exportBtns">
-    <HBox HBox.hgrow="ALWAYS" styleClass="cancel">
-      <Button text="Abbrechen" onAction="#closeDiashowContext" />
+  <HBox styleClass="listControls">
+    <HBox HBox.hgrow="ALWAYS" styleClass="btnWrapper, cancel">
+      <Button onAction="#closeDiashowContext">
+        <graphic><FontIcon iconLiteral="mdi2c-close" /></graphic>
+      </Button>
     </HBox>
-    <HBox HBox.hgrow="ALWAYS" styleClass="export">
-      <Button text="Starten" onAction="#startDiashow"/>
+    <HBox HBox.hgrow="ALWAYS" styleClass="btnWrapper, primary">
+      <Button onAction="#startDiashow">
+        <graphic><FontIcon iconLiteral="mdi2p-play" /></graphic>
+      </Button>
     </HBox>
   </HBox>
 </VBox>

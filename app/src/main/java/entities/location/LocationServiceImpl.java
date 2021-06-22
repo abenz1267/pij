@@ -11,18 +11,18 @@ import java.util.logging.Level;
 
 @Singleton
 public class LocationServiceImpl extends AbstractEntityService implements LocationService {
-  private Dao<Location, Integer> _dao = null;
+  private Dao<Location, Integer> iDao = null;
 
   public Dao<Location, Integer> dao() {
-    if (this._dao == null) {
+    if (this.iDao == null) {
       try {
-        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), Location.class);
+        this.iDao = DaoManager.createDao(this.databaseConnectionService.get(), Location.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this._dao;
+    return this.iDao;
   }
 
   public void checkLocation(Media media) throws SQLException {

@@ -27,6 +27,8 @@ public class ContextController extends AbstractController implements Initializab
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     eventService.register(this);
+    contextwrapper.setManaged(false);
+    contextwrapper.setVisible(false);
   }
 
   @Subscribe

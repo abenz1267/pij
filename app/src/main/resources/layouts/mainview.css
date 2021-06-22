@@ -2,14 +2,13 @@
   -fx-font-family: "sans-serif";
   -fx-font-size: 16px;
   -fx-orientation: vertical;
-  -fx-background-color: #222b38;
 }
 
 Button {
   -fx-background-radius: 0;
   -fx-background-insets: none;
-  -fx-background-color: #ffffff;
   -fx-text-fill: #333;
+  -fx-background-color: #efefef;
 }
 
 Button FontIcon {
@@ -19,6 +18,26 @@ Button FontIcon {
 
 Button:hover {
   -fx-cursor: hand;
+}
+
+Button {
+  -fx-background-color: #efefef;
+}
+
+Button.active {
+  -fx-text-fill: #4a3eef;
+}
+
+Button.active FontIcon {
+  -fx-icon-color: #4a3eef;
+}
+
+Button:hover {
+  -fx-text-fill: #4a3eef;
+}
+
+Button:hover FontIcon {
+  -fx-icon-color: #4a3eef;
 }
 
 .btn--disabled,

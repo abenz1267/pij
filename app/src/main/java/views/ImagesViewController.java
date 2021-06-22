@@ -7,7 +7,9 @@ import events.AddToExport;
 import events.PlayDiashow;
 import events.ShowImages;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,7 +18,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -36,9 +40,12 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML private TilePane imageWrapper;
   @FXML private ScrollPane scrollPane;
   @FXML private Pagination pagination;
+  @FXML private Button singleBtn;
+  @FXML private Button multiBtn;
 
   private int maxImages = 10;
   private List<Media> media;
+  private static final String ACTIVE = "active";
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -47,6 +54,8 @@ public class ImagesViewController extends AbstractController implements Initiali
     scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
+
+    multiBtn.getStyleClass().add(ACTIVE);
   }
 
   /**
@@ -124,6 +133,8 @@ public class ImagesViewController extends AbstractController implements Initiali
                   } else if (count == 1) {
                     logger.log(Level.INFO, "SINGLECLIKC");
                   }
+                } else if (event.getButton().equals(MouseButton.SECONDARY)) {
+                  this.createContextMenu(imageView, item, media);
                 }
 
                 event.consume();
@@ -135,11 +146,25 @@ public class ImagesViewController extends AbstractController implements Initiali
     return resizedImages;
   }
 
-  /**
-   * Loads a Image from the given media object.
-   * @param media to be converted to the image.
-   * @return the ImageView of that given media object.
-   */
+  private void createContextMenu(ImageView view, Media media, List<Media> list) {
+    var contextMenu = new ContextMenu();
+    var menuItem1 = new MenuItem("Bild löschen");
+    menuItem1.setOnAction(
+        e -> {
+          try {
+            mediaService.delete(media);
+            list.remove(media);
+            this.display();
+          } catch (SQLException | IOException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());
+          }
+        });
+
+    contextMenu.getItems().add(menuItem1);
+
+    view.setOnContextMenuRequested(e -> contextMenu.show(view, e.getScreenX(), e.getScreenY()));
+  }
+
   private ImageView loadImageViewFromMedia(Media media) {
     var file = new File(media.getFilename());
     Image tempImage;
@@ -163,6 +188,8 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML
   public void singleView() {
     maxImages = 1;
+    multiBtn.getStyleClass().remove(ACTIVE);
+    singleBtn.getStyleClass().add(ACTIVE);
     display();
   }
 
@@ -172,6 +199,8 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML
   public void multipleView() {
     maxImages = 10;
+    multiBtn.getStyleClass().add(ACTIVE);
+    singleBtn.getStyleClass().remove(ACTIVE);
     display();
   }
 

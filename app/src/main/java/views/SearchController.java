@@ -9,6 +9,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller to handle the search
+ *
+ * @author Huilun Chen
+ */
 public class SearchController extends AbstractController implements Initializable {
   @FXML TextField searchInput;
 

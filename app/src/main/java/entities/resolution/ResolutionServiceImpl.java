@@ -13,18 +13,18 @@ import java.util.logging.Level;
 
 @Singleton
 public class ResolutionServiceImpl extends AbstractEntityService implements ResolutionService {
-  private Dao<Resolution, Integer> _dao = null;
+  private Dao<Resolution, Integer> iDao = null;
 
   public Dao<Resolution, Integer> dao() {
-    if (this._dao == null) {
+    if (this.iDao == null) {
       try {
-        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), Resolution.class);
+        this.iDao = DaoManager.createDao(this.databaseConnectionService.get(), Resolution.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this._dao;
+    return this.iDao;
   }
 
   public void checkResolution(Media media) throws SQLException {

@@ -15,18 +15,18 @@ import javax.inject.Singleton;
 public class AlbumServiceImpl extends AbstractEntityService implements AlbumService {
   @Inject private AlbumMediaService albumMediaService;
 
-  private Dao<Album, Integer> _dao = null;
+  private Dao<Album, Integer> iDao = null;
 
   public Dao<Album, Integer> dao() {
-    if (this._dao == null) {
+    if (this.iDao == null) {
       try {
-        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), Album.class);
+        this.iDao = DaoManager.createDao(this.databaseConnectionService.get(), Album.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this._dao;
+    return this.iDao;
   }
 
   public void createAlbum(Album album) throws SQLException {

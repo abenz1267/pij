@@ -74,5 +74,22 @@ public interface MediaService {
    */
   void create(Media media) throws SQLException;
 
+  /**
+   * Deletes a media entity from the database. Deletes all related data, if possible.
+   *
+   * @param media the media entity.
+   * @throws SQLException if there's a problem with the database.
+   * @author Andrej Benz
+   */
+  void delete(Media media) throws SQLException, IOException;
+
+  /**
+   * Filters the database media entities by input string
+   *
+   * @param input the string to search in the {@link Media} entities
+   * @return List of {@link Media} which contain the searched string
+   * @throws SQLException SQLException if there's a problem with the database.
+   * @author Huilun Chen
+   */
   List<Media> filterMediaByInput(String input) throws SQLException;
 }

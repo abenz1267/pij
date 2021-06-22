@@ -124,6 +124,29 @@ class MediaServiceTest extends BaseEntityTest {
   }
 
   @Test
+  void testDelete() throws SQLException {
+    var folder = new File("testfiles");
+
+    assertDoesNotThrow(
+        () -> {
+          mediaService.importMedia(Lists.newArrayList(folder.listFiles()));
+        });
+
+    List<Media> all = mediaService.dao().queryForAll();
+
+    assertDoesNotThrow(
+        () -> {
+          mediaService.delete(all.get(0));
+          mediaService.delete(all.get(1));
+        });
+
+    assertEquals(0, locationService.dao().queryForAll().size());
+    assertEquals(0, resolutionService.dao().queryForAll().size());
+    assertEquals(0, mediaService.dao().queryForAll().size());
+    assertEquals(0, new File(resourceService.getMediaDir()).listFiles().length);
+  }
+
+  @Test
   void testFilterMediaByInput() throws SQLException {
     var input = "MediaFileName";
     var input2 = "Media2";
