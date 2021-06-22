@@ -124,6 +124,47 @@ class MediaServiceTest extends BaseEntityTest {
   }
 
   @Test
+  void testDelete() throws SQLException {
+    var res = new Resolution(200, 200);
+    var loc = new Location();
+    loc.setName("Kiel");
+
+    var media = new Media();
+    media.setName("TestMedia");
+    media.setFilename("TestMediaFileName");
+    media.setDataType(Media.DataType.JPEG);
+    media.setResolution(res);
+    media.setLocation(loc);
+
+    mediaService.create(media);
+    mediaService.delete(media);
+
+    assertEquals(0, locationService.dao().queryForAll().size());
+    assertEquals(0, resolutionService.dao().queryForAll().size());
+    assertEquals(0, mediaService.dao().queryForAll().size());
+
+    var media2 = new Media();
+    media2.setName("TestMedia2");
+    media2.setFilename("TestMediaFileName2");
+    media2.setDataType(Media.DataType.JPEG);
+    media2.setResolution(res);
+    media2.setLocation(loc);
+
+    mediaService.create(media);
+    mediaService.create(media2);
+    mediaService.delete(media);
+
+    assertEquals(1, locationService.dao().queryForAll().size());
+    assertEquals(1, resolutionService.dao().queryForAll().size());
+    assertEquals(1, mediaService.dao().queryForAll().size());
+
+    mediaService.delete(media2);
+    assertEquals(0, locationService.dao().queryForAll().size());
+    assertEquals(0, resolutionService.dao().queryForAll().size());
+    assertEquals(0, mediaService.dao().queryForAll().size());
+  }
+
+  @Test
   void testFilterMediaByInput() throws SQLException {
     var input = "MediaFileName";
     var input2 = "Media2";

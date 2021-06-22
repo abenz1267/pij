@@ -288,6 +288,17 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   }
 
   public void delete(Media media) throws SQLException {
+    List<Media> locationRes = dao().queryForEq("location_id", media.getLocation().getId());
+    List<Media> resolutionRes = dao().queryForEq("resolution_id", media.getResolution().getId());
+
+    if (locationRes.size() == 1) {
+      locationService.dao().delete(media.getLocation());
+    }
+
+    if (resolutionRes.size() == 1) {
+      resolutionService.dao().delete(media.getResolution());
+    }
+
     var file = new File(media.getFilename());
     file.delete();
     dao().delete(media);
