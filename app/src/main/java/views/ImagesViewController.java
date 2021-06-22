@@ -29,6 +29,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
+/**
+ * Controller handling the images that will be displayed in the mainwrapper.
+ *
+ * @author Andrej Benz
+ * @author Christian Paulsen
+ * @author Kelvin Leclaire
+ */
 public class ImagesViewController extends AbstractController implements Initializable {
   @FXML private TilePane imageWrapper;
   @FXML private ScrollPane scrollPane;
@@ -51,12 +58,19 @@ public class ImagesViewController extends AbstractController implements Initiali
     multiBtn.getStyleClass().add(ACTIVE);
   }
 
+  /**
+   * The listener for the {@link ShowImages} event.
+   * @param event the event to listen for
+   */
   @Subscribe
   public void displayMedia(ShowImages event) {
     this.media = event.getMedia();
     display();
   }
 
+  /**
+   * Displays the images from a {@link ShowImages} event in the mainwrapper.
+   */
   private void display() {
     var offset = 0;
     if ((this.media.size() % maxImages) != 0) {
@@ -89,6 +103,11 @@ public class ImagesViewController extends AbstractController implements Initiali
         });
   }
 
+  /**
+   * Creates a a list of thumbnail imageviews of the given media list.
+   * @param mediaList the list, for the thumbnails.
+   * @return a list of {@link ImageView} thumbnails for displaying in the mainwrapper.
+   */
   private List<ImageView> createThumbnails(List<Media> mediaList) {
     List<ImageView> resizedImages = new ArrayList<>();
     mediaList.forEach(
@@ -173,6 +192,9 @@ public class ImagesViewController extends AbstractController implements Initiali
     return tempImageView;
   }
 
+  /**
+   * Display single image in the mainwrapper.
+   */
   @FXML
   public void singleView() {
     maxImages = 1;
@@ -181,6 +203,9 @@ public class ImagesViewController extends AbstractController implements Initiali
     display();
   }
 
+  /**
+   * Display multiple images at once in the mainwrapper.
+   */
   @FXML
   public void multipleView() {
     maxImages = 10;
@@ -189,6 +214,9 @@ public class ImagesViewController extends AbstractController implements Initiali
     display();
   }
 
+  /**
+   * Creates a new event that will start a Diashow with the media documents in the mainwrapper.
+   */
   @FXML
   void playAllAsDiashow() {
     this.eventService.post(new PlayDiashow(this.media));
