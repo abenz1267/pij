@@ -38,7 +38,7 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   private int maxImages = 10;
   private List<Media> media;
-  private static final String active = "active";
+  private static final String ACTIVE = "active";
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -48,7 +48,7 @@ public class ImagesViewController extends AbstractController implements Initiali
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
 
-    multiBtn.getStyleClass().add(active);
+    multiBtn.getStyleClass().add(ACTIVE);
   }
 
   @Subscribe
@@ -166,16 +166,16 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML
   public void singleView() {
     maxImages = 1;
-    multiBtn.getStyleClass().remove(active);
-    singleBtn.getStyleClass().add(active);
+    multiBtn.getStyleClass().remove(ACTIVE);
+    singleBtn.getStyleClass().add(ACTIVE);
     display();
   }
 
   @FXML
   public void multipleView() {
     maxImages = 10;
-    multiBtn.getStyleClass().add(active);
-    singleBtn.getStyleClass().remove(active);
+    multiBtn.getStyleClass().add(ACTIVE);
+    singleBtn.getStyleClass().remove(ACTIVE);
     display();
   }
 
