@@ -286,4 +286,10 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       this.logger.log(Level.SEVERE, e.getMessage());
     }
   }
+
+  public void delete(Media media) throws SQLException {
+    var file = new File(media.getFilename());
+    file.delete();
+    dao().delete(media);
+  }
 }
