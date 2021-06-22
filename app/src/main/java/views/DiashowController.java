@@ -24,6 +24,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Controller handling the Diashow
+ *
+ * @author Christian Paulsen
+ */
 public class DiashowController extends AbstractController implements Initializable {
   private List<Media> media = new ArrayList<>();
   private StackPane stackPane = new StackPane();
@@ -35,8 +40,17 @@ public class DiashowController extends AbstractController implements Initializab
     eventService.register(this);
   }
 
+  /**
+   * Starts a diashow in fullscreen. It takes a list of {@link Media} objects from the {@link
+   * PlayDiashow} event. The media will be filtered and added to a new stage in fullscreen mode. The
+   * diashow can be controlled with the left and right arrow-keys. If you skip manually through the
+   * image, the diashow animation will be paused. You can resume the animation by pressing spacebar.
+   * The Escape key closes the diashow.
+   *
+   * @param event the event that triggers the diashow.
+   */
   @Subscribe
-  public void playDiashow(PlayDiashow event) {
+  private void playDiashow(PlayDiashow event) {
     this.media =
         event.getMedia().stream().filter(item -> !item.isPrivate()).collect(Collectors.toList());
 
@@ -88,16 +102,32 @@ public class DiashowController extends AbstractController implements Initializab
     timer.play();
   }
 
+  /**
+   * This functions sets a new Image in the diashow window.
+   *
+   * @param index the index of the image to be displayed from the media list.
+   */
   private void setCurrentImage(int index) {
     if (index > media.size() - 1) currentImage = 0;
     else if (index < 0) currentImage = media.size() - 1;
     else currentImage = index;
 
     stackPane.getChildren().clear();
+    mediaService.refreshAll(media.get(currentImage));
+
     var file = new File(media.get(currentImage).getFilename());
-    var tempImage =
-        new Image(file.toURI().toString(), stackPane.getWidth(), stackPane.getHeight(), true, true);
+    var width = media.get(currentImage).getResolution().getWidth();
+    var height = media.get(currentImage).getResolution().getHeight();
+
+    if (width > stackPane.getWidth() || height > stackPane.getHeight()) {
+      width = (int) stackPane.getWidth();
+      height = (int) stackPane.getHeight();
+    }
+
+    var tempImage = new Image(file.toURI().toString(), width, height, true, true);
     var imageView = new ImageView(tempImage);
+    stackPane.setBackground(
+        new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     stackPane.getChildren().add(imageView);
   }
 }

@@ -9,6 +9,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller to handle the search
+ *
+ * @author Huilun Chen
+ */
 public class SearchController extends AbstractController implements Initializable {
   @FXML TextField searchInput;
 
@@ -18,7 +23,7 @@ public class SearchController extends AbstractController implements Initializabl
   }
 
   @FXML
-  public void onSearch() {
+  private void onSearch() {
     try {
       eventService.post(new ShowImages(mediaService.filterMediaByInput(searchInput.getText())));
     } catch (SQLException e) {

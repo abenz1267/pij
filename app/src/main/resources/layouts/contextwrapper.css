@@ -24,6 +24,11 @@
   -fx-alignment: center-right;
 }
 
+.primary Button {
+  -fx-content-display: right;
+  -fx-text-fill: #4a3eef;
+}
+
 .contextwrapper .primary Button FontIcon {
   -fx-icon-color: #4a3eef;
 }

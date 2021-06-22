@@ -19,9 +19,14 @@
       </Button>
     </HBox>
     <HBox HBox.hgrow="ALWAYS" styleClass="btnWrapper, primary">
-      <Button onAction="#chooseDest">
+      <Button text="ausgewählte exportieren" onAction="#chooseDest">
         <graphic><FontIcon iconLiteral="mdi2c-content-save" /></graphic>
       </Button>
     </HBox>
+  </HBox>
+  <HBox styleClass="exportAll">
+    <Button text="alle exportieren" onAction="#exportAll">
+      <graphic><FontIcon iconLiteral="mdi2c-content-save" /></graphic>
+    </Button>
   </HBox>
 </VBox>

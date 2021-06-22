@@ -22,15 +22,15 @@ public class AlbumMediaServiceImpl extends AbstractEntityService implements Albu
   private Dao<AlbumMedia, Integer> _dao = null;
 
   public Dao<AlbumMedia, Integer> dao() {
-    if (this._dao == null) {
+    if (this.iDao == null) {
       try {
-        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), AlbumMedia.class);
+        this.iDao = DaoManager.createDao(this.databaseConnectionService.get(), AlbumMedia.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this._dao;
+    return this.iDao;
   }
 
   @Override

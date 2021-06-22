@@ -9,6 +9,7 @@ import events.AddToExport;
 import events.PlayDiashow;
 import events.ShowImages;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,13 +30,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
+import resources.Resource;
 
+/**
+ * Controller handling the images that will be displayed in the mainwrapper.
+ *
+ * @author Andrej Benz
+ * @author Christian Paulsen
+ * @author Kelvin Leclaire
+ */
 public class ImagesViewController extends AbstractController implements Initializable {
   @FXML private TilePane imageWrapper;
   @FXML private ScrollPane scrollPane;
@@ -47,7 +50,7 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   private int maxImages = 10;
   private List<Media> media;
-  private Album album;
+  private static final String ACTIVE = "active";
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -59,11 +62,16 @@ public class ImagesViewController extends AbstractController implements Initiali
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
 
-    multiBtn.getStyleClass().add("active");
+    multiBtn.getStyleClass().add(ACTIVE);
   }
 
+  /**
+   * The listener for the {@link ShowImages} event.
+   *
+   * @param event the event to listen for
+   */
   @Subscribe
-  public void displayMedia(ShowImages event) {
+  private void displayMedia(ShowImages event) {
     this.media = event.getMedia();
     this.album = event.getAlbum();
 
@@ -75,6 +83,7 @@ public class ImagesViewController extends AbstractController implements Initiali
     display();
   }
 
+  /** Displays the images from a {@link ShowImages} event in the mainwrapper. */
   private void display() {
     var offset = 0;
     if ((this.media.size() % maxImages) != 0) {
@@ -107,6 +116,12 @@ public class ImagesViewController extends AbstractController implements Initiali
         });
   }
 
+  /**
+   * Creates a a list of thumbnail imageviews of the given media list.
+   *
+   * @param mediaList the list, for the thumbnails.
+   * @return a list of {@link ImageView} thumbnails for displaying in the mainwrapper.
+   */
   private List<ImageView> createThumbnails(List<Media> mediaList) {
     List<ImageView> resizedImages = new ArrayList<>();
     mediaList.forEach(
@@ -137,23 +152,7 @@ public class ImagesViewController extends AbstractController implements Initiali
                     logger.log(Level.INFO, "SINGLECLICK");
                   }
                 } else if (event.getButton().equals(MouseButton.SECONDARY)) {
-                  var contextMenu = new ContextMenu();
-                  var menuItem1 = new MenuItem("Bild löschen");
-                  menuItem1.setOnAction(
-                      e -> {
-                        try {
-                          mediaService.delete(item);
-                          media.remove(item);
-                          this.display();
-                        } catch (SQLException ex) {
-                          logger.log(Level.SEVERE, ex.getMessage());
-                        }
-                      });
-
-                  contextMenu.getItems().add(menuItem1);
-
-                  imageView.setOnContextMenuRequested(
-                      e -> contextMenu.show(imageView, e.getScreenX(), e.getScreenY()));
+                  this.createContextMenu(imageView, item, media);
                 }
 
                 event.consume();
@@ -165,18 +164,45 @@ public class ImagesViewController extends AbstractController implements Initiali
     return resizedImages;
   }
 
+  // creates the right-click context menu to delete an image
+  private void createContextMenu(ImageView view, Media media, List<Media> list) {
+    var contextMenu = new ContextMenu();
+    var menuItem1 = new MenuItem(resourceService.getString(Resource.GENERIC, "delete"));
+    menuItem1.setOnAction(
+        e -> {
+          try {
+            mediaService.delete(media);
+            list.remove(media);
+            this.display();
+          } catch (SQLException | IOException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());
+          }
+        });
+
+    contextMenu.getItems().add(menuItem1);
+
+    view.setOnContextMenuRequested(e -> contextMenu.show(view, e.getScreenX(), e.getScreenY()));
+  }
+
+  // creates the actual thumbnail ImageViews
   private ImageView loadImageViewFromMedia(Media media) {
     var file = new File(media.getFilename());
     Image tempImage;
+    mediaService.refreshAll(media);
+    var width = media.getResolution().getWidth();
+    var height = media.getResolution().getHeight();
+
     if (maxImages == 10) {
-      tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
+      if (width > 400 || height > 400) {
+        width = 400;
+      }
+
+      tempImage = new Image(file.toURI().toString(), width, height, true, false);
     } else {
-      var width = media.getResolution().getWidth();
-      var height = media.getResolution().getHeight();
       if (width > scrollPane.getWidth() || height > scrollPane.getHeight()) {
         width = (int) scrollPane.getWidth();
-        height = (int) scrollPane.getHeight();
       }
+
       tempImage = new Image(file.toURI().toString(), width, height, true, true);
     }
     var tempImageView = new ImageView();
@@ -186,24 +212,27 @@ public class ImagesViewController extends AbstractController implements Initiali
     return tempImageView;
   }
 
+  /** Display single image in the mainwrapper. */
   @FXML
-  public void singleView() {
+  private void singleView() {
     maxImages = 1;
-    multiBtn.getStyleClass().remove("active");
-    singleBtn.getStyleClass().add("active");
+    multiBtn.getStyleClass().remove(ACTIVE);
+    singleBtn.getStyleClass().add(ACTIVE);
     display();
   }
 
+  /** Display multiple images at once in the mainwrapper. */
   @FXML
-  public void multipleView() {
+  private void multipleView() {
     maxImages = 10;
-    multiBtn.getStyleClass().add("active");
-    singleBtn.getStyleClass().remove("active");
+    multiBtn.getStyleClass().add(ACTIVE);
+    singleBtn.getStyleClass().remove(ACTIVE);
     display();
   }
 
+  /** Creates a new event that will start a Diashow with the media documents in the mainwrapper. */
   @FXML
-  void playAllAsDiashow() {
+  private void playAllAsDiashow() {
     this.eventService.post(new PlayDiashow(this.media));
   }
 

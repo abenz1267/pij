@@ -2,6 +2,7 @@ package views;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.common.io.Files;
+import entities.media.Media;
 import events.AddToExport;
 import events.SetUIState;
 import events.SetUIState.State;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
@@ -41,7 +43,11 @@ public class ExportContextController extends AbstractController implements Initi
 
   @FXML
   private void chooseDest() {
-    if (this.itemList.isEmpty()) {
+    this.chooseDest(new ArrayList<>(this.itemList));
+  }
+
+  private void chooseDest(List<Media> items) {
+    if (items.isEmpty()) {
       var alert = new Alert(AlertType.ERROR, "Keine Dateien zum export ausgewählt", ButtonType.OK);
       alert.showAndWait();
       return;
@@ -63,7 +69,8 @@ public class ExportContextController extends AbstractController implements Initi
     }
 
     try {
-      mediaService.exportMedia(new ArrayList<>(this.itemList), file.toPath());
+      mediaService.exportMedia(items, file.toPath());
+      this.closeExport();
     } catch (IOException | SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
@@ -72,5 +79,15 @@ public class ExportContextController extends AbstractController implements Initi
   @FXML
   private void closeExport() {
     eventService.post(new SetUIState(State.CLOSE_CONTEXT));
+  }
+
+  @FXML
+  private void exportAll() {
+    try {
+      this.chooseDest(mediaService.dao().queryForAll());
+      this.closeExport();
+    } catch (SQLException e) {
+      logger.log(Level.SEVERE, e.getMessage());
+    }
   }
 }

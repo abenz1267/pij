@@ -31,6 +31,7 @@ public class App extends Application {
 
     resourceService.setStageTitle(stage, Resource.CONFIG, View.MAINVIEW.toString());
     stage.setScene(scene);
+    stage.setMaximized(true);
     stage.centerOnScreen();
 
     stage.show();

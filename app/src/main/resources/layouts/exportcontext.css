@@ -29,3 +29,19 @@
 .file {
   -fx-alignment: center;
 }
+
+.exportAll {
+  -fx-alignment: center-right;
+  -fx-padding: 40px 0 0 0;
+}
+
+.exportAll Button {
+  -fx-content-display: right;
+  -fx-text-fill: #4a3eef;
+  -fx-padding: 0;
+}
+
+.exportAll Button FontIcon {
+  -fx-icon-color: #4a3eef;
+  -fx-icon-size: 32px;
+}

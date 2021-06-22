@@ -30,6 +30,7 @@ abstract class AbstractController {
   @Inject protected SceneService sceneService;
   @Inject protected EventService eventService;
   @Inject protected MediaService mediaService;
+  @Inject protected ResolutionService resolutionService;
   @Inject protected Logger logger;
   @Inject protected AlbumService albumService;
   @Inject protected AlbumMediaService albumMediaService;

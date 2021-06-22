@@ -39,6 +39,7 @@ import javax.inject.Inject;
 import org.apache.commons.io.FileUtils;
 import resources.ResourceService;
 
+/** Implementation for {@link MediaService} */
 @Singleton
 public class MediaServiceImpl extends AbstractEntityService implements MediaService {
   @Inject private LocationService locationService;
@@ -49,19 +50,19 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   @Inject private TagMediaService tagMediaService;
   @Inject private PersonMediaService personMediaService;
 
-  private Dao<Media, Integer> _dao = null;
+  private Dao<Media, Integer> iDao = null;
   private boolean keepOriginal = true;
 
   public Dao<Media, Integer> dao() {
-    if (this._dao == null) {
+    if (this.iDao == null) {
       try {
-        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), Media.class);
+        this.iDao = DaoManager.createDao(this.databaseConnectionService.get(), Media.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this._dao;
+    return this.iDao;
   }
 
   public void importMedia(List<File> files) throws IOException, SQLException {
@@ -113,6 +114,14 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     FileUtils.deleteDirectory(tmpDir);
   }
 
+  /**
+   * Extracts a given zip file into a given temporary directory;
+   *
+   * @param tmpDir the directory
+   * @param zip the zip-file
+   * @throws IOException
+   * @author Andrej Benz
+   */
   private void unzip(File tmpDir, File zip) throws IOException {
     var buffer = new byte[1024];
 
@@ -146,6 +155,14 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     }
   }
 
+  /**
+   * Creates a new file in the destination dir for a zip entry.
+   *
+   * @param destinationDir the destinationDir.
+   * @param zipEntry the {@link ZipEntry}
+   * @throws IOException
+   * @author Andrej Benz
+   */
   private File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
     var destFile = new File(destinationDir, zipEntry.getName());
 
@@ -187,38 +204,47 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     FileUtils.deleteDirectory(tmpDir);
   }
 
-  private void zipFolder(File fileToZip, String fileName, ZipOutputStream zipOut)
+  /**
+   * Creats zip from a folder and saves it to the destination.
+   *
+   * @param folderToZip the folder to be zipped
+   * @param outputFile the outputs filename
+   * @param zipOut the {@link ZipOutputStream}
+   * @author Andrej Benz
+   */
+  private void zipFolder(File folderToZip, String outputFile, ZipOutputStream zipOut)
       throws IOException {
-    if (fileToZip.isHidden()) {
+    if (folderToZip.isHidden()) {
       return;
     }
-    if (fileToZip.isDirectory()) {
-      if (fileName.endsWith("/")) {
-        zipOut.putNextEntry(new ZipEntry(fileName));
+    if (folderToZip.isDirectory()) {
+      if (outputFile.endsWith("/")) {
+        zipOut.putNextEntry(new ZipEntry(outputFile));
         zipOut.closeEntry();
       } else {
-        zipOut.putNextEntry(new ZipEntry(fileName + "/"));
+        zipOut.putNextEntry(new ZipEntry(outputFile + "/"));
         zipOut.closeEntry();
       }
-      File[] children = fileToZip.listFiles();
+      File[] children = folderToZip.listFiles();
       for (File childFile : children) {
-        zipFolder(childFile, fileName + "/" + childFile.getName(), zipOut);
+        zipFolder(childFile, outputFile + "/" + childFile.getName(), zipOut);
       }
       return;
     }
 
-    var zipEntry = new ZipEntry(fileName);
+    var zipEntry = new ZipEntry(outputFile);
     zipOut.putNextEntry(zipEntry);
     var bytes = new byte[1024];
     int length;
 
-    try (var fis = new FileInputStream(fileToZip)) {
+    try (var fis = new FileInputStream(folderToZip)) {
       while ((length = fis.read(bytes)) >= 0) {
         zipOut.write(bytes, 0, length);
       }
     }
   }
 
+  /** Used to make sure all or none of the files get imported. */
   private void createMultiple(List<Media> media) throws SQLException {
     this.transaction(
         () -> {
@@ -296,9 +322,21 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     }
   }
 
-  public void delete(Media media) throws SQLException {
+  public void delete(Media media) throws SQLException, IOException {
+    if (media.getLocation() != null) {
+      List<Media> locationRes = dao().queryForEq("location_id", media.getLocation().getId());
+      if (locationRes.size() == 1) {
+        locationService.dao().delete(media.getLocation());
+      }
+    }
+
+    List<Media> resolutionRes = dao().queryForEq("resolution_id", media.getResolution().getId());
+    if (resolutionRes.size() == 1) {
+      resolutionService.dao().delete(media.getResolution());
+    }
+
     var file = new File(media.getFilename());
-    file.delete();
+    FileUtils.delete(file);
     dao().delete(media);
   }
 
