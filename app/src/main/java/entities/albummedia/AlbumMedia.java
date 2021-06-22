@@ -5,6 +5,13 @@ import com.j256.ormlite.table.DatabaseTable;
 import entities.album.Album;
 import entities.media.Media;
 
+/**
+ * AlbumMedia entity.
+ *
+ * @author Timm Lohmann
+ * @author Phillip Knutzen
+ * @author Joey Wille
+ */
 @DatabaseTable()
 public class AlbumMedia {
 

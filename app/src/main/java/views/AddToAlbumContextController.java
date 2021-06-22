@@ -21,6 +21,7 @@ import java.util.logging.Level;
  *
  * @author Phillip Knutzen
  * @author Timm Lohmann
+ * @author Joey Wille
  */
 
 public class AddToAlbumContextController extends AbstractController implements Initializable {

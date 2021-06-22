@@ -2,6 +2,14 @@ package entities.album;
 
 import com.j256.ormlite.field.DatabaseField;
 
+/**
+ * Album entity.
+ *
+ * @author Timm Lohmann
+ * @author Phillip Knutzen
+ * @author Joey Wille
+ */
+
 public class Album {
 
   public static final String ID_FIELD_NAME = "id";

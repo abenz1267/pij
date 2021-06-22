@@ -15,6 +15,17 @@ import java.util.Date;
 import java.util.List;
 import javax.imageio.ImageIO;
 
+/**
+ * Media entity.
+ *
+ * @author Andrej Benz
+ * @author Timm Lohmann
+ * @author Joey Wille
+ * @author Phillip Knutzen
+ * @author Christian Paulsen
+ * @author Kelvin Leclaire
+ */
+
 @DatabaseTable()
 public class Media {
   @DatabaseField(generatedId = true)

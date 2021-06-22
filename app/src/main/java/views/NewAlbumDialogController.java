@@ -13,6 +13,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Controller to handle new album dialog.
+ *
+ * @author Timm Lohmann
+ * @author Phillip Knutzen
+ * @author Joey Wille
+ */
+
 public class NewAlbumDialogController extends AbstractController {
 
   @FXML private TextField albumName;

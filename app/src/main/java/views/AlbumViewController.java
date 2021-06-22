@@ -15,6 +15,14 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controller to handle albumview.
+ *
+ * @author Timm Lohmann
+ * @author Phillip Knutzen
+ * @author Joey Wille
+ */
+
 public class AlbumViewController extends AbstractController implements Initializable {
   @FXML private TilePane tilePane;
 
@@ -43,6 +51,12 @@ public class AlbumViewController extends AbstractController implements Initializ
       logger.log(Level.SEVERE, e.getMessage());
     }
   }
+
+  /**
+   * Sets new stage and creates new albumdialog in scene.
+   *
+   * @throws SQLException if there's a problem with the database.
+   */
 
   @FXML
   private void newAlbumDialog() throws IOException {

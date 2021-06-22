@@ -2,6 +2,14 @@ package events;
 
 import entities.person.Person;
 
+/**
+ * Event to remove persons from media.
+ *
+ * @author Timm Lohmann
+ * @author Phillip Knutzen
+ * @author Joey Wille
+ */
+
 public class RemovePersonFromMedia {
     private Person person;
 

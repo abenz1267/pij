@@ -5,6 +5,15 @@ import com.j256.ormlite.table.DatabaseTable;
 import entities.media.Media;
 import entities.person.Person;
 
+/**
+ * PersonMedia entity.
+ *
+ * @author Andrej Benz
+ * @author Timm Lohmann
+ * @author Joey Wille
+ * @author Phillip Knutzen
+ */
+
 @DatabaseTable()
 public class PersonMedia {
 

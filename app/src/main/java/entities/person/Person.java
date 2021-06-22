@@ -4,6 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * Person entity.
+ *
+ * @author Timm Lohmann
+ * @author Joey Wille
+ * @author Phillip Knutzen
+
+ */
 @DatabaseTable()
 public class Person {
   @DatabaseField(generatedId = true)

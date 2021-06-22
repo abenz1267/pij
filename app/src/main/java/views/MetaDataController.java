@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 /**
- * Controller to handle metadata view
+ * Controller to show, save and handle metadata.
  *
  * @author Timm Lohmann
  * @author Phillip Knutzen
