@@ -6,6 +6,7 @@
 
 <VBox styleClass="container" stylesheets="@metadataview.css" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
+    <Label styleClass="personbox" text="Metadaten:"/>
     <VBox>
         <Label text="Personen im Bild:"/>
         <VBox VBox.vgrow="ALWAYS">
@@ -21,7 +22,7 @@
                 </Button>
             </HBox>
             <ScrollPane>
-              <VBox VBox.vgrow="ALWAYS" styleClass="personbox" fx:id="personBox" minWidth="300"/>
+                <VBox VBox.vgrow="ALWAYS" styleClass="personbox" fx:id="personBox" minWidth="300"/>
             </ScrollPane>
         </VBox>
     </VBox>
@@ -81,7 +82,11 @@
             <Label fx:id="datatypeField"/>
         </HBox>
     </HBox>
+    <HBox>
+        <Button mnemonicParsing="false" onAction="#btnSaveDataClicked" text="Änderungen speichern"/>
+    </HBox>
     <VBox>
+        <Label styleClass="personbox" text="Tags hinzufügen:"/>
         <HBox>
             <ComboBox fx:id="tagBox"/>
             <Button fx:id="addTagBtn" onAction="#addTag">
@@ -92,7 +97,5 @@
         </HBox>
         <TilePane fx:id="tagPane"/>
     </VBox>
-    <HBox>
-        <Button mnemonicParsing="false" onAction="#btnSaveDataClicked" text="Save Changes"/>
-    </HBox>
+
 </VBox>

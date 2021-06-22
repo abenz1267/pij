@@ -22,6 +22,10 @@ public interface AlbumService {
    *
    * @param album the album entity.
    * @throws SQLException if there's a problem with the database.
+   *
+   * @author Timm Lohmann
+   * @author Phillip Knutzen
+   * @author Joey Wille
    */
   void createAlbum(Album album) throws SQLException;
 
