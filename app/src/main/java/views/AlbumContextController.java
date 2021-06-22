@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
  * @author Joey Wille
  * @author Phillip Knutzen
  */
-
 public class AlbumContextController extends AbstractController implements Initializable {
   @FXML
   Label albumLabel;
