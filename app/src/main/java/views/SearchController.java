@@ -23,9 +23,6 @@ public class SearchController extends AbstractController implements Initializabl
   }
 
   @FXML
-  /**
-   * OnSearch triggered by the search input textField and/or search button
-   */
   public void onSearch() {
     try {
       eventService.post(new ShowImages(mediaService.filterMediaByInput(searchInput.getText())));
