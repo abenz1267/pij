@@ -112,10 +112,21 @@ public class DiashowController extends AbstractController implements Initializab
     else currentImage = index;
 
     stackPane.getChildren().clear();
+    mediaService.refreshAll(media.get(currentImage));
+
     var file = new File(media.get(currentImage).getFilename());
-    var tempImage =
-        new Image(file.toURI().toString(), stackPane.getWidth(), stackPane.getHeight(), true, true);
+    var width = media.get(currentImage).getResolution().getWidth();
+    var height = media.get(currentImage).getResolution().getHeight();
+
+    if (width > stackPane.getWidth() || height > stackPane.getHeight()) {
+      width = (int) stackPane.getWidth();
+      height = (int) stackPane.getHeight();
+    }
+
+    var tempImage = new Image(file.toURI().toString(), width, height, true, true);
     var imageView = new ImageView(tempImage);
+    stackPane.setBackground(
+        new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     stackPane.getChildren().add(imageView);
   }
 }
