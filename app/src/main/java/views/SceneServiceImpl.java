@@ -36,7 +36,12 @@ public class SceneServiceImpl implements SceneService {
     ObservableList<Node> children = pane.getChildren();
     children.clear();
 
+    pane.setManaged(true);
+    pane.setVisible(true);
+
     if (view.equals(View.CLEAR)) {
+      pane.setManaged(false);
+      pane.setVisible(false);
       return;
     }
 
