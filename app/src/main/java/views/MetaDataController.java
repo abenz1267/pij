@@ -144,6 +144,12 @@ public class MetaDataController extends AbstractController implements Initializa
 
   @FXML
   public void addTag() {
+    var children = tagPane.getChildren();
+    children.clear();
+
+    media.setTags(new ArrayList<>());
+    mediaService.refreshAll(media);
+
 
   }
 
