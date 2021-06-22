@@ -4,11 +4,24 @@ import com.google.common.eventbus.Subscribe;
 import entities.album.Album;
 import entities.media.Media;
 import events.*;
+import events.AddToDiashow;
+import events.AddToExport;
+import events.PlayDiashow;
+import events.ShowImages;
+import java.io.File;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -123,6 +136,24 @@ public class ImagesViewController extends AbstractController implements Initiali
                   } else if (count == 1) {
                     logger.log(Level.INFO, "SINGLECLICK");
                   }
+                } else if (event.getButton().equals(MouseButton.SECONDARY)) {
+                  var contextMenu = new ContextMenu();
+                  var menuItem1 = new MenuItem("Bild löschen");
+                  menuItem1.setOnAction(
+                      e -> {
+                        try {
+                          mediaService.delete(item);
+                          media.remove(item);
+                          this.display();
+                        } catch (SQLException ex) {
+                          logger.log(Level.SEVERE, ex.getMessage());
+                        }
+                      });
+
+                  contextMenu.getItems().add(menuItem1);
+
+                  imageView.setOnContextMenuRequested(
+                      e -> contextMenu.show(imageView, e.getScreenX(), e.getScreenY()));
                 }
 
                 event.consume();
