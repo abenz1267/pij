@@ -3,6 +3,7 @@ package views;
 import com.google.inject.Inject;
 import entities.media.Media;
 import entities.media.MediaService;
+import entities.resolution.ResolutionService;
 import events.EventService;
 import java.util.HashSet;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ abstract class AbstractController {
   @Inject protected SceneService sceneService;
   @Inject protected EventService eventService;
   @Inject protected MediaService mediaService;
+  @Inject protected ResolutionService resolutionService;
   @Inject protected Logger logger;
 
   protected HashSet<Media> itemList = new HashSet<>();

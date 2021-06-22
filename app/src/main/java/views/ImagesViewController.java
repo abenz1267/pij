@@ -149,12 +149,22 @@ public class ImagesViewController extends AbstractController implements Initiali
   private ImageView loadImageViewFromMedia(Media media) {
     var file = new File(media.getFilename());
     Image tempImage;
+    mediaService.refreshAll(media);
+    var width = media.getResolution().getWidth();
+    var height = media.getResolution().getHeight();
+
     if (maxImages == 10) {
-      tempImage = new Image(file.toURI().toString(), 400, 400, true, false);
+      if (width > 400 || height > 400) {
+        width = 400;
+      }
+
+      tempImage = new Image(file.toURI().toString(), width, height, true, false);
     } else {
-      tempImage =
-          new Image(
-              file.toURI().toString(), scrollPane.getWidth(), scrollPane.getHeight(), true, true);
+      if (width > scrollPane.getWidth() || height > scrollPane.getHeight()) {
+        width = (int) scrollPane.getWidth();
+      }
+
+      tempImage = new Image(file.toURI().toString(), width, height, true, true);
     }
     var tempImageView = new ImageView();
     tempImageView.setImage(tempImage);
