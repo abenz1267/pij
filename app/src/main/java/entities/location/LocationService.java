@@ -18,6 +18,8 @@ public interface LocationService {
    * Checks if a given location is in the database. Persists new location if not, sets media
    * location to entity if yes.
    *
+   * @param media the {@link Media}
+   * @throws SQLException in case of a problem with the database
    * @author Andrej Benz
    */
   void checkLocation(Media media) throws SQLException;
