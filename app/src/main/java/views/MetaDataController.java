@@ -6,6 +6,12 @@ import entities.media.Media;
 import entities.person.Person;
 import entities.tag.Tag;
 import events.LoadMetaData;
+import java.net.URL;
+import java.sql.SQLException;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.*;
+import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,12 +21,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
-import java.net.URL;
-import java.sql.SQLException;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.*;
-import java.util.logging.Level;
 
 /**
  * Controller to show, save and handle metadata.
@@ -40,7 +40,7 @@ public class MetaDataController extends AbstractController implements Initializa
   @FXML private TextField personFieldFirstName;
   @FXML private TextField personFieldLastName;
   @FXML private VBox personBox;
-  @FXML private ComboBox tagBox;
+  @FXML private ComboBox<String> tagBox;
   @FXML private TilePane tagPane;
 
   private Media media;
@@ -54,12 +54,22 @@ public class MetaDataController extends AbstractController implements Initializa
     try {
       tagBox.getItems().clear();
       tagBox.setEditable(true);
+
       var allTags = tagService.dao().queryForAll();
-      allTags.addAll(tags);
-      var filteredTags = new HashSet<>(allTags);
-      filteredTags.forEach(
+      var set = new HashSet<String>();
+      allTags.forEach(
           tag -> {
-            tagBox.getItems().add(tag.getName());
+            set.add(tag.getName());
+          });
+
+      tags.forEach(
+          tag -> {
+            set.remove(tag.getName());
+          });
+
+      set.forEach(
+          entry -> {
+            tagBox.getItems().add(entry);
           });
 
       tagBox.setOnAction(
