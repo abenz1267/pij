@@ -23,7 +23,7 @@ public class SearchController extends AbstractController implements Initializabl
   }
 
   @FXML
-  public void onSearch() {
+  private void onSearch() {
     try {
       eventService.post(new ShowImages(mediaService.filterMediaByInput(searchInput.getText())));
     } catch (SQLException e) {

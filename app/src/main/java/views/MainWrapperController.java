@@ -28,7 +28,7 @@ public class MainWrapperController extends AbstractController implements Initial
   }
 
   @Subscribe
-  public void showPage(SetUIState event) {
+  private void showPage(SetUIState event) {
     try {
       switch (event.getState()) {
         case ALBUM:

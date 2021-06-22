@@ -32,7 +32,7 @@ public class ContextController extends AbstractController implements Initializab
   }
 
   @Subscribe
-  public void setView(SetUIState event) {
+  private void setView(SetUIState event) {
     sceneService.setState(event.getState());
 
     try {

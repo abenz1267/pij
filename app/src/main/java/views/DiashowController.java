@@ -41,15 +41,16 @@ public class DiashowController extends AbstractController implements Initializab
   }
 
   /**
-   * Starts a diashow in fullscreen. It takes a list of {@link Media} objects from the {@link PlayDiashow} event.
-   * The media will be filtered and added to a new stage in fullscreen mode.
-   * The diashow can be controlled with the left and right arrow-keys. If you skip manually through the image, the
-   * diashow animation will be paused. You can resume the animation by pressing spacebar.
+   * Starts a diashow in fullscreen. It takes a list of {@link Media} objects from the {@link
+   * PlayDiashow} event. The media will be filtered and added to a new stage in fullscreen mode. The
+   * diashow can be controlled with the left and right arrow-keys. If you skip manually through the
+   * image, the diashow animation will be paused. You can resume the animation by pressing spacebar.
    * The Escape key closes the diashow.
+   *
    * @param event the event that triggers the diashow.
    */
   @Subscribe
-  public void playDiashow(PlayDiashow event) {
+  private void playDiashow(PlayDiashow event) {
     this.media =
         event.getMedia().stream().filter(item -> !item.isPrivate()).collect(Collectors.toList());
 

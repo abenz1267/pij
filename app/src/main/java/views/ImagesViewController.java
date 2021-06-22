@@ -60,17 +60,16 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   /**
    * The listener for the {@link ShowImages} event.
+   *
    * @param event the event to listen for
    */
   @Subscribe
-  public void displayMedia(ShowImages event) {
+  private void displayMedia(ShowImages event) {
     this.media = event.getMedia();
     display();
   }
 
-  /**
-   * Displays the images from a {@link ShowImages} event in the mainwrapper.
-   */
+  /** Displays the images from a {@link ShowImages} event in the mainwrapper. */
   private void display() {
     var offset = 0;
     if ((this.media.size() % maxImages) != 0) {
@@ -105,6 +104,7 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   /**
    * Creates a a list of thumbnail imageviews of the given media list.
+   *
    * @param mediaList the list, for the thumbnails.
    * @return a list of {@link ImageView} thumbnails for displaying in the mainwrapper.
    */
@@ -192,33 +192,27 @@ public class ImagesViewController extends AbstractController implements Initiali
     return tempImageView;
   }
 
-  /**
-   * Display single image in the mainwrapper.
-   */
+  /** Display single image in the mainwrapper. */
   @FXML
-  public void singleView() {
+  private void singleView() {
     maxImages = 1;
     multiBtn.getStyleClass().remove(ACTIVE);
     singleBtn.getStyleClass().add(ACTIVE);
     display();
   }
 
-  /**
-   * Display multiple images at once in the mainwrapper.
-   */
+  /** Display multiple images at once in the mainwrapper. */
   @FXML
-  public void multipleView() {
+  private void multipleView() {
     maxImages = 10;
     multiBtn.getStyleClass().add(ACTIVE);
     singleBtn.getStyleClass().remove(ACTIVE);
     display();
   }
 
-  /**
-   * Creates a new event that will start a Diashow with the media documents in the mainwrapper.
-   */
+  /** Creates a new event that will start a Diashow with the media documents in the mainwrapper. */
   @FXML
-  void playAllAsDiashow() {
+  private void playAllAsDiashow() {
     this.eventService.post(new PlayDiashow(this.media));
   }
 }
