@@ -6,6 +6,8 @@ import entities.media.Media;
 import entities.person.Person;
 import entities.tag.Tag;
 import events.LoadMetaData;
+import events.SetUIState;
+import events.SetUIState.State;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
@@ -17,8 +19,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -41,7 +43,7 @@ public class MetaDataController extends AbstractController implements Initializa
   @FXML private TextField personFieldLastName;
   @FXML private VBox personBox;
   @FXML private ComboBox<String> tagBox;
-  @FXML private TilePane tagPane;
+  @FXML private FlowPane tagPane;
 
   private Media media;
 
@@ -232,5 +234,10 @@ public class MetaDataController extends AbstractController implements Initializa
       wrapper.getChildren().add(button);
       children.add(wrapper);
     }
+  }
+
+  @FXML
+  private void closeMetaData() {
+    eventService.post(new SetUIState(State.CLOSE_CONTEXT));
   }
 }
