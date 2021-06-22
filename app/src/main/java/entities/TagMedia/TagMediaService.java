@@ -15,4 +15,6 @@ public interface TagMediaService {
     void remove(Tag tag, Media media) throws SQLException;
 
     List<TagMedia> get(Tag tag, Media media) throws SQLException;
+
+    List<Tag> getTags(Media media) throws SQLException;
 }

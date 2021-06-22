@@ -3,6 +3,7 @@ package entities.PersonMedia;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractEntityService;
+import entities.album.Album;
 import entities.media.Media;
 import entities.person.Person;
 import entities.person.PersonService;
@@ -50,5 +51,18 @@ public class PersonMediaServiceImpl extends AbstractEntityService implements Per
     qb.where().eq("person_id", person.getId()).and().eq("media_id", media.getId());
 
     return qb.query();
+  }
+
+  @Override
+  public List<Person> getPersons(Media media) throws SQLException {
+    var qb = dao().queryBuilder();
+    var mQb = personService.dao().queryBuilder();
+
+    qb.selectColumns("person_id");
+    qb.where().eq("media_id", media.getId());
+
+    mQb.where().in("id", qb);
+
+    return mQb.query();
   }
 }

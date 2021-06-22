@@ -12,6 +12,8 @@ import com.j256.ormlite.stmt.Where;
 import entities.AbstractEntityService;
 import entities.PersonMedia.PersonMedia;
 import entities.PersonMedia.PersonMediaService;
+import entities.TagMedia.TagMedia;
+import entities.TagMedia.TagMediaService;
 import entities.location.Location;
 import entities.location.LocationService;
 import entities.person.Person;
@@ -44,6 +46,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   @Inject private ResourceService resourceService;
   @Inject private PersonService personService;
   @Inject private TagService tagService;
+  @Inject private TagMediaService tagMediaService;
   @Inject private PersonMediaService personMediaService;
 
   private Dao<Media, Integer> _dao = null;
@@ -285,15 +288,14 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
       resolutionService.dao().refresh(media.getResolution());
       locationService.dao().refresh(media.getLocation());
 
-      List<PersonMedia> res = personMediaService.dao().queryForEq("media_id", media.getId());
+      media.setPersons(personMediaService.getPersons(media));
+      media.setTags(tagMediaService.getTags(media));
 
-      for (var i : res) {
-        personService.dao().refresh(i.getPerson());
-        media.getPersons().add(i.getPerson());
-      }
     } catch (SQLException e) {
       this.logger.log(Level.SEVERE, e.getMessage());
     }
+
+
   }
 
   public void delete(Media media) throws SQLException {
@@ -304,6 +306,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
   public void update(Media media) throws SQLException {
     this.checkPersons(media);
+    this.checkTags(media);
     locationService.checkLocation(media);
     this.dao().update(media);
     media.setPersons(new ArrayList<>());
@@ -341,6 +344,38 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
         personService.dao().create(persons.get(i));
         var personMedia = new PersonMedia(persons.get(i), media);
         personMediaService.dao().create(personMedia);
+      }
+    }
+  }
+
+  private void checkTags(Media media) throws SQLException {
+    var tags = media.getTags();
+
+    for (var i = 0; i < tags.size(); i++) {
+      var tag = tags.get(i);
+      if (tag.getName().isEmpty()) {
+        continue;
+      }
+
+      if (tag.getId() != 0) {
+        continue;
+      }
+
+      List<Tag> tagList = tagService.dao().queryForEq("name", tag.getName());
+
+      if (!tagList.isEmpty()) {
+        tags.get(i).setId(tagList.get(0).getId());
+
+        List<TagMedia> res = tagMediaService.get(tagList.get(0), media);
+
+        if (res.isEmpty()) {
+          var tagMedia = new TagMedia(tags.get(i), media);
+          tagMediaService.dao().createIfNotExists(tagMedia);
+        }
+      } else {
+        tagService.dao().create(tags.get(i));
+        var tagMedia = new TagMedia(tags.get(i), media);
+        tagMediaService.dao().create(tagMedia);
       }
     }
   }

@@ -52,14 +52,22 @@ public class MetaDataController extends AbstractController implements Initializa
     eventService.register(this);
 
     try {
-      tagService.dao().queryForAll().forEach(tag -> {
-        tagBox.getItems().add(tag.getName());
+      tagService
+          .dao()
+          .queryForAll()
+          .forEach(
+              tag -> {
+                tagBox.getItems().add(tag.getName());
+              });
+
+      tagBox.setEditable(true);
+      tagBox.setOnAction((event) -> {
+        var sel = tagBox.getSelectionModel().getSelectedItem().toString();
+        logger.info("selected Tag:" + sel);
       });
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
-
-    tagBox.setEditable(true);
   }
 
   @Subscribe
@@ -78,8 +86,6 @@ public class MetaDataController extends AbstractController implements Initializa
       locationField.setText(media.getLocation().toString());
       locationField.setAlignment(Pos.CENTER_RIGHT);
     }
-
-
 
     nameField.setText(media.getName());
     nameField.setAlignment(Pos.CENTER_RIGHT);
@@ -146,7 +152,7 @@ public class MetaDataController extends AbstractController implements Initializa
   }
 
   @FXML
-  public void addTagToImage() {
+  public void addTag() {
     var tag = new Tag();
     tag.setName(tagBox.getValue().toString());
     media.getTags().add(tag);
@@ -154,13 +160,11 @@ public class MetaDataController extends AbstractController implements Initializa
     try {
       mediaService.update(media);
       mediaService.refreshAll(media);
-      tagBox.setValue("");
 
       this.listTags(media);
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
-
   }
 
   private void listTags(Media media) {
@@ -174,14 +178,16 @@ public class MetaDataController extends AbstractController implements Initializa
       var wrapper = new HBox();
       var button = new Button();
       button.setGraphic(new FontIcon("mdi2b-bookmark-remove-outline"));
+      button.setText(t.getName());
 
-      button.setOnAction(event -> {
-        try {
-          tagMediaService.remove(t, media);
-        } catch (SQLException e) {
-          logger.log(Level.SEVERE, e.getMessage());
-        }
-      });
+      button.setOnAction(
+          event -> {
+            try {
+              tagMediaService.remove(t, media);
+            } catch (SQLException e) {
+              logger.log(Level.SEVERE, e.getMessage());
+            }
+          });
 
       wrapper.getChildren().add(button);
       children.add(wrapper);

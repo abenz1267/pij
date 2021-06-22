@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import entities.AbstractEntityService;
 import entities.media.Media;
+import entities.person.Person;
 import entities.tag.Tag;
 import entities.tag.TagService;
 
@@ -51,5 +52,18 @@ public class TagMediaServiceImpl extends AbstractEntityService implements TagMed
         qb.where().eq("tag_id", tag.getId()).and().eq("media_id", media.getId());
 
         return qb.query();
+    }
+
+    @Override
+    public List<Tag> getTags(Media media) throws SQLException {
+        var qb = dao().queryBuilder();
+        var mQb = tagService.dao().queryBuilder();
+
+        qb.selectColumns("tag_id");
+        qb.where().eq("media_id", media.getId());
+
+        mQb.where().in("id", qb);
+
+        return mQb.query();
     }
 }

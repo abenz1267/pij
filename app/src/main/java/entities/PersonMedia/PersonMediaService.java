@@ -15,4 +15,6 @@ public interface PersonMediaService {
   void remove(Person person, Media media) throws SQLException;
 
   List<PersonMedia> get(Person person, Media media) throws SQLException;
+
+  List<Person> getPersons(Media media) throws SQLException;
 }
