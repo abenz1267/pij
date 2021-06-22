@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<FlowPane stylesheets="@topmenu.css" styleClass="topmenu" prefWrapLength="Infinity" xmlns="http://javafx.com/javafx/15"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.TopMenuController">
+
+<HBox stylesheets="@topmenu.css" styleClass="topmenu" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.TopMenuController">
+  <HBox HBox.hgrow="ALWAYS">
     <Button fx:id="imagesBtn" text="Bilder" onAction="#showImagesView">
-        <graphic>
-            <FontIcon iconLiteral="mdi2c-camera-burst"/>
-        </graphic>
+      <graphic>
+        <FontIcon iconLiteral="mdi2c-camera-burst"/>
+      </graphic>
     </Button>
     <Button fx:id="albumBtn" text="Alben" onAction="#showAlbumView">
-        <graphic>
-            <FontIcon iconLiteral="mdi2i-image-album"/>
-        </graphic>
+      <graphic><FontIcon iconLiteral="mdi2i-image-album" /></graphic>
     </Button>
-
+  </HBox>
+  <HBox HBox.hgrow="ALWAYS" styleClass="topmenuactions">
     <Button fx:id="importBtn" text="Importieren" onAction="#openFileImportDialog">
-        <graphic>
-            <FontIcon iconLiteral="mdi2i-import"/>
-        </graphic>
+      <graphic><FontIcon iconLiteral="mdi2i-import" /></graphic>
     </Button>
     <Button fx:id="exportBtn" text="Exportieren" onAction="#showExport">
-        <graphic>
-            <FontIcon iconLiteral="mdi2e-export"/>
-        </graphic>
+      <graphic><FontIcon iconLiteral="mdi2e-export" /></graphic>
     </Button>
     <Button fx:id="diashowBtn" text="Diashow" onAction="#showDiashowPrep">
-        <graphic><FontIcon iconLiteral="mdi2a-animation-play" /></graphic>
+      <graphic><FontIcon iconLiteral="mdi2a-animation-play" /></graphic>
     </Button>
-</FlowPane>
+  </HBox>
+</HBox>

@@ -27,6 +27,8 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML private TilePane imageWrapper;
   @FXML private ScrollPane scrollPane;
   @FXML private Pagination pagination;
+  @FXML private Button singleBtn;
+  @FXML private Button multiBtn;
   @FXML private Button addToAlbumBtn;
   @FXML private Label albumTitle;
 
@@ -43,6 +45,8 @@ public class ImagesViewController extends AbstractController implements Initiali
     scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
+
+    multiBtn.getStyleClass().add("active");
   }
 
   @Subscribe
@@ -154,12 +158,16 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML
   public void singleView() {
     maxImages = 1;
+    multiBtn.getStyleClass().remove("active");
+    singleBtn.getStyleClass().add("active");
     display();
   }
 
   @FXML
   public void multipleView() {
     maxImages = 10;
+    multiBtn.getStyleClass().add("active");
+    singleBtn.getStyleClass().remove("active");
     display();
   }
 
