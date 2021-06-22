@@ -71,11 +71,6 @@ public class MetaDataController extends AbstractController implements Initializa
           entry -> {
             tagBox.getItems().add(entry);
           });
-
-      tagBox.setOnAction(
-          (event) -> {
-            tagBox.getSelectionModel().getSelectedItem().toString();
-          });
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
