@@ -7,6 +7,7 @@ import events.AddToExport;
 import events.PlayDiashow;
 import events.ShowImages;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   private int maxImages = 10;
   private List<Media> media;
+  private static final String active = "active";
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -46,7 +48,7 @@ public class ImagesViewController extends AbstractController implements Initiali
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
 
-    multiBtn.getStyleClass().add("active");
+    multiBtn.getStyleClass().add(active);
   }
 
   @Subscribe
@@ -113,23 +115,7 @@ public class ImagesViewController extends AbstractController implements Initiali
                     logger.log(Level.INFO, "SINGLECLIKC");
                   }
                 } else if (event.getButton().equals(MouseButton.SECONDARY)) {
-                  var contextMenu = new ContextMenu();
-                  var menuItem1 = new MenuItem("Bild löschen");
-                  menuItem1.setOnAction(
-                      e -> {
-                        try {
-                          mediaService.delete(item);
-                          media.remove(item);
-                          this.display();
-                        } catch (SQLException ex) {
-                          logger.log(Level.SEVERE, ex.getMessage());
-                        }
-                      });
-
-                  contextMenu.getItems().add(menuItem1);
-
-                  imageView.setOnContextMenuRequested(
-                      e -> contextMenu.show(imageView, e.getScreenX(), e.getScreenY()));
+                  this.createContextMenu(imageView, item, media);
                 }
 
                 event.consume();
@@ -139,6 +125,25 @@ public class ImagesViewController extends AbstractController implements Initiali
         });
 
     return resizedImages;
+  }
+
+  private void createContextMenu(ImageView view, Media media, List<Media> list) {
+    var contextMenu = new ContextMenu();
+    var menuItem1 = new MenuItem("Bild löschen");
+    menuItem1.setOnAction(
+        e -> {
+          try {
+            mediaService.delete(media);
+            list.remove(media);
+            this.display();
+          } catch (SQLException | IOException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());
+          }
+        });
+
+    contextMenu.getItems().add(menuItem1);
+
+    view.setOnContextMenuRequested(e -> contextMenu.show(view, e.getScreenX(), e.getScreenY()));
   }
 
   private ImageView loadImageViewFromMedia(Media media) {
@@ -161,16 +166,16 @@ public class ImagesViewController extends AbstractController implements Initiali
   @FXML
   public void singleView() {
     maxImages = 1;
-    multiBtn.getStyleClass().remove("active");
-    singleBtn.getStyleClass().add("active");
+    multiBtn.getStyleClass().remove(active);
+    singleBtn.getStyleClass().add(active);
     display();
   }
 
   @FXML
   public void multipleView() {
     maxImages = 10;
-    multiBtn.getStyleClass().add("active");
-    singleBtn.getStyleClass().remove("active");
+    multiBtn.getStyleClass().add(active);
+    singleBtn.getStyleClass().remove(active);
     display();
   }
 

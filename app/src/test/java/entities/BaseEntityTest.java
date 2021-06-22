@@ -24,6 +24,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -65,6 +66,11 @@ public abstract class BaseEntityTest {
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
+  }
+
+  @BeforeEach
+  public void setupBefore() {
+    new File(MEDIA_FOLDER).mkdir();
   }
 
   @AfterEach

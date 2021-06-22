@@ -9,17 +9,17 @@ import javax.inject.Singleton;
 
 @Singleton
 public class PersonServiceImpl extends AbstractEntityService implements PersonService {
-  private Dao<Person, Integer> _dao = null;
+  private Dao<Person, Integer> iDao = null;
 
   public Dao<Person, Integer> dao() {
-    if (this._dao == null) {
+    if (this.iDao == null) {
       try {
-        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), Person.class);
+        this.iDao = DaoManager.createDao(this.databaseConnectionService.get(), Person.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this._dao;
+    return this.iDao;
   }
 }

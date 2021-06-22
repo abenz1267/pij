@@ -81,7 +81,7 @@ public interface MediaService {
    * @throws SQLException if there's a problem with the database.
    * @author Andrej Benz
    */
-  void delete(Media media) throws SQLException;
+  void delete(Media media) throws SQLException, IOException;
 
   /**
    * Filters the database media entities by input string

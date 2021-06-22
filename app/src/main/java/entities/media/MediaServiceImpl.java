@@ -44,19 +44,19 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   @Inject private PersonService personService;
   @Inject private TagService tagService;
 
-  private Dao<Media, Integer> _dao = null;
+  private Dao<Media, Integer> iDao = null;
   private boolean keepOriginal = true;
 
   public Dao<Media, Integer> dao() {
-    if (this._dao == null) {
+    if (this.iDao == null) {
       try {
-        this._dao = DaoManager.createDao(this.databaseConnectionService.get(), Media.class);
+        this.iDao = DaoManager.createDao(this.databaseConnectionService.get(), Media.class);
       } catch (SQLException e) {
         logger.log(Level.SEVERE, e.getMessage());
       }
     }
 
-    return this._dao;
+    return this.iDao;
   }
 
   public void importMedia(List<File> files) throws IOException, SQLException {
@@ -287,20 +287,21 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     }
   }
 
-  public void delete(Media media) throws SQLException {
-    List<Media> locationRes = dao().queryForEq("location_id", media.getLocation().getId());
-    List<Media> resolutionRes = dao().queryForEq("resolution_id", media.getResolution().getId());
-
-    if (locationRes.size() == 1) {
-      locationService.dao().delete(media.getLocation());
+  public void delete(Media media) throws SQLException, IOException {
+    if (media.getLocation() != null) {
+      List<Media> locationRes = dao().queryForEq("location_id", media.getLocation().getId());
+      if (locationRes.size() == 1) {
+        locationService.dao().delete(media.getLocation());
+      }
     }
 
+    List<Media> resolutionRes = dao().queryForEq("resolution_id", media.getResolution().getId());
     if (resolutionRes.size() == 1) {
       resolutionService.dao().delete(media.getResolution());
     }
 
     var file = new File(media.getFilename());
-    file.delete();
+    FileUtils.delete(file);
     dao().delete(media);
   }
 }
