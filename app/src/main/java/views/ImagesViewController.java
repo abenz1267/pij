@@ -28,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import resources.Resource;
 
 /**
  * Controller handling the images that will be displayed in the mainwrapper.
@@ -148,7 +149,7 @@ public class ImagesViewController extends AbstractController implements Initiali
 
   private void createContextMenu(ImageView view, Media media, List<Media> list) {
     var contextMenu = new ContextMenu();
-    var menuItem1 = new MenuItem("Bild löschen");
+    var menuItem1 = new MenuItem(resourceService.getString(Resource.GENERIC, "delete"));
     menuItem1.setOnAction(
         e -> {
           try {
