@@ -1,17 +1,13 @@
 .content {
-  -fx-padding: 20px;
 }
 
 .content > Label {
   -fx-font-size: 24px;
   -fx-font-weight: 700;
-  -fx-padding: 0 0 20px 0;
 }
 
 .exportBtns {
   -fx-alignment: center-right;
-  -fx-hgap: 10px;
-  -fx-padding: 20px 0 0 0;
 }
 
 .cancel {
@@ -23,9 +19,7 @@
 }
 
 #list {
-  -fx-spacing: 10px;
   -fx-background-color: #fefefe;
-  -fx-padding: 20px;
 }
 
 #list Label {
@@ -34,5 +28,4 @@
 
 .file {
   -fx-alignment: center;
-  -fx-spacing: 10px;
 }

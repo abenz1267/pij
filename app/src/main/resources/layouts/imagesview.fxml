@@ -19,7 +19,7 @@
       <Button fx:id="singleBtn" onAction="#singleView">
         <graphic><FontIcon iconLiteral="mdi2i-image" /></graphic>
       </Button>
-      <Button fx:id="singleBtn" onAction="#multipleView">
+      <Button fx:id="multiBtn" onAction="#multipleView">
         <graphic><FontIcon iconLiteral="mdi2i-image-multiple" /></graphic>
       </Button>
     </HBox>
