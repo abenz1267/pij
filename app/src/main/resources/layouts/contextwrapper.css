@@ -1,8 +1,42 @@
 .contextwrapper {
-  -fx-background-color: #354358;
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0);
+  -fx-padding: 20px 0 0 0;
 }
 
-.contextwrapper Label {
-  -fx-text-fill: #fefefe;
+.contextwrapper > * {
+  -fx-padding: 20px;
+  -fx-background-color: #efefef;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.16), 8, 0.5, 0, 0);
+}
+
+.contextwrapper .listControls {
+  -fx-padding: 20px 0 0 0;
+}
+
+.contextwrapper .listControls Button {
+  -fx-padding: 0;
+}
+
+.contextwrapper .listControls Button FontIcon {
+  -fx-icon-size: 32px;
+}
+
+.contextwrapper .primary {
+  -fx-alignment: center-right;
+}
+
+.contextwrapper .primary Button FontIcon {
+  -fx-icon-color: #4a3eef;
+}
+
+.contextwrapper .header {
+  -fx-padding: 0 0 20px 0;
+  -fx-font-size: 24px;
+}
+
+.contextwrapper .list {
+  -fx-padding: 10px;
+}
+
+.contextwrapper .list Button {
+  -fx-background-color: #ffffff;
 }

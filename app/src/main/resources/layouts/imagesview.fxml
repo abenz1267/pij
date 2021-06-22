@@ -8,8 +8,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Button?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-
 <?import javafx.scene.control.Label?>
+
 <VBox stylesheets="@imagesview.css" styleClass="imagesview" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ImagesViewController">
   <Label fx:id="albumTitle" styleClass="albumTitle"/>
   <HBox styleClass="controls">
@@ -24,7 +24,7 @@
       <Button fx:id="singleBtn" onAction="#singleView">
         <graphic><FontIcon iconLiteral="mdi2i-image" /></graphic>
       </Button>
-      <Button fx:id="multipleBtn" onAction="#multipleView">
+      <Button fx:id="multiBtn" onAction="#multipleView">
         <graphic><FontIcon iconLiteral="mdi2i-image-multiple" /></graphic>
       </Button>
     </HBox>
