@@ -27,7 +27,6 @@ public class TagMediaServiceImpl extends AbstractEntityService implements TagMed
             } catch (SQLException e) {
                 logger.log(Level.SEVERE, e.getMessage());
             }
-
         }
 
         return this.dao;

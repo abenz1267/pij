@@ -9,24 +9,21 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Service to handle albumMedia.
+ * Service to handle albumMedia entity.
  *
  * @author Timm Lohmann
  * @author Phillip Knutzen
  * @author Joey Wille
  */
-
 @ImplementedBy(AlbumMediaServiceImpl.class)
 public interface AlbumMediaService {
   Dao<AlbumMedia, Integer> dao();
 
   /**
-   * Gets a given List of Album.
-   * @param album the Album files.
+   * Gets a List of given {@link Media} entitites which are connected with a given {@link Album} entity.
+   *
+   * @param album the Album entities.
    * @throws SQLException if there's a problem with the Database.
-   * @author Timm Lohmann
-   * @author Phillip Knutzen
-   * @author Joey Wille
    */
   List<Media> getMedia(Album album) throws SQLException;
 }
