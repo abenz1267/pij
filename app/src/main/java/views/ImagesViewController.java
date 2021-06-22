@@ -147,6 +147,7 @@ public class ImagesViewController extends AbstractController implements Initiali
     return resizedImages;
   }
 
+  // creates the right-click context menu to delete an image
   private void createContextMenu(ImageView view, Media media, List<Media> list) {
     var contextMenu = new ContextMenu();
     var menuItem1 = new MenuItem(resourceService.getString(Resource.GENERIC, "delete"));
@@ -166,6 +167,7 @@ public class ImagesViewController extends AbstractController implements Initiali
     view.setOnContextMenuRequested(e -> contextMenu.show(view, e.getScreenX(), e.getScreenY()));
   }
 
+  // creates the actual thumbnail ImageViews
   private ImageView loadImageViewFromMedia(Media media) {
     var file = new File(media.getFilename());
     Image tempImage;
