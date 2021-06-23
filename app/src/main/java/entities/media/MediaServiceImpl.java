@@ -30,6 +30,11 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
@@ -276,12 +281,13 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   }
 
   public List<Media> filterMediaByInput(String input) throws SQLException {
-    var dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-    Date date = null;
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
+    Date date = null;
     try {
-      date = dateFormat.parse(input);
-    } catch (ParseException e) {
+      LocalDate localDate = LocalDate.from(dateTimeFormatter.parse(input));
+      date = Date.from(localDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+    } catch (DateTimeParseException e){
       this.logger.log(Level.INFO, e.getMessage());
     }
 
@@ -290,14 +296,18 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     QueryBuilder<Media, Integer> mediaQB = dao().queryBuilder();
     QueryBuilder<Location, Integer> locationQB = locationService.dao().queryBuilder();
     QueryBuilder<Person, Integer> personQB = personService.dao().queryBuilder();
+    QueryBuilder<PersonMedia, Integer> personMediaQB = personMediaService.dao().queryBuilder();
     QueryBuilder<Tag, Integer> tagQB = tagService.dao().queryBuilder();
+    QueryBuilder<TagMedia, Integer> tagMediaQB = tagMediaService.dao().queryBuilder();
 
     locationQB.where().like("name", input);
     personQB.where().like("firstname", input).or().like("lastname", input);
     tagQB.where().like("name", input);
 
-    mediaQB.leftJoinOr(
-        locationQB); // .leftJoinOr(personQB).leftJoinOr(tagQB); //nicht in der Datenbank?
+    personMediaQB.leftJoinOr(personQB);
+    tagMediaQB.leftJoinOr(tagQB);
+
+    mediaQB.leftJoinOr(locationQB).leftJoinOr(personMediaQB).leftJoinOr(tagMediaQB);
     Where<Media, Integer> whereMedia = mediaQB.where();
 
     whereMedia.like("filename", input).or().like("name", input).or().like("description", input);
@@ -305,6 +315,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
     PreparedQuery<Media> preparedQuery = mediaQB.prepare();
 
+    List<Media> test = dao().query(preparedQuery);
     return dao().query(preparedQuery);
   }
 
