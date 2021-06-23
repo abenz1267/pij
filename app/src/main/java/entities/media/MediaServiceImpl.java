@@ -28,12 +28,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.logging.Level;
@@ -281,13 +278,13 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   }
 
   public List<Media> filterMediaByInput(String input) throws SQLException {
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    var dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     Date date = null;
     try {
-      LocalDate localDate = LocalDate.from(dateTimeFormatter.parse(input));
+      var localDate = LocalDate.from(dateTimeFormatter.parse(input));
       date = Date.from(localDate.atStartOfDay().toInstant(ZoneOffset.UTC));
-    } catch (DateTimeParseException e){
+    } catch (DateTimeParseException e) {
       this.logger.log(Level.INFO, e.getMessage());
     }
 
