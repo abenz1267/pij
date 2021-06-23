@@ -42,7 +42,7 @@
     </HBox>
     <HBox>
         <HBox>
-            <Label text="Datetime:"/>
+            <Label text="Datum:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <DatePicker fx:id="datetimePicker"/>
@@ -50,7 +50,7 @@
     </HBox>
     <HBox>
         <HBox>
-            <Label text="Description:"/>
+            <Label text="Beschreibung:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <TextField fx:id="descriptionField"/>
@@ -58,7 +58,7 @@
     </HBox>
     <HBox>
         <HBox>
-            <Label text="Private:"/>
+            <Label text="Privat:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <CheckBox fx:id="isPrivateBox"/>
@@ -66,7 +66,7 @@
     </HBox>
     <HBox>
         <HBox>
-            <Label text="Resolution:"/>
+            <Label text="Auflösung:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <Label fx:id="resolutionField"/>
@@ -74,7 +74,7 @@
     </HBox>
     <HBox>
         <HBox>
-            <Label text="Location:"/>
+            <Label text="Ort:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <TextField fx:id="locationField"/>
@@ -82,7 +82,7 @@
     </HBox>
     <HBox>
         <HBox>
-            <Label text="Datatype:"/>
+            <Label text="Datentyp:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <Label fx:id="datatypeField"/>
