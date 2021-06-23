@@ -44,9 +44,8 @@ public class AlbumViewController extends AbstractController implements Initializ
         });
         Optional<Date> minDate = dates.stream().min(Comparator.naturalOrder());
         Optional<Date> maxDate = dates.stream().max(Comparator.naturalOrder());
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
-
+        var formatter = new SimpleDateFormat("dd-MM-yyyy");
+        
         var albumBtn = new Button();
         albumBtn.getStyleClass().add("albumBtn");
         albumBtn.setMnemonicParsing(false);
