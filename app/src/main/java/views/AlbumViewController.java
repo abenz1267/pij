@@ -4,7 +4,7 @@ import events.SetUIState;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,10 +33,26 @@ public class AlbumViewController extends AbstractController implements Initializ
     try {
       var albums = albumService.dao().queryForAll();
       for (var album : albums) {
+
+        List<Date> dates = new ArrayList<>();
+
+        albumMediaService.getMedia(album).forEach(media -> {
+          if (media.getDatetime() != null) {
+            dates.add(media.getDatetime());
+          }
+        });
+        Optional<Date> minDate = dates.stream().min(Comparator.naturalOrder());
+        Optional<Date> maxDate = dates.stream().max(Comparator.naturalOrder());
+
         var albumBtn = new Button();
         albumBtn.getStyleClass().add("albumBtn");
         albumBtn.setMnemonicParsing(false);
         albumBtn.setText("Titel: " + album.getName() + ", Thema: " + album.getTheme());
+
+        minDate.ifPresent(date -> albumBtn.setText(albumBtn.getText() + " Zeitraum: "
+                + minDate.get()
+                + " - "
+                + maxDate.get()));
 
         albumBtn.setOnAction(e -> eventService.post(new SetUIState(SetUIState.State.ALBUM, album)));
 
