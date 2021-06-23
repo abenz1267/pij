@@ -133,6 +133,7 @@ public class MetaDataController extends AbstractController implements Initializa
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
+    eventService.post(new SetUIState(SetUIState.State.CLOSE_CONTEXT));
   }
 
   @FXML
