@@ -4,16 +4,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <VBox styleClass="content" stylesheets="@exportcontext.css" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml" fx:controller="views.AddToAlbumContextController">
     <Label text="Zu Album hinzufügen"/>
     <VBox fx:id="list"/>
     <HBox styleClass="exportBtns">
         <HBox HBox.hgrow="ALWAYS" styleClass="cancel">
-            <Button text="abbrechen" onAction="#closeAdd"/>
+            <Button onAction="#closeAdd">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2c-close"/>
+                </graphic>
+            </Button>
         </HBox>
-        <HBox HBox.hgrow="ALWAYS" styleClass="export">
-            <Button text="hinzufügen" onAction="#addToAlbum"/>
+        <HBox HBox.hgrow="ALWAYS" styleClass="primary">
+            <Button onAction="#addToAlbum">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2p-plus-box-outline"/>
+                </graphic>
+            </Button>
         </HBox>
     </HBox>
 </VBox>

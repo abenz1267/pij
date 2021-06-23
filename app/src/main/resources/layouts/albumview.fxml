@@ -8,10 +8,12 @@
 
 <VBox stylesheets="@albumview.css" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/15"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.AlbumViewController">
-    <Button fx:id="createAlbumBtn" text="neues Album" onAction="#newAlbumDialog">
-        <graphic>
-            <FontIcon iconLiteral="mdi2f-folder-plus-outline"/>
-        </graphic>
-    </Button>
+    <HBox styleClass="container" HBox.hgrow="ALWAYS">
+        <Button styleClass="albumBtn" text="Neues Album" onAction="#newAlbumDialog">
+            <graphic>
+                <FontIcon iconLiteral="mdi2f-folder-plus-outline"/>
+            </graphic>
+        </Button>
+    </HBox>
     <TilePane styleClass="container" fx:id="tilePane"/>
 </VBox>

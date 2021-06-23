@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  * Controller to handle albumview.
@@ -34,7 +35,7 @@ public class AlbumViewController extends AbstractController implements Initializ
       var albums = albumService.dao().queryForAll();
       for (var album : albums) {
         var albumBtn = new Button();
-        albumBtn.getStyleClass().add("albumBtn");
+        albumBtn.setGraphic(new FontIcon("mdi2i-image-multiple"));
         albumBtn.setMnemonicParsing(false);
         albumBtn.setText("Titel: " + album.getName() + ", Thema: " + album.getTheme());
 
