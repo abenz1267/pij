@@ -4,6 +4,7 @@ import events.SetUIState;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
@@ -43,16 +44,19 @@ public class AlbumViewController extends AbstractController implements Initializ
         });
         Optional<Date> minDate = dates.stream().min(Comparator.naturalOrder());
         Optional<Date> maxDate = dates.stream().max(Comparator.naturalOrder());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
 
         var albumBtn = new Button();
         albumBtn.getStyleClass().add("albumBtn");
         albumBtn.setMnemonicParsing(false);
         albumBtn.setText("Titel: " + album.getName() + ", Thema: " + album.getTheme());
 
-        minDate.ifPresent(date -> albumBtn.setText(albumBtn.getText() + " Zeitraum: "
-                + minDate.get()
-                + " - "
-                + maxDate.get()));
+        minDate.ifPresent(date -> albumBtn.setText(albumBtn.getText() + ", Zeitraum: "
+                + formatter.format(minDate.get())
+                + " bis "
+                + formatter.format(maxDate.get())
+        ));
 
         albumBtn.setOnAction(e -> eventService.post(new SetUIState(SetUIState.State.ALBUM, album)));
 
