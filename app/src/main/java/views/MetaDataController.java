@@ -6,6 +6,8 @@ import entities.media.Media;
 import entities.person.Person;
 import entities.tag.Tag;
 import events.LoadMetaData;
+import events.SetUIState;
+import events.SetUIState.State;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
@@ -17,8 +19,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -41,7 +43,9 @@ public class MetaDataController extends AbstractController implements Initializa
   @FXML private TextField personFieldLastName;
   @FXML private VBox personBox;
   @FXML private ComboBox<String> tagBox;
-  @FXML private TilePane tagPane;
+  @FXML private FlowPane tagPane;
+  @FXML private ComboBox<String> quality;
+
 
   private Media media;
 
@@ -57,20 +61,11 @@ public class MetaDataController extends AbstractController implements Initializa
 
       var allTags = tagService.dao().queryForAll();
       var set = new HashSet<String>();
-      allTags.forEach(
-          tag -> {
-            set.add(tag.getName());
-          });
+      allTags.forEach(tag -> set.add(tag.getName()));
 
-      tags.forEach(
-          tag -> {
-            set.remove(tag.getName());
-          });
+      tags.forEach(tag -> set.remove(tag.getName()));
 
-      set.forEach(
-          entry -> {
-            tagBox.getItems().add(entry);
-          });
+      set.forEach(entry -> tagBox.getItems().add(entry));
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
@@ -78,39 +73,42 @@ public class MetaDataController extends AbstractController implements Initializa
 
   @Subscribe
   public void getMetaData(LoadMetaData event) {
-    var media = event.getMedia();
-    mediaService.refreshAll(media);
-    this.media = media;
+    var ev = event.getMedia();
+    mediaService.refreshAll(ev);
+    this.media = ev;
 
-    if (media.getDatetime() != null) {
-      var date = media.getDatetime();
+    if (this.media.getDatetime() != null) {
+      var date = this.media.getDatetime();
       var localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
       datetimePicker.setValue(localDate);
     }
 
     if (media.getLocation() != null) {
-      locationField.setText(media.getLocation().toString());
+      locationField.setText(this.media.getLocation().toString());
       locationField.setAlignment(Pos.CENTER_RIGHT);
     }
 
-    nameField.setText(media.getName());
+    quality.setValue(String.valueOf(media.getQuality()));
+    quality.getItems().setAll("1", "2", "3" , "4", "5");
+
+    nameField.setText(this.media.getName());
     nameField.setAlignment(Pos.CENTER_RIGHT);
 
-    descriptionField.setText(media.getDescription());
+    descriptionField.setText(this.media.getDescription());
     descriptionField.setAlignment(Pos.CENTER_RIGHT);
 
-    datatypeField.setText(media.getDataType().toString());
+    datatypeField.setText(this.media.getDataType().toString());
     datatypeField.setAlignment(Pos.CENTER_RIGHT);
 
-    resolutionField.setText(media.getResolution().toString());
+    resolutionField.setText(this.media.getResolution().toString());
     resolutionField.setAlignment(Pos.CENTER_RIGHT);
 
-    isPrivateBox.setSelected(media.isPrivate());
+    isPrivateBox.setSelected(this.media.isPrivate());
     isPrivateBox.setAlignment(Pos.CENTER_RIGHT);
 
-    this.listPersons(media);
-    this.listTags(media);
-    this.setTags(media.getTags());
+    this.listPersons(this.media);
+    this.listTags(this.media);
+    this.setTags(this.media.getTags());
   }
 
   @FXML
@@ -118,6 +116,7 @@ public class MetaDataController extends AbstractController implements Initializa
     this.media.setName(nameField.getText());
     this.media.setDescription(descriptionField.getText());
     this.media.setPrivate(isPrivateBox.isSelected());
+    this.media.setQuality(Integer.parseInt(quality.getValue()));
 
     var location = new Location();
     location.setName(locationField.getText());
@@ -134,6 +133,7 @@ public class MetaDataController extends AbstractController implements Initializa
     } catch (SQLException e) {
       logger.log(Level.SEVERE, e.getMessage());
     }
+    eventService.post(new SetUIState(SetUIState.State.CLOSE_CONTEXT));
   }
 
   @FXML
@@ -162,7 +162,7 @@ public class MetaDataController extends AbstractController implements Initializa
   @FXML
   public void addTag() {
     var tag = new Tag();
-    tag.setName(tagBox.getValue().toString());
+    tag.setName(tagBox.getValue());
     media.getTags().add(tag);
 
     try {
@@ -232,5 +232,10 @@ public class MetaDataController extends AbstractController implements Initializa
       wrapper.getChildren().add(button);
       children.add(wrapper);
     }
+  }
+
+  @FXML
+  private void closeMetaData() {
+    eventService.post(new SetUIState(State.CLOSE_CONTEXT));
   }
 }

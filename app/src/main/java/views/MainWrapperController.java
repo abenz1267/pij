@@ -42,7 +42,8 @@ public class MainWrapperController extends AbstractController implements Initial
         case ALBUMCONTEXT:
           sceneService.setContent(this.mainwrapper, View.ALBUMCONTEXT);
           break;
-        case INITIAL, ADDTOALBUM:
+        case ADDTOALBUM:
+        case INITIAL:
           sceneService.setContent(this.mainwrapper, View.IMAGESVIEW);
           eventService.post(new ShowImages(mediaService.dao().queryForAll()));
           break;

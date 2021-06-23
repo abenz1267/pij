@@ -19,7 +19,9 @@ public class AlbumContextController extends AbstractController implements Initia
   @FXML Label albumLabel;
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+    // for abstract
+  }
 
   @FXML
   private void addToAlbum(ActionEvent actionEvent) {

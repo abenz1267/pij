@@ -4,17 +4,15 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox styleClass="container" stylesheets="@metadataview.css" xmlns="http://javafx.com/javafx"
+<VBox styleClass="metadatacontainer" stylesheets="@metadataview.css" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml" fx:controller="views.MetaDataController">
-    <Label styleClass="personbox" text="Metadaten:"/>
+    <Label styleClass="header" text="Daten"/>
     <VBox>
         <Label text="Personen im Bild:"/>
         <VBox VBox.vgrow="ALWAYS">
-            <HBox HBox.hgrow="ALWAYS">
-                <HBox>
-                    <TextField fx:id="personFieldFirstName"/>
-                    <TextField fx:id="personFieldLastName"/>
-                </HBox>
+            <HBox>
+                <TextField fx:id="personFieldFirstName" promptText="Vorname" />
+                <TextField fx:id="personFieldLastName" promptText="Nachname"/>
                 <Button mnemonicParsing="false" onAction="#addPerson">
                     <graphic>
                         <FontIcon iconLiteral="mdi2a-account-plus"/>
@@ -27,7 +25,15 @@
         </VBox>
     </VBox>
     <HBox>
-        <HBox HBox.hgrow="ALWAYS">
+        <HBox>
+            <Label text="Qualität:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <ComboBox fx:id="quality"/>
+        </HBox>
+    </HBox>
+    <HBox>
+        <HBox>
             <Label text="Name:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
@@ -35,59 +41,58 @@
         </HBox>
     </HBox>
     <HBox>
-        <HBox HBox.hgrow="ALWAYS">
-            <Label text="Datetime:"/>
+        <HBox>
+            <Label text="Datum:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <DatePicker fx:id="datetimePicker"/>
         </HBox>
     </HBox>
     <HBox>
-        <HBox HBox.hgrow="ALWAYS">
-            <Label text="Description:"/>
+        <HBox>
+            <Label text="Beschreibung:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <TextField fx:id="descriptionField"/>
         </HBox>
     </HBox>
     <HBox>
-        <HBox HBox.hgrow="ALWAYS">
-            <Label text="Private:"/>
+        <HBox>
+            <Label text="Privat:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <CheckBox fx:id="isPrivateBox"/>
         </HBox>
     </HBox>
     <HBox>
-        <HBox HBox.hgrow="ALWAYS">
-            <Label text="Resolution:"/>
+        <HBox>
+            <Label text="Auflösung:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <Label fx:id="resolutionField"/>
         </HBox>
     </HBox>
     <HBox>
-        <HBox HBox.hgrow="ALWAYS">
-            <Label text="Location:"/>
+        <HBox>
+            <Label text="Ort:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <TextField fx:id="locationField"/>
         </HBox>
     </HBox>
     <HBox>
-        <HBox HBox.hgrow="ALWAYS">
-            <Label text="Datatype:"/>
+        <HBox>
+            <Label text="Datentyp:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <Label fx:id="datatypeField"/>
         </HBox>
     </HBox>
     <HBox>
-        <Button mnemonicParsing="false" onAction="#btnSaveDataClicked" text="Änderungen speichern"/>
-    </HBox>
-    <VBox>
-        <Label styleClass="personbox" text="Tags hinzufügen:"/>
-        <HBox>
+        <HBox HBox.hgrow="ALWAYS">
+          <Label text="Tags hinzufügen:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
             <ComboBox fx:id="tagBox"/>
             <Button fx:id="addTagBtn" onAction="#addTag">
                 <graphic>
@@ -95,7 +100,18 @@
                 </graphic>
             </Button>
         </HBox>
-        <TilePane fx:id="tagPane"/>
-    </VBox>
-
+    </HBox>
+    <FlowPane fx:id="tagPane" prefWrapLength="300"/>
+  <HBox styleClass="listControls">
+    <HBox HBox.hgrow="ALWAYS" styleClass="btnWrapper, cancel">
+      <Button onAction="#closeMetaData">
+        <graphic><FontIcon iconLiteral="mdi2c-close" /></graphic>
+      </Button>
+    </HBox>
+    <HBox HBox.hgrow="ALWAYS" styleClass="btnWrapper, primary">
+      <Button text="speichern" onAction="#btnSaveDataClicked">
+        <graphic><FontIcon iconLiteral="mdi2c-content-save" /></graphic>
+      </Button>
+    </HBox>
+  </HBox>
 </VBox>

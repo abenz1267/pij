@@ -1,4 +1,4 @@
-package entities.PersonMedia;
+package entities.personmedia;
 
 import com.google.inject.ImplementedBy;
 import com.j256.ormlite.dao.Dao;

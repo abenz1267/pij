@@ -1,4 +1,4 @@
-package entities.TagMedia;
+package entities.tagmedia;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -14,8 +14,9 @@ import javax.inject.Singleton;
 
 @Singleton
 public class TagMediaServiceImpl extends AbstractEntityService implements TagMediaService {
-
   @Inject private TagService tagService;
+
+  private static final String TID = "tag_id";
 
   private Dao<TagMedia, Integer> dao = null;
 
@@ -36,7 +37,7 @@ public class TagMediaServiceImpl extends AbstractEntityService implements TagMed
     var result = this.get(tag, media);
 
     dao().delete(result.get(0));
-    var others = dao().queryForEq("tag_id", tag.getId());
+    var others = dao().queryForEq(TID, tag.getId());
     if (others.isEmpty()) {
       tagService.dao().delete(tag);
     }
@@ -46,7 +47,7 @@ public class TagMediaServiceImpl extends AbstractEntityService implements TagMed
   public List<TagMedia> get(Tag tag, Media media) throws SQLException {
 
     var qb = dao().queryBuilder();
-    qb.where().eq("tag_id", tag.getId()).and().eq("media_id", media.getId());
+    qb.where().eq(TID, tag.getId()).and().eq("media_id", media.getId());
 
     return qb.query();
   }
@@ -56,7 +57,7 @@ public class TagMediaServiceImpl extends AbstractEntityService implements TagMed
     var qb = dao().queryBuilder();
     var mQb = tagService.dao().queryBuilder();
 
-    qb.selectColumns("tag_id");
+    qb.selectColumns(TID);
     qb.where().eq("media_id", media.getId());
 
     mQb.where().in("id", qb);

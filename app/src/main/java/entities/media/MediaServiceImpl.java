@@ -10,17 +10,17 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import entities.AbstractEntityService;
-import entities.PersonMedia.PersonMedia;
-import entities.PersonMedia.PersonMediaService;
-import entities.TagMedia.TagMedia;
-import entities.TagMedia.TagMediaService;
 import entities.location.Location;
 import entities.location.LocationService;
 import entities.person.Person;
 import entities.person.PersonService;
+import entities.personmedia.PersonMedia;
+import entities.personmedia.PersonMediaService;
 import entities.resolution.ResolutionService;
 import entities.tag.Tag;
 import entities.tag.TagService;
+import entities.tagmedia.TagMedia;
+import entities.tagmedia.TagMediaService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,6 +30,11 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
@@ -276,12 +281,13 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
   }
 
   public List<Media> filterMediaByInput(String input) throws SQLException {
-    var dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-    Date date = null;
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
+    Date date = null;
     try {
-      date = dateFormat.parse(input);
-    } catch (ParseException e) {
+      LocalDate localDate = LocalDate.from(dateTimeFormatter.parse(input));
+      date = Date.from(localDate.atStartOfDay().toInstant(ZoneOffset.UTC));
+    } catch (DateTimeParseException e){
       this.logger.log(Level.INFO, e.getMessage());
     }
 
@@ -290,21 +296,24 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     QueryBuilder<Media, Integer> mediaQB = dao().queryBuilder();
     QueryBuilder<Location, Integer> locationQB = locationService.dao().queryBuilder();
     QueryBuilder<Person, Integer> personQB = personService.dao().queryBuilder();
+    QueryBuilder<PersonMedia, Integer> personMediaQB = personMediaService.dao().queryBuilder();
     QueryBuilder<Tag, Integer> tagQB = tagService.dao().queryBuilder();
+    QueryBuilder<TagMedia, Integer> tagMediaQB = tagMediaService.dao().queryBuilder();
 
     locationQB.where().like("name", input);
     personQB.where().like("firstname", input).or().like("lastname", input);
     tagQB.where().like("name", input);
 
-    mediaQB.leftJoinOr(
-        locationQB); // .leftJoinOr(personQB).leftJoinOr(tagQB); //nicht in der Datenbank?
+    personMediaQB.leftJoinOr(personQB);
+    tagMediaQB.leftJoinOr(tagQB);
+
+    mediaQB.leftJoinOr(locationQB).leftJoinOr(personMediaQB).leftJoinOr(tagMediaQB);
     Where<Media, Integer> whereMedia = mediaQB.where();
 
     whereMedia.like("filename", input).or().like("name", input).or().like("description", input);
     if (date != null) whereMedia.or().eq("datetime", date);
 
     PreparedQuery<Media> preparedQuery = mediaQB.prepare();
-
     return dao().query(preparedQuery);
   }
 
@@ -354,11 +363,8 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
     for (var i = 0; i < persons.size(); i++) {
       var person = persons.get(i);
-      if (person.getFirstname().isEmpty() || person.getLastname().isEmpty()) {
-        continue;
-      }
-
-      if (person.getId() != 0) {
+      if ((person.getFirstname().isEmpty() || person.getLastname().isEmpty())
+          || person.getId() != 0) {
         continue;
       }
 
@@ -390,11 +396,7 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
 
     for (var i = 0; i < tags.size(); i++) {
       var tag = tags.get(i);
-      if (tag.getName().isEmpty()) {
-        continue;
-      }
-
-      if (tag.getId() != 0) {
+      if (tag.getName().isEmpty() || tag.getId() != 0) {
         continue;
       }
 

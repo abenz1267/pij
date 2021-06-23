@@ -42,9 +42,13 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML Button imagesBtn;
   @FXML Button diashowBtn;
 
+  private static final String ACTIVE = "active";
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     // empty initialize
+    imagesBtn.getStyleClass().add(ACTIVE);
+    albumBtn.getStyleClass().remove(ACTIVE);
   }
 
   @FXML
@@ -94,11 +98,15 @@ public class TopMenuController extends AbstractController implements Initializab
   @FXML
   private void showAlbumView() {
     eventService.post(new SetUIState(State.ALBUMLIST));
+    imagesBtn.getStyleClass().remove(ACTIVE);
+    albumBtn.getStyleClass().add(ACTIVE);
   }
 
   @FXML
   private void showImagesView() {
     eventService.post(new SetUIState(SetUIState.State.INITIAL));
+    imagesBtn.getStyleClass().add(ACTIVE);
+    albumBtn.getStyleClass().remove(ACTIVE);
   }
 
   @FXML

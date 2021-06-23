@@ -1,4 +1,4 @@
-package entities.PersonMedia;
+package entities.personmedia;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
