@@ -314,8 +314,6 @@ public class MediaServiceImpl extends AbstractEntityService implements MediaServ
     if (date != null) whereMedia.or().eq("datetime", date);
 
     PreparedQuery<Media> preparedQuery = mediaQB.prepare();
-
-    List<Media> test = dao().query(preparedQuery);
     return dao().query(preparedQuery);
   }
 
