@@ -44,6 +44,8 @@ public class MetaDataController extends AbstractController implements Initializa
   @FXML private VBox personBox;
   @FXML private ComboBox<String> tagBox;
   @FXML private FlowPane tagPane;
+  @FXML private ComboBox<String> quality;
+
 
   private Media media;
 
@@ -86,6 +88,9 @@ public class MetaDataController extends AbstractController implements Initializa
       locationField.setAlignment(Pos.CENTER_RIGHT);
     }
 
+    quality.setValue(String.valueOf(media.getQuality()));
+    quality.getItems().setAll("1", "2", "3" , "4", "5");
+
     nameField.setText(this.media.getName());
     nameField.setAlignment(Pos.CENTER_RIGHT);
 
@@ -111,6 +116,7 @@ public class MetaDataController extends AbstractController implements Initializa
     this.media.setName(nameField.getText());
     this.media.setDescription(descriptionField.getText());
     this.media.setPrivate(isPrivateBox.isSelected());
+    this.media.setQuality(Integer.parseInt(quality.getValue()));
 
     var location = new Location();
     location.setName(locationField.getText());

@@ -26,6 +26,14 @@
     </VBox>
     <HBox>
         <HBox>
+            <Label text="Qualität:"/>
+        </HBox>
+        <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
+            <ComboBox fx:id="quality"/>
+        </HBox>
+    </HBox>
+    <HBox>
+        <HBox>
             <Label text="Name:"/>
         </HBox>
         <HBox styleClass="inputContainer" HBox.hgrow="ALWAYS">
